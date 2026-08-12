@@ -3,6 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense, useEffect, type ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import Layout from "./components/Layout";
+import SeoHead from "./components/SeoHead";
 import { SUPPORTED_LANGUAGES } from "./i18n/config";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -58,6 +59,7 @@ export default function App() {
   const loc = useLocation();
   return (
     <Layout>
+      <SeoHead />
       <Suspense fallback={<PageFallback />}>
         <AnimatePresence mode="wait">
           <Routes location={loc} key={loc.pathname}>

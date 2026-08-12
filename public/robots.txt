@@ -1,0 +1,15 @@
+# Longevity.Agent Grand Prix 2026
+# https://longevityagent.top
+
+User-agent: *
+Allow: /
+Disallow: /api/openapi.*
+
+# Crawl-delay for aggressive bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+Sitemap: https://longevityagent.top/sitemap.xml
