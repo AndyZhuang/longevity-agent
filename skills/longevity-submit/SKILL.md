@@ -142,7 +142,7 @@ resp.raise_for_status()
     "agent_score": 0.873,
     "safety_status": "passed",
     "leaderboard_rank": 5,
-    "url": "https://longevity.agent/submissions/sub_01HGQ3...",
+    "url": "https://longevityagent.top/submissions/sub_01HGQ3...",
 }
 ```
 
@@ -181,7 +181,7 @@ print(result.agent_score)
 
 ## References
 
-- API source: `https://longevity.agent/docs/api`
-- Rules: `https://longevity.agent/docs/rules`
-- Spec source: `https://longevity.agent/docs/targets`
+- API source: `https://longevityagent.top/docs/api`
+- Rules: `https://longevityagent.top/docs/rules`
+- Spec source: `https://longevityagent.top/docs/targets`
 - Code repo: `github.com/longevity-agent/skills`

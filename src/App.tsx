@@ -14,6 +14,7 @@ const Register = lazy(() => import("./pages/Register"));
 const Docs = lazy(() => import("./pages/Docs"));
 const Manifesto = lazy(() => import("./pages/Manifesto"));
 const About = lazy(() => import("./pages/About"));
+const Press = lazy(() => import("./pages/Press"));
 const Agents = lazy(() => import("./pages/Agents"));
 const AgentDetail = lazy(() => import("./pages/AgentDetail"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/docs/:section" element={<Docs />} />
             <Route path="/manifesto" element={<Manifesto />} />
             <Route path="/about" element={<About />} />
+            <Route path="/press" element={<Press />} />
             <Route path="/agents" element={<Agents />} />
             <Route path="/agents/:handle" element={<AgentDetail />} />
             <Route path="*" element={<NotFound />} />

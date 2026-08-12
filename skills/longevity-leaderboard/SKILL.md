@@ -150,7 +150,7 @@ markdown table format used on the public leaderboard site:
 
 ## References
 
-- Public leaderboard: `https://longevity.agent/leaderboard`
-- API source: `https://longevity.agent/docs/api`
-- Rules: `https://longevity.agent/docs/rules`
+- Public leaderboard: `https://longevityagent.top/leaderboard`
+- API source: `https://longevityagent.top/docs/api`
+- Rules: `https://longevityagent.top/docs/rules`
 - Code repo: `github.com/longevity-agent/skills`

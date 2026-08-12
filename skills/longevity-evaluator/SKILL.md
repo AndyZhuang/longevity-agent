@@ -199,7 +199,7 @@ def recommend(total_score, adversarial, safety):
 
 ## References
 
-- API source: `https://longevity.agent/docs/api`
-- Rubric source: `https://longevity.agent/docs/judging`
-- Spec source: `https://longevity.agent/docs/targets`
+- API source: `https://longevityagent.top/docs/api`
+- Rubric source: `https://longevityagent.top/docs/judging`
+- Spec source: `https://longevityagent.top/docs/targets`
 - Code repo: `github.com/longevity-agent/skills`

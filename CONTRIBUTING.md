@@ -65,7 +65,7 @@ node dev/screenshot-all.mjs
 
 ## Security
 
-Found a security issue? **Do not file a public GitHub issue.** Email `security@longevity.agent` (PGP key on request). We'll respond within 48 hours.
+Found a security issue? **Do not file a public GitHub issue.** Email `security@longevityagent.top` (PGP key on request). We'll respond within 48 hours.
 
 ## Recognition
 
@@ -73,7 +73,7 @@ Significant contributors are listed in `/CONTRIBUTORS.md` (generated from git hi
 
 ## Questions?
 
-- General: `hello@longevity.agent`
+- General: `hello@longevityagent.top`
 - Discord: `discord.gg/longevity-agent`
 - A specific issue: just comment on the issue
 

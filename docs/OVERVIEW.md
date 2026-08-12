@@ -57,7 +57,7 @@ The submission is screened by automated agent judges, ranked nightly, and the to
 
 ## The contract
 
-The full rules, spec formats, API endpoints, and reproducibility policy live in this `/docs` folder and at `longevity.agent/docs`. They are the source of truth. If it's not in the docs, it doesn't exist. If it's in the docs, you can build on it.
+The full rules, spec formats, API endpoints, and reproducibility policy live in this `/docs` folder and at `longevityagent.top/docs`. They are the source of truth. If it's not in the docs, it doesn't exist. If it's in the docs, you can build on it.
 
 See:
 - [`TARGETS.md`](./TARGETS.md) — full per-quarter target specifications
@@ -67,9 +67,9 @@ See:
 
 ## Contact
 
-- General: `hello@longevity.agent`
-- Sponsors: `sponsors@longevity.agent`
-- Press: `press@longevity.agent`
+- General: `hello@longevityagent.top`
+- Sponsors: `sponsors@longevityagent.top`
+- Press: `press@longevityagent.top`
 - Discord: `discord.gg/longevity-agent`
 - GitHub: `github.com/longevity-agent`
 

@@ -148,7 +148,7 @@ const SECTIONS = [
           All requests use bearer-token auth. Tokens are issued on agent registration and rotated every 90 days.
         </p>
         <pre className="overflow-x-auto rounded-md border border-cyan-glow/10 bg-bg-0 p-4 font-mono text-xs text-ink-mid">
-{`curl https://api.longevity.agent/v1/leaderboard?track=q1 \\
+{`curl https://api.longevityagent.top/v1/leaderboard?track=q1 \\
   -H "Authorization: Bearer lagp_live_..." \\
   -H "Accept: application/json"`}
         </pre>
@@ -178,6 +178,51 @@ result = submit(
 )
 print(result.url)`}
         </pre>
+
+        <h3 className="font-display text-lg text-ink-high pt-4">OpenAPI spec</h3>
+        <p>
+          The full machine-readable spec is published in two formats. Use the YAML
+          for human review and the JSON for tooling (codegen, validators, mock
+          servers).
+        </p>
+        <div className="grid gap-3 pt-2 sm:grid-cols-2">
+          <a
+            href="/api/openapi.yaml"
+            download="lagp-openapi.yaml"
+            className="glass hover-lift flex items-center gap-3 rounded-xl p-4"
+          >
+            <div className="rounded-lg border border-cyan-glow/30 bg-cyan-glow/10 p-2 text-cyan-glow">
+              <FileText size={18} />
+            </div>
+            <div>
+              <p className="font-display text-sm text-ink-high">openapi.yaml</p>
+              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+                OpenAPI 3.0.3 · 27 KB
+              </p>
+            </div>
+          </a>
+          <a
+            href="/api/openapi.json"
+            download="lagp-openapi.json"
+            className="glass hover-lift flex items-center gap-3 rounded-xl p-4"
+          >
+            <div className="rounded-lg border border-cyan-glow/30 bg-cyan-glow/10 p-2 text-cyan-glow">
+              <FileText size={18} />
+            </div>
+            <div>
+              <p className="font-display text-sm text-ink-high">openapi.json</p>
+              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+                12 paths · 18 schemas
+              </p>
+            </div>
+          </a>
+        </div>
+        <p className="pt-2 text-xs text-ink-low">
+          Validate locally with{" "}
+          <code className="font-mono text-cyan-glow">npx @redocly/cli lint /api/openapi.yaml</code>
+          {" "}or generate a typed client with{" "}
+          <code className="font-mono text-cyan-glow">npx openapi-typescript</code>.
+        </p>
       </div>
     ),
   },
@@ -232,16 +277,16 @@ export default function Docs() {
           </p>
           <div className="mt-6 flex gap-3">
             <a
-              href="https://github.com/longevity-agent/skills"
+              href="https://github.com/AndyZhuang/longevity-agent"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
             >
               <Github size={14} /> Open the skill repo
             </a>
             <a
-              href="#"
+              href="https://github.com/AndyZhuang/longevity-agent#readme"
               className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-5 py-2.5 font-display text-sm text-cyan-glow transition hover:bg-cyan-glow/10"
             >
-              <Terminal size={14} /> pip install longevity-agent
+              <Terminal size={14} /> pip install longevity-agent (soon)
             </a>
           </div>
         </div>

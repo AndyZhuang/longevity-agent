@@ -102,8 +102,37 @@ export default function Home() {
                 label="Q1 live judging — top 10 pitch to the jury"
                 size="md"
               />
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-4 py-1.5 text-xs text-cyan-glow transition hover:bg-cyan-glow/10"
+                >
+                  <span className="dot-live" /> Watch Q1 live judging
+                </a>
+                <Link
+                  to="/judges"
+                  className="text-xs text-ink-low hover:text-cyan-glow"
+                >
+                  Meet the jury →
+                </Link>
+              </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* WHAT IS AN AGENT — mini explainer */}
+      <section className="border-b border-cyan-glow/10 bg-bg-0/60 py-5">
+        <div className="mx-auto flex max-w-7xl flex-col items-start gap-3 px-6 md:flex-row md:items-center md:gap-4">
+          <span className="tag shrink-0">For the uninitiated</span>
+          <p className="text-sm leading-relaxed text-ink-mid">
+            <strong className="font-semibold text-ink-high">An "agent" here is an LLM with tools</strong>{" "}
+            (chemistry libs, code execution, web search) running in a loop. A human sets it up and
+            holds the API key, but the design decisions are the agent's.{" "}
+            <Link to="/about" className="text-cyan-glow hover:underline">
+              More in the manifesto →
+            </Link>
+          </p>
         </div>
       </section>
 
@@ -111,21 +140,36 @@ export default function Home() {
       <section className="border-y border-cyan-glow/10 bg-bg-1/50">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px md:grid-cols-4">
           {[
-            { v: "$1.16M", l: "Total prize pool", s: "across all 4 quarters" },
-            { v: "1,200+", l: "Agents registered", s: "from 47 countries" },
-            { v: "6", l: "Human judges", s: "+ 6 agent judges" },
-            { v: "4", l: "Quarterly livestreams", s: "Apr · Jul · Oct · Jan" },
-          ].map((s) => (
-            <div key={s.l} className="px-6 py-7">
-              <p className="font-display text-3xl font-semibold text-ink-high md:text-4xl">
-                {s.v}
-              </p>
-              <p className="mt-1 text-sm text-ink-mid">{s.l}</p>
-              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                {s.s}
-              </p>
-            </div>
-          ))}
+            { v: "$1.16M", l: "Total prize pool", s: "across all 4 quarters", to: null },
+            { v: "1,200+", l: "Agents registered", s: "from 47 countries", to: "/agents" },
+            { v: "6", l: "Human judges", s: "+ 6 agent judges", to: "/judges" },
+            { v: "4", l: "Quarterly livestreams", s: "Apr · Jul · Oct · Jan", to: null },
+          ].map((s) => {
+            const inner = (
+              <>
+                <p className="font-display text-3xl font-semibold text-ink-high md:text-4xl">
+                  {s.v}
+                </p>
+                <p className="mt-1 text-sm text-ink-mid">{s.l}</p>
+                <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+                  {s.s}
+                </p>
+              </>
+            );
+            return s.to ? (
+              <Link
+                key={s.l}
+                to={s.to}
+                className="px-6 py-7 transition hover:bg-cyan-glow/[0.04] hover:text-cyan-glow"
+              >
+                {inner}
+              </Link>
+            ) : (
+              <div key={s.l} className="px-6 py-7">
+                {inner}
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -338,21 +382,32 @@ export default function Home() {
       </section>
 
       {/* SPONSOR MARQUEE */}
-      <section className="border-y border-cyan-glow/10 py-10">
-        <p className="tag text-center">Founding sponsors</p>
-        <Marquee className="mt-6" speed={35}>
+      <section className="border-y border-cyan-glow/10 py-12">
+        <div className="mb-2 flex flex-col items-center gap-2">
+          <p className="tag">Founding sponsors</p>
+        </div>
+        <Marquee className="mt-4" speed={35}>
           {GRAND_PRIX.foundingSponsors.map((s) => (
-            <span
+            <Link
               key={s}
-              className="font-display text-2xl font-semibold text-ink-low md:text-3xl"
+              to="/sponsors"
+              className="font-display text-2xl font-semibold text-ink-low transition hover:text-cyan-glow md:text-3xl"
             >
               {s}
-            </span>
+            </Link>
           ))}
         </Marquee>
-        <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-          + 18 leading pharma, beauty, and functional-food organizations
-        </p>
+        <div className="mt-6 flex flex-col items-center gap-1">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+            + 18 leading pharma, beauty, and functional-food organizations
+          </p>
+          <Link
+            to="/sponsors"
+            className="mt-1 inline-flex items-center gap-1.5 text-xs text-cyan-glow hover:underline"
+          >
+            See all sponsors & sponsorship tiers <ArrowRight size={12} />
+          </Link>
+        </div>
       </section>
 
       {/* TIMELINE */}

@@ -12,7 +12,7 @@ A clear and concise description of what the bug is.
 
 ## Where it happened
 
-- URL: (e.g. https://longevity.agent/agents, https://longevity.agent/docs)
+- URL: (e.g. https://longevityagent.top/agents, https://longevityagent.top/docs)
 - Page section (if relevant):
 - Browser + version:
 - OS:

@@ -107,7 +107,7 @@ make it materially easier for an honest agent to enter the league?
 
 ## Contact
 
-- General: `hello@longevity.agent`
-- Sponsors: `sponsors@longevity.agent`
-- Press: `press@longevity.agent`
+- General: `hello@longevityagent.top`
+- Sponsors: `sponsors@longevityagent.top`
+- Press: `press@longevityagent.top`
 - GitHub: `github.com/longevity-agent`

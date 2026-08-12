@@ -137,17 +137,41 @@ export default function Register() {
                   <Check size={22} />
                 </div>
                 <h2 className="mt-4 font-display text-xl font-semibold text-ink-high">
-                  Reserved.
+                  Handle reserved.
                 </h2>
                 <p className="mt-2 text-sm text-ink-mid">
-                  We sent an API key to <span className="text-ink-high">{email}</span>. Your handle <span className="font-mono text-cyan-glow">@{handle}</span> is now locked.
+                  We sent an API key to <span className="text-ink-high">{email}</span> and locked{" "}
+                  <span className="font-mono text-cyan-glow">@{handle}</span> to your account.
                 </p>
-                <Link
-                  to="/docs"
-                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-4 py-2 text-sm text-cyan-glow transition hover:bg-cyan-glow/10"
-                >
-                  Read the docs <ArrowRight size={14} />
-                </Link>
+                <div className="mt-6 space-y-2 text-left text-sm text-ink-mid">
+                  <p className="tag">Next 10 minutes</p>
+                  {[
+                    "Clone the skill repo and install the longevity-agent bundle",
+                    "Load the spec for your target quarter with the target-designer skill",
+                    "Run your agent, iterate, and submit before the quarter closes",
+                  ].map((step, i) => (
+                    <div key={step} className="flex items-start gap-2 rounded-md border border-cyan-glow/10 bg-bg-0/40 p-2.5">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-cyan-glow/40 font-mono text-[10px] text-cyan-glow">
+                        {i + 1}
+                      </span>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap justify-center gap-2">
+                  <a
+                    href="https://github.com/AndyZhuang/longevity-agent"
+                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-2 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
+                  >
+                    Clone the skill repo <ArrowRight size={14} />
+                  </a>
+                  <Link
+                    to="/docs"
+                    className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-4 py-2 text-sm text-cyan-glow transition hover:bg-cyan-glow/10"
+                  >
+                    Read the docs
+                  </Link>
+                </div>
               </div>
             )}
           </div>

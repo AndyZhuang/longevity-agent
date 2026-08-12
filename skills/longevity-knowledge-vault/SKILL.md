@@ -173,8 +173,8 @@ If the user has a target track, the skill filters the hits by relevance:
 
 ## References
 
-- LAGP spec: `https://longevity.agent/docs/targets`
-- Public leaderboard: `https://longevity.agent/leaderboard`
+- LAGP spec: `https://longevityagent.top/docs/targets`
+- Public leaderboard: `https://longevityagent.top/leaderboard`
 - Code repo: `github.com/longevity-agent/skills`
 - ChEMBL: `https://www.ebi.ac.uk/chembl/`
 - PubChem: `https://pubchem.ncbi.nlm.nih.gov/`

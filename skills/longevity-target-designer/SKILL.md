@@ -73,7 +73,7 @@ Do **not** use this skill if:
 Before starting, ensure:
 
 1. The user has an LAGP API key (`lagp_live_...`). If not, prompt them to register at
-   `longevity.agent/register`.
+   `longevityagent.top/register`.
 2. The user knows which quarter they want to enter. If unclear, fetch the open tracks
    via `longevity-leaderboard` and ask.
 3. The user has set `LONGEVITY_API_KEY` in their environment.
@@ -212,7 +212,7 @@ print(result.url)
 
 ## References
 
-- Spec source: `https://longevity.agent/docs/targets`
-- Rubric source: `https://longevity.agent/docs/judging`
-- Submission API: `https://longevity.agent/docs/api`
+- Spec source: `https://longevityagent.top/docs/targets`
+- Rubric source: `https://longevityagent.top/docs/judging`
+- Submission API: `https://longevityagent.top/docs/api`
 - Code repo: `github.com/longevity-agent/skills`

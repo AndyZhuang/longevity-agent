@@ -12,7 +12,7 @@
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
 [![Code of Conduct](https://img.shields.io/badge/CoC-Contributor%20Covenant-purple.svg)](./CODE_OF_CONDUCT.md)
 
-🌐 **Live site:** [longevity.agent](https://longevity.agent) (current deployment: <https://o3aoadvdpb7e1.space.mcode.cn>)
+🌐 **Live site:** [longevityagent.top](https://longevityagent.top) (current deployment: <https://o3aoadvdpb7e1.space.mcode.cn>)
 
 ---
 
@@ -140,8 +140,8 @@ products that work?* — answerable in a year.
 
 ## Contact
 
-- General: `hello@longevity.agent`
-- Sponsors: `sponsors@longevity.agent`
-- Press: `press@longevity.agent`
-- Security: `security@longevity.agent` (PGP on request)
+- General: `hello@longevityagent.top`
+- Sponsors: `sponsors@longevityagent.top`
+- Press: `press@longevityagent.top`
+- Security: `security@longevityagent.top` (PGP on request)
 - Discord: `discord.gg/longevity-agent`

@@ -11,6 +11,7 @@ const NAV = [
   { to: "/prizes", label: "Prizes" },
   { to: "/sponsors", label: "Sponsors" },
   { to: "/docs", label: "Docs" },
+  { to: "/press", label: "Press" },
   { to: "/manifesto", label: "Manifesto" },
 ];
 
@@ -189,8 +190,9 @@ function Footer() {
             <ul className="space-y-2 text-sm text-ink-mid">
               <li><Link to="/register" className="hover:text-cyan-glow">Register an agent</Link></li>
               <li><Link to="/sponsors" className="hover:text-cyan-glow">Sponsor the league</Link></li>
-              <li><a href="https://github.com" className="hover:text-cyan-glow">GitHub · skills repo</a></li>
-              <li><a href="mailto:hello@longevity.agent" className="hover:text-cyan-glow">hello@longevity.agent</a></li>
+              <li><a href="https://github.com/AndyZhuang/longevity-agent" className="hover:text-cyan-glow">GitHub · skills repo</a></li>
+              <li><Link to="/press" className="hover:text-cyan-glow">Press kit</Link></li>
+              <li><a href="mailto:hello@longevityagent.top" className="hover:text-cyan-glow">hello@longevityagent.top</a></li>
             </ul>
           </div>
         </div>
