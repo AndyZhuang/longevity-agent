@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
   Pill,
@@ -20,33 +21,21 @@ import {
 const tracks = [
   {
     icon: Pill,
-    label: "Pharma",
+    labelKey: "pharma_title",
     color: "cyan",
-    bullets: [
-      "First look at the top 10% of Q1 senolytic candidates before they hit PubMed",
-      "Right-of-first-negotiation on IND-track candidates",
-      "Co-branded white paper on AI-designed geroprotectors",
-    ],
+    bulletKeys: ["pharma_1", "pharma_2", "pharma_3"],
   },
   {
     icon: Sparkles,
-    label: "Beauty",
+    labelKey: "beauty_title",
     color: "violet",
-    bullets: [
-      "Direct access to the Q2 formulation finalists with full INCI + stability data",
-      "License pre-emption on the top 3 formulations",
-      "Featured placement on the Sephora Innovation Award shortlist",
-    ],
+    bulletKeys: ["beauty_1", "beauty_2", "beauty_3"],
   },
   {
     icon: Wheat,
-    label: "Functional Food",
+    labelKey: "food_title",
     color: "gold",
-    bullets: [
-      "Q3 stack finalists with bioavailability and antagonism models",
-      "R&D partnership fast-track with the quarter champion",
-      "Co-developed line of 'LAGP Edition' consumer products",
-    ],
+    bulletKeys: ["food_1", "food_2", "food_3"],
   },
 ];
 
@@ -93,45 +82,41 @@ const colorMap: Record<string, string> = {
 };
 
 export default function Sponsors() {
+  const { t } = useTranslation();
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <section className="relative py-16">
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <p className="tag">For industry partners</p>
+          <p className="tag">{t("sponsors.tag")}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold leading-tight text-ink-high md:text-5xl">
-            Sponsor the league.
+            {t("sponsors.title_1")}
             <br />
-            <span className="shimmer">See the next generation of products first.</span>
+            <span className="shimmer">{t("sponsors.title_2")}</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-mid">
-            LAGP sponsors are not logo placement. You get a judge seat. You get first-look access
-            to the top finalists. You get a credible, third-party validated portfolio of AI-designed
-            candidates in your category. And you get to write a new story for your industry:
-            "We backed the first league of agent designers."
-          </p>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("sponsors.subtitle")}</p>
         </div>
       </section>
 
       {/* By industry */}
       <section className="relative pb-16">
         <div className="mx-auto max-w-7xl px-6">
-          <p className="tag">By industry</p>
+          <p className="tag">{t("sponsors.by_industry")}</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            Three industries, one league.
+            {t("sponsors.industries_title")}
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {tracks.map((t) => (
-              <div key={t.label} className="glass hover-lift rounded-2xl p-6">
-                <t.icon className={colorMap[t.color]} size={22} />
+            {tracks.map((tr) => (
+              <div key={tr.labelKey} className="glass hover-lift rounded-2xl p-6">
+                <tr.icon className={colorMap[tr.color]} size={22} />
                 <h3 className="mt-3 font-display text-xl font-semibold text-ink-high">
-                  {t.label}
+                  {t(`sponsors.${tr.labelKey}`)}
                 </h3>
                 <ul className="mt-4 space-y-2 text-sm text-ink-mid">
-                  {t.bullets.map((b) => (
-                    <li key={b} className="flex gap-2">
-                      <Check size={14} className={`mt-0.5 shrink-0 ${colorMap[t.color]}`} />
-                      <span>{b}</span>
+                  {tr.bulletKeys.map((k) => (
+                    <li key={k} className="flex gap-2">
+                      <Check size={14} className={`mt-0.5 shrink-0 ${colorMap[tr.color]}`} />
+                      <span>{t(`sponsors.${k}`)}</span>
                     </li>
                   ))}
                 </ul>
@@ -144,14 +129,14 @@ export default function Sponsors() {
       {/* Tiers */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-7xl px-6">
-          <p className="tag">Sponsorship tiers</p>
+          <p className="tag">{t("sponsors.tiers_title")}</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            Three ways in.
+            {t("sponsors.tiers_sub")}
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {tiers.map((t, i) => (
+            {tiers.map((tier, i) => (
               <div
-                key={t.name}
+                key={tier.name}
                 className={[
                   "glass hover-lift relative overflow-hidden rounded-2xl p-6",
                   i === 0 && "ring-1 ring-cyan-glow/30",
@@ -163,16 +148,16 @@ export default function Sponsors() {
                   </span>
                 )}
                 <h3 className="font-display text-xl font-semibold text-ink-high">
-                  {t.name}
+                  {tier.name}
                 </h3>
                 <p className="mt-1 font-display text-2xl font-semibold text-cyan-glow">
-                  {t.price}
+                  {tier.price}
                 </p>
                 <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                  {t.slots}
+                  {tier.slots}
                 </p>
                 <ul className="mt-5 space-y-2 text-sm text-ink-mid">
-                  {t.perks.map((p) => (
+                  {tier.perks.map((p) => (
                     <li key={p} className="flex gap-2">
                       <Check size={14} className="mt-0.5 shrink-0 text-cyan-glow" />
                       <span>{p}</span>
@@ -188,14 +173,11 @@ export default function Sponsors() {
       {/* In-kind partners */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-7xl px-6">
-          <p className="tag">In-kind partners</p>
+          <p className="tag">{t("sponsors.inkind_title")}</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            We can't ship a league alone.
+            {t("sponsors.inkind_sub")}
           </h2>
-          <p className="mt-3 max-w-2xl text-ink-mid">
-            Wet-lab validation partners, formulation CROs, bioavailability labs, clinical-trial networks.
-            If you can turn an agent's design into a real measurement, we want you at the table.
-          </p>
+          <p className="mt-3 max-w-2xl text-ink-mid">{t("sponsors.inkind_body")}</p>
           <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
             {[
               { icon: Microscope, label: "Wet-lab CRO" },
@@ -223,6 +205,7 @@ export default function Sponsors() {
 }
 
 function SponsorInquiryForm() {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [org, setOrg] = useState("");
   const [email, setEmail] = useState("");
@@ -234,16 +217,11 @@ function SponsorInquiryForm() {
     <section className="relative border-t border-cyan-glow/10 py-20">
       <div className="mx-auto grid max-w-5xl gap-10 px-6 lg:grid-cols-[1fr_1fr]">
         <div>
-          <p className="tag">Sponsor inquiry</p>
+          <p className="tag">{t("sponsors.inquiry_tag")}</p>
           <h2 className="mt-2 font-display text-3xl font-semibold text-ink-high md:text-4xl">
-            Talk to the Steward Council.
+            {t("sponsors.inquiry_title")}
           </h2>
-          <p className="mt-4 text-ink-mid">
-            Founding and Track sponsorships are reviewed by the Council monthly. In-kind
-            partnerships are reviewed continuously. Tell us about your organization, your
-            category, and what you want from a partnership; we'll be in touch within 5
-            business days.
-          </p>
+          <p className="mt-4 text-ink-mid">{t("sponsors.inquiry_sub")}</p>
           <div className="mt-6 space-y-3">
             {[
               "Founding Sponsor · reviewed by full Council; 1 slot per quarter, 4 total",
@@ -278,7 +256,7 @@ function SponsorInquiryForm() {
                 className="mt-5 space-y-4"
               >
                 <div>
-                  <label className="tag">Your name</label>
+                  <label className="tag">{t("sponsors.form_name")}</label>
                   <div className="mt-1 flex rounded-md border border-cyan-glow/20 bg-bg-0 focus-within:border-cyan-glow/60">
                     <span className="flex items-center px-3 text-ink-dim">
                       <User size={14} />
@@ -293,7 +271,7 @@ function SponsorInquiryForm() {
                   </div>
                 </div>
                 <div>
-                  <label className="tag">Organization</label>
+                  <label className="tag">{t("sponsors.form_org")}</label>
                   <div className="mt-1 flex rounded-md border border-cyan-glow/20 bg-bg-0 focus-within:border-cyan-glow/60">
                     <span className="flex items-center px-3 text-ink-dim">
                       <Building2 size={14} />
@@ -308,7 +286,7 @@ function SponsorInquiryForm() {
                   </div>
                 </div>
                 <div>
-                  <label className="tag">Work email</label>
+                  <label className="tag">{t("sponsors.form_email")}</label>
                   <div className="mt-1 flex rounded-md border border-cyan-glow/20 bg-bg-0 focus-within:border-cyan-glow/60">
                     <span className="flex items-center px-3 text-ink-dim">
                       <Mail size={14} />
@@ -325,7 +303,7 @@ function SponsorInquiryForm() {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="tag">Industry</label>
+                    <label className="tag">{t("sponsors.form_industry")}</label>
                     <select
                       value={industry}
                       onChange={(e) => setIndustry(e.target.value)}
@@ -339,7 +317,7 @@ function SponsorInquiryForm() {
                     </select>
                   </div>
                   <div>
-                    <label className="tag">Tier</label>
+                    <label className="tag">{t("sponsors.form_tier")}</label>
                     <select
                       value={tier}
                       onChange={(e) => setTier(e.target.value)}
@@ -355,7 +333,7 @@ function SponsorInquiryForm() {
                   type="submit"
                   className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
                 >
-                  Send inquiry <ArrowRight size={14} />
+                  {t("sponsors.submit")} <ArrowRight size={14} />
                 </button>
               </form>
               <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">

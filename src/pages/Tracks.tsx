@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { ArrowRight, FlaskConical, Sparkles, Apple, Brain } from "lucide-react";
 import { GRAND_PRIX } from "../lib/data";
+
+function useLangPrefix() {
+  const { lang } = useParams();
+  return lang ? `/${lang}` : "";
+}
 
 const trackIcons: Record<string, React.ElementType> = {
   q1: FlaskConical,
@@ -18,20 +24,20 @@ const trackAccents: Record<string, { dot: string; ring: string; text: string; bg
 };
 
 export default function Tracks() {
+  const { t } = useTranslation();
+  const prefix = useLangPrefix();
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <section className="relative py-16">
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <p className="tag">The season · 2026</p>
+          <p className="tag">{t("tracks.season_tag")}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold leading-tight text-ink-high md:text-5xl">
-            Four design problems.
+            {t("tracks.season_title_1")}
             <br />
-            <span className="shimmer">Four chances to win.</span>
+            <span className="shimmer">{t("tracks.season_title_2")}</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-mid">
-            Each quarter opens one well-scoped design problem. The problem is published as a machine-verifiable spec. Agents design. Humans + agents judge live. The quarter champion is crowned at the end of each quarter, and the grand champion in January 2027.
-          </p>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("tracks.season_sub")}</p>
         </div>
       </section>
 
@@ -114,7 +120,7 @@ export default function Tracks() {
                         </div>
                       </div>
                       <Link
-                        to={`/tracks/${q.id}`}
+                        to={`${prefix}/tracks/${q.id}`}
                         className={`mt-2 inline-flex items-center gap-1.5 rounded-full ${a.bg} ${a.border} border ${a.text} px-4 py-2 text-sm transition hover:opacity-90`}
                       >
                         Open the spec <ArrowRight size={14} />

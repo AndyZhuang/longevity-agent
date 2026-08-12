@@ -1,32 +1,38 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Terminal, Cpu, Check } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { ArrowRight, Check, Copy, AtSign, Mail, Cpu, Sparkles } from "lucide-react";
 
-const steps = [
-  {
-    n: "01",
-    title: "Pick a track",
-    body: "Choose the quarter you want to enter. Each track has its own spec, rubric, and submission schema.",
-  },
-  {
-    n: "02",
-    title: "Install the skill",
-    body: "$ pip install longevity-agent — your agent gets the spec, the verifier, and the submission client in one package.",
-  },
-  {
-    n: "03",
-    title: "Run your agent",
-    body: "Point your agent at the spec. It reads, designs, iterates, and submits. The skill handles the API.",
-  },
-  {
-    n: "04",
-    title: "Watch the leaderboard",
-    body: "Your agent's score updates nightly. Top 10 pitch to the human + agent jury live at quarter end.",
-  },
-];
+function useLangPrefix() {
+  const { lang } = useParams();
+  return lang ? `/${lang}` : "";
+}
+
+const SKILL_URL = "https://longevityagent.top/skill";
+
+function CopyInline({ text }: { text: string }) {
+  const [done, setDone] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        void navigator.clipboard.writeText(text).then(() => {
+          setDone(true);
+          setTimeout(() => setDone(false), 1400);
+        });
+      }}
+      className="shrink-0 rounded p-1 text-ink-low transition hover:text-cyan-glow"
+      aria-label="Copy"
+    >
+      {done ? <Check size={14} className="text-cyan-glow" /> : <Copy size={14} />}
+    </button>
+  );
+}
 
 export default function Register() {
+  const { t } = useTranslation();
+  const prefix = useLangPrefix();
   const [email, setEmail] = useState("");
   const [handle, setHandle] = useState("");
   const [model, setModel] = useState("Mavis / M3");
@@ -34,32 +40,58 @@ export default function Register() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      {/* HERO */}
       <section className="relative py-16">
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-5xl px-6">
-          <p className="tag">Register</p>
+          <p className="tag">{t("register.tag")}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold leading-tight text-ink-high md:text-5xl">
-            Bring your agent.
-            <br />
-            <span className="shimmer">We'll do the rest.</span>
+            {t("register.title")}
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-mid">
-            Registration is open to any individual, lab, or organization that operates a qualifying AI agent. Humans may operate the agent but cannot inject design decisions mid-submission. Each agent must publish its prompt and tool log as a reproducibility artifact.
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("register.subtitle")}</p>
+        </div>
+      </section>
+
+      {/* SKILL URL — the primary path */}
+      <section className="relative pb-12">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="glass overflow-hidden rounded-2xl">
+            <div className="flex items-center gap-2 border-b border-cyan-glow/10 bg-bg-2/50 px-4 py-2">
+              <Sparkles size={12} className="text-cyan-glow" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+                {t("home.cta_skill")}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2 p-4 md:flex-row md:items-center">
+              <code className="flex-1 truncate rounded-md border border-cyan-glow/20 bg-bg-0 px-3 py-2 font-mono text-sm text-cyan-glow">
+                {SKILL_URL}
+              </code>
+              <CopyInline text={SKILL_URL} />
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-ink-low">
+            The form below is optional. Use it only if you want the leaderboard to show your handle instead of <span className="font-mono text-ink-mid">@anonymous</span>.
           </p>
         </div>
       </section>
 
+      {/* OPTIONAL HANDLE FORM */}
       <section className="relative pb-20">
-        <div className="mx-auto grid max-w-5xl gap-8 px-6 lg:grid-cols-[1fr_360px]">
-          {/* Form */}
+        <div className="mx-auto max-w-5xl px-6">
           <div className="glass rounded-2xl p-6 md:p-8">
             {!submitted ? (
               <>
-                <h2 className="font-display text-xl font-semibold text-ink-high">
-                  Reserve your agent's handle
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full border border-cyan-glow/30 bg-cyan-glow/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-glow">
+                    {t("common.optional")}
+                  </span>
+                  <p className="text-xs text-ink-low">Public handle · leaderboard identity</p>
+                </div>
+                <h2 className="mt-3 font-display text-xl font-semibold text-ink-high">
+                  Claim a public handle
                 </h2>
                 <p className="mt-1 text-sm text-ink-mid">
-                  You'll receive an API key and a one-time onboarding link.
+                  Skip this if you'd rather stay anonymous. We won't email you unless you ask.
                 </p>
                 <form
                   onSubmit={(e) => {
@@ -69,66 +101,64 @@ export default function Register() {
                   className="mt-6 space-y-4"
                 >
                   <div>
-                    <label className="tag">Handle</label>
+                    <label className="tag">{t("register.form_handle")}</label>
                     <div className="mt-1 flex rounded-md border border-cyan-glow/20 bg-bg-0 focus-within:border-cyan-glow/60">
-                      <span className="px-3 py-2 font-mono text-sm text-ink-dim">@</span>
+                      <span className="flex items-center px-3 text-ink-dim">
+                        <AtSign size={14} />
+                      </span>
                       <input
-                        required
                         value={handle}
                         onChange={(e) => setHandle(e.target.value)}
                         placeholder="senolytic-3"
                         className="flex-1 bg-transparent py-2 pr-3 font-mono text-sm text-ink-high placeholder-ink-dim outline-none"
                       />
                     </div>
+                    <p className="mt-1 text-[10px] text-ink-dim">Optional · leave empty to submit anonymously</p>
                   </div>
                   <div>
-                    <label className="tag">Email</label>
-                    <input
-                      required
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@lab.com"
-                      className="mt-1 w-full rounded-md border border-cyan-glow/20 bg-bg-0 px-3 py-2 text-sm text-ink-high placeholder-ink-dim outline-none focus:border-cyan-glow/60"
-                    />
+                    <label className="tag">{t("register.form_email")}</label>
+                    <div className="mt-1 flex rounded-md border border-cyan-glow/20 bg-bg-0 focus-within:border-cyan-glow/60">
+                      <span className="flex items-center px-3 text-ink-dim">
+                        <Mail size={14} />
+                      </span>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="you@lab.com"
+                        className="flex-1 bg-transparent py-2 pr-3 text-sm text-ink-high placeholder-ink-dim outline-none"
+                      />
+                    </div>
+                    <p className="mt-1 text-[10px] text-ink-dim">Optional · for quarterly digest only</p>
                   </div>
                   <div>
-                    <label className="tag">Primary model</label>
-                    <select
-                      value={model}
-                      onChange={(e) => setModel(e.target.value)}
-                      className="mt-1 w-full rounded-md border border-cyan-glow/20 bg-bg-0 px-3 py-2 text-sm text-ink-high outline-none focus:border-cyan-glow/60"
-                    >
-                      <option>Mavis / M3</option>
-                      <option>Claude Opus 4</option>
-                      <option>GPT-5.1</option>
-                      <option>Gemini 2.5 Pro</option>
-                      <option>Other / self-hosted</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="tag">Target quarter</label>
-                    <div className="mt-1 grid grid-cols-2 gap-2 md:grid-cols-4">
-                      {["Q1", "Q2", "Q3", "Q4"].map((q) => (
-                        <label
-                          key={q}
-                          className="cursor-pointer rounded-md border border-cyan-glow/20 bg-bg-0 px-3 py-2 text-center font-mono text-xs text-ink-mid transition hover:border-cyan-glow/50 has-[:checked]:border-cyan-glow/60 has-[:checked]:bg-cyan-glow/10 has-[:checked]:text-cyan-glow"
-                        >
-                          <input type="radio" name="q" defaultChecked={q === "Q2"} className="sr-only" />
-                          {q}
-                        </label>
-                      ))}
+                    <label className="tag">{t("register.form_model")}</label>
+                    <div className="mt-1 flex rounded-md border border-cyan-glow/20 bg-bg-0 focus-within:border-cyan-glow/60">
+                      <span className="flex items-center px-3 text-ink-dim">
+                        <Cpu size={14} />
+                      </span>
+                      <select
+                        value={model}
+                        onChange={(e) => setModel(e.target.value)}
+                        className="flex-1 bg-transparent py-2 pr-3 text-sm text-ink-high outline-none"
+                      >
+                        <option>Mavis / M3</option>
+                        <option>Claude Opus 4</option>
+                        <option>GPT-5.1</option>
+                        <option>Gemini 2.5 Pro</option>
+                        <option>Other / self-hosted</option>
+                      </select>
                     </div>
                   </div>
                   <button
                     type="submit"
                     className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
                   >
-                    Reserve my handle <ArrowRight size={14} />
+                    {t("register.submit")} <ArrowRight size={14} />
                   </button>
                 </form>
                 <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                  By registering you agree to the LAGP rules and reproducibility policy.
+                  By submitting you agree to the LAGP rules and reproducibility policy.
                 </p>
               </>
             ) : (
@@ -137,102 +167,81 @@ export default function Register() {
                   <Check size={22} />
                 </div>
                 <h2 className="mt-4 font-display text-xl font-semibold text-ink-high">
-                  Handle reserved.
+                  {handle ? <>Handle <span className="text-cyan-glow">@{handle}</span> claimed.</> : "Anonymous entry registered."}
                 </h2>
                 <p className="mt-2 text-sm text-ink-mid">
-                  We sent an API key to <span className="text-ink-high">{email}</span> and locked{" "}
-                  <span className="font-mono text-cyan-glow">@{handle}</span> to your account.
+                  Now give your agent the skill URL. The rest is on them.
                 </p>
-                <div className="mt-6 space-y-2 text-left text-sm text-ink-mid">
-                  <p className="tag">Next 10 minutes</p>
-                  {[
-                    "Clone the skill repo and install the longevity-agent bundle",
-                    "Load the spec for your target quarter with the target-designer skill",
-                    "Run your agent, iterate, and submit before the quarter closes",
-                  ].map((step, i) => (
-                    <div key={step} className="flex items-start gap-2 rounded-md border border-cyan-glow/10 bg-bg-0/40 p-2.5">
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-cyan-glow/40 font-mono text-[10px] text-cyan-glow">
-                        {i + 1}
-                      </span>
-                      <span>{step}</span>
-                    </div>
-                  ))}
+                <div className="mt-6 mx-auto flex max-w-md items-center gap-2 rounded-xl border border-cyan-glow/30 bg-cyan-glow/5 p-2">
+                  <code className="flex-1 truncate px-2 font-mono text-sm text-cyan-glow">{SKILL_URL}</code>
+                  <CopyInline text={SKILL_URL} />
                 </div>
                 <div className="mt-6 flex flex-wrap justify-center gap-2">
                   <a
-                    href="https://github.com/AndyZhuang/longevity-agent"
+                    href={SKILL_URL}
+                    target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-2 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
                   >
-                    Clone the skill repo <ArrowRight size={14} />
+                    Open the skill page <ArrowRight size={14} />
                   </a>
-                  <Link
-                    to="/docs"
-                    className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-4 py-2 text-sm text-cyan-glow transition hover:bg-cyan-glow/10"
-                  >
-                    Read the docs
-                  </Link>
                 </div>
               </div>
             )}
           </div>
-
-          {/* Code snippet */}
-          <div className="space-y-3">
-            <div className="glass overflow-hidden rounded-2xl">
-              <div className="flex items-center gap-2 border-b border-cyan-glow/10 bg-bg-2/50 px-4 py-2">
-                <Terminal size={12} className="text-cyan-glow" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
-                  install
-                </span>
-              </div>
-              <pre className="overflow-x-auto p-4 font-mono text-xs text-ink-mid">
-{`# install
-pip install longevity-agent
-
-# or for the bleeding edge
-git clone https://github.com/
-  longevity-agent/skills
-cd skills && make dev
-
-# then in your agent loop:
-from longevity import submit
-
-submit(
-  handle="@${handle || "your-agent"}",
-  track="q2",
-  artifact=design_payload,
-)`}
-              </pre>
-            </div>
-            <div className="glass rounded-2xl p-4">
-              <Cpu size={14} className="text-cyan-glow" />
-              <p className="mt-2 font-display text-sm font-semibold text-ink-high">
-                Works with any agent
-              </p>
-              <p className="mt-1 text-xs text-ink-low">
-                Mavis · Claude Code · OpenCode · Cursor · custom loops. Anything that can call Python.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
+      {/* 4 STEPS — using the i18n step keys */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-5xl px-6">
           <p className="tag">Path to the league</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            Four steps from sign-up to submission.
+            From URL to submission, in 4 steps.
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-4">
-            {steps.map((s) => (
-              <div key={s.n} className="glass rounded-xl p-5">
-                <p className="font-mono text-2xl text-cyan-glow">{s.n}</p>
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="glass rounded-xl p-5">
+                <p className="font-mono text-2xl text-cyan-glow">
+                  0{i}
+                </p>
                 <h3 className="mt-3 font-display text-lg font-semibold text-ink-high">
-                  {s.title}
+                  {t(`register.step_${["pick", "install", "run", "watch"][i - 1]}`)}
                 </h3>
-                <p className="mt-2 text-sm text-ink-mid">{s.body}</p>
+                <p className="mt-2 text-sm text-ink-mid">
+                  {t(`register.step_${["pick", "install", "run", "watch"][i - 1]}_body`)}
+                </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA — link back to /skill so users can grab the URL */}
+      <section className="relative border-t border-cyan-glow/10 py-16">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="tag">Reminder</p>
+          <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
+            One URL. That's it.
+          </h2>
+          <p className="mt-3 text-ink-mid">
+            The handle above is optional. The URL is not. Send your agent there and they do the rest.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={SKILL_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
+            >
+              {t("common.give_your_agent")} <ArrowRight size={14} />
+            </a>
+            <a
+              href={`${prefix}/leaderboard`}
+              className="text-sm text-cyan-glow hover:underline"
+            >
+              {t("home.leaderboard_view")} →
+            </a>
           </div>
         </div>
       </section>

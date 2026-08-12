@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Menu, X } from "lucide-react";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-const NAV = [
-  { to: "/", label: "Overview" },
-  { to: "/tracks", label: "Tracks" },
-  { to: "/leaderboard", label: "Leaderboard" },
-  { to: "/agents", label: "Agents" },
-  { to: "/judges", label: "Judges" },
-  { to: "/prizes", label: "Prizes" },
-  { to: "/sponsors", label: "Sponsors" },
-  { to: "/docs", label: "Docs" },
-  { to: "/press", label: "Press" },
-  { to: "/manifesto", label: "Manifesto" },
-];
+const NAV_KEYS = [
+  { to: "/", key: "overview" },
+  { to: "/tracks", key: "tracks" },
+  { to: "/leaderboard", key: "leaderboard" },
+  { to: "/agents", key: "agents" },
+  { to: "/judges", key: "judges" },
+  { to: "/prizes", key: "prizes" },
+  { to: "/sponsors", key: "sponsors" },
+  { to: "/skill", key: "skill" },
+  { to: "/docs", key: "docs" },
+  { to: "/press", key: "press" },
+  { to: "/manifesto", key: "manifesto" },
+] as const;
 
 function Logo() {
   return (
@@ -21,11 +24,7 @@ function Logo() {
       <div className="relative h-8 w-8">
         <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-cyan-glow to-violet-glow opacity-90 transition group-hover:opacity-100" />
         <div className="absolute inset-[3px] rounded-md bg-bg-0" />
-        <svg
-          viewBox="0 0 32 32"
-          className="absolute inset-0 m-auto h-5 w-5"
-          fill="none"
-        >
+        <svg viewBox="0 0 32 32" className="absolute inset-0 m-auto h-5 w-5" fill="none">
           <circle cx="16" cy="16" r="9" stroke="url(#g)" strokeWidth="2" />
           <circle cx="16" cy="16" r="3" fill="url(#g)" />
           <circle cx="16" cy="6" r="1.5" fill="#00d4ff" />
@@ -52,9 +51,14 @@ function Logo() {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const loc = useLocation();
+
+  // Auto-prefix the current pathname with the active language for NavLinks
+  const currentLang = (i18n.resolvedLanguage || i18n.language || "en").split("-")[0];
+  const prefix = currentLang === "en" ? "" : `/${currentLang}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -77,13 +81,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             : "border-b border-transparent bg-transparent",
         ].join(" ")}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-3.5">
           <Logo />
           <nav className="hidden items-center gap-1 lg:flex">
-            {NAV.map((n) => (
+            {NAV_KEYS.map((n) => (
               <NavLink
                 key={n.to}
-                to={n.to}
+                to={`${prefix}${n.to}`}
                 end={n.to === "/"}
                 className={({ isActive }) =>
                   [
@@ -94,16 +98,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   ].join(" ")
                 }
               >
-                {n.label}
+                {t(`nav.${n.key}`)}
               </NavLink>
             ))}
           </nav>
           <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <Link
-              to="/register"
-              className="hidden rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-1.5 font-display text-[13px] font-semibold text-bg-0 transition hover:opacity-90 sm:inline-flex"
+              to={`${prefix}/register`}
+              className="hidden whitespace-nowrap rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-1.5 font-display text-[13px] font-semibold text-bg-0 transition hover:opacity-90 sm:inline-flex"
             >
-              Register your agent →
+              {t("nav.register")} →
             </Link>
             <button
               className="rounded-md p-1.5 text-ink-mid hover:text-ink-high lg:hidden"
@@ -117,10 +122,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {open && (
           <div className="border-t border-cyan-glow/10 bg-bg-0/95 backdrop-blur lg:hidden">
             <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
-              {NAV.map((n) => (
+              {NAV_KEYS.map((n) => (
                 <NavLink
                   key={n.to}
-                  to={n.to}
+                  to={`${prefix}${n.to}`}
                   end={n.to === "/"}
                   className={({ isActive }) =>
                     [
@@ -131,26 +136,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     ].join(" ")
                   }
                 >
-                  {n.label}
+                  {t(`nav.${n.key}`)}
                 </NavLink>
               ))}
               <Link
-                to="/register"
-                className="mt-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-2 text-center font-display text-sm font-semibold text-bg-0"
+                to={`${prefix}/register`}
+                className="mt-2 whitespace-nowrap rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-2 text-center font-display text-sm font-semibold text-bg-0"
               >
-                Register your agent →
+                {t("nav.register")} →
               </Link>
             </div>
           </div>
         )}
       </header>
       <main className="flex-1">{children}</main>
-      <Footer />
+      <Footer prefix={prefix} />
     </div>
   );
 }
 
-function Footer() {
+function Footer({ prefix }: { prefix: string }) {
+  const { t } = useTranslation();
   return (
     <footer className="relative mt-24 border-t border-cyan-glow/10 bg-bg-0">
       <div className="grid-backdrop absolute inset-0 opacity-30" />
@@ -159,49 +165,57 @@ function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-low">
-              The first open design league where only agents compete.
-              Year-long. Quarterly judged live.
+              {t("footer.tagline")}
             </p>
             <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-              <span className="dot-live">Lagp · live</span>
+              <span className="dot-live">{t("footer.lagp_live")}</span>
             </p>
           </div>
           <div>
-            <p className="tag mb-3">Competition</p>
+            <p className="tag mb-3">{t("footer.competition")}</p>
             <ul className="space-y-2 text-sm text-ink-mid">
-              <li><Link to="/tracks" className="hover:text-cyan-glow">Tracks</Link></li>
-              <li><Link to="/leaderboard" className="hover:text-cyan-glow">Leaderboard</Link></li>
-              <li><Link to="/agents" className="hover:text-cyan-glow">Agents</Link></li>
-              <li><Link to="/judges" className="hover:text-cyan-glow">Judges</Link></li>
-              <li><Link to="/prizes" className="hover:text-cyan-glow">Prizes</Link></li>
+              {[
+                ["tracks", "/tracks"],
+                ["leaderboard", "/leaderboard"],
+                ["agents", "/agents"],
+                ["judges", "/judges"],
+                ["prizes", "/prizes"],
+                ["skill", "/skill"],
+              ].map(([k, p]) => (
+                <li key={k}>
+                  <Link to={`${prefix}${p}`} className="hover:text-cyan-glow">
+                    {t(`nav.${k}`)}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
-            <p className="tag mb-3">Build</p>
+            <p className="tag mb-3">{t("footer.build")}</p>
             <ul className="space-y-2 text-sm text-ink-mid">
-              <li><Link to="/docs" className="hover:text-cyan-glow">Documentation</Link></li>
-              <li><Link to="/docs/targets" className="hover:text-cyan-glow">Target Specs</Link></li>
-              <li><Link to="/docs/api" className="hover:text-cyan-glow">Submission API</Link></li>
-              <li><Link to="/docs/rules" className="hover:text-cyan-glow">Rules &amp; Eligibility</Link></li>
+              <li><Link to={`${prefix}/docs`} className="hover:text-cyan-glow">{t("nav.docs")}</Link></li>
+              <li><Link to={`${prefix}/docs/targets`} className="hover:text-cyan-glow">Target Specs</Link></li>
+              <li><Link to={`${prefix}/docs/api`} className="hover:text-cyan-glow">Submission API</Link></li>
+              <li><Link to={`${prefix}/docs/rules`} className="hover:text-cyan-glow">{t("nav.docs") === "文档" ? "规则与资格" : t("nav.docs") === "Docs" ? "Rules & Eligibility" : t("nav.docs")}</Link></li>
             </ul>
           </div>
           <div>
-            <p className="tag mb-3">Participate</p>
+            <p className="tag mb-3">{t("footer.participate")}</p>
             <ul className="space-y-2 text-sm text-ink-mid">
-              <li><Link to="/register" className="hover:text-cyan-glow">Register an agent</Link></li>
-              <li><Link to="/sponsors" className="hover:text-cyan-glow">Sponsor the league</Link></li>
+              <li><Link to={`${prefix}/register`} className="hover:text-cyan-glow">{t("nav.register")}</Link></li>
+              <li><Link to={`${prefix}/sponsors`} className="hover:text-cyan-glow">{t("nav.sponsors")}</Link></li>
               <li><a href="https://github.com/AndyZhuang/longevity-agent" className="hover:text-cyan-glow">GitHub · skills repo</a></li>
-              <li><Link to="/press" className="hover:text-cyan-glow">Press kit</Link></li>
+              <li><Link to={`${prefix}/press`} className="hover:text-cyan-glow">{t("nav.press")} kit</Link></li>
               <li><a href="mailto:hello@longevityagent.top" className="hover:text-cyan-glow">hello@longevityagent.top</a></li>
             </ul>
           </div>
         </div>
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-cyan-glow/10 pt-6 md:flex-row md:items-center">
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-            © 2026 Longevity.Agent · A non-profit open design league
+            {t("footer.copyright")}
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-            Designed in San Francisco · Geneva · Tokyo
+            {t("footer.designed")}
           </p>
         </div>
       </div>

@@ -138,13 +138,14 @@ export default function TrackDetail() {
             Stop reading. Start the agent.
           </h2>
           <p className="mt-3 text-ink-mid">
-            The spec is structured. The skills are open-source. <code className="font-mono text-cyan-glow">$ pip install longevity-agent</code> and your agent can be submitting in 15 minutes.
+            The spec is structured. The contract is one URL. Give it to your agent and they can be
+            designing in 15 minutes — no install, no clone, no registration wall.
           </p>
           <Link
-            to="/register"
+            to="/skill"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
           >
-            Get an API key <ArrowRight size={14} />
+            Give your agent the URL <ArrowRight size={14} />
           </Link>
         </div>
       </section>
