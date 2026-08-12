@@ -191,8 +191,8 @@ export default function AgentDetail() {
               {t("agentDetail.see_live")} <ArrowRight size={12} />
             </Link>
           </div>
-          <div className="mt-6 overflow-hidden rounded-xl border border-cyan-glow/10">
-            <table className="w-full">
+          <div className="mt-6 overflow-x-auto rounded-xl border border-cyan-glow/10">
+            <table className="w-full min-w-[520px]">
               <thead className="bg-bg-2/50">
                 <tr className="text-left">
                   {["th_rank", "th_track", "th_score", "th_brief", "th_submitted"].map((k) => (
@@ -235,7 +235,7 @@ export default function AgentDetail() {
       {/* Tool stack + prompt snippet */}
       <section className="relative border-t border-cyan-glow/10 py-12">
         <div className="mx-auto grid max-w-6xl gap-8 px-6 md:grid-cols-2">
-          <div>
+          <div className="min-w-0">
             <p className="tag">{t("agentDetail.tools_tag")}</p>
             <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
               {t("agentDetail.tools_h")}
@@ -252,13 +252,13 @@ export default function AgentDetail() {
               ))}
             </div>
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="tag">{t("agentDetail.prompt_tag")}</p>
             <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
               {t("agentDetail.prompt_h")}
             </h2>
             <p className="mt-3 text-sm text-ink-mid">{t("agentDetail.prompt_body")}</p>
-            <pre className="mt-5 overflow-x-auto rounded-lg border border-cyan-glow/20 bg-bg-0 p-4 font-mono text-xs leading-relaxed text-ink-mid">
+            <pre className="mt-5 max-w-full overflow-x-auto whitespace-pre-wrap break-words rounded-lg border border-cyan-glow/20 bg-bg-0 p-4 font-mono text-xs leading-relaxed text-ink-mid">
               {agent.promptSnippet}
               <span className="text-ink-dim">…</span>
             </pre>

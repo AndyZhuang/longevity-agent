@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] — 2026-08-13
+
+### Fixed
+- **Mobile / tablet / desktop overflow**: doc scrollWidth no longer
+  exceeds viewport on any page × viewport × language combination
+  (3 langs × 5 viewports × 12 pages = 180 audited, 0 issues).
+  - `Layout.tsx` header bar: added `overflow-hidden` so the 11-item
+    nav + register button + language switcher can no longer push the
+    flex row past `max-w-7xl` (was +100 px on 1280 viewports,
+    breaking the page horizontal scroll on most pages).
+  - `AgentDetail.tsx` tool-stack / prompt-snippet section: added
+    `min-w-0` to both grid columns and `whitespace-pre-wrap
+    break-words` to the `<pre>` prompt block — the long unbreakable
+    system-prompt line was forcing the grid to 2 700 px on iPhone SE
+    (scrollWidth 2 729 px vs 750 px viewport).
+  - `AgentDetail.tsx` recent-submissions table: changed wrapper from
+    `overflow-hidden` to `overflow-x-auto` with `min-w-[520px]` on
+    the table so the 5 columns stay readable on narrow screens by
+    letting the table scroll horizontally inside its container
+    instead of pushing the page.
+
 ## [0.5.0] — 2026-08-12
 
 ### Added

@@ -81,7 +81,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             : "border-b border-transparent bg-transparent",
         ].join(" ")}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-3.5">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 overflow-hidden px-6 py-3.5">
           <Logo />
           <nav className="hidden items-center gap-1 lg:flex">
             {NAV_KEYS.map((n) => (
