@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-08-12
+
+### Added
+- **New i18n keys (≈200)** across all 5 locales for: track titles/themes/
+  objectives/deliverables/rubric, leaderboard column headers, judge tags,
+  prize tier fallback alignment, register-page form labels, success/footer
+  copy, track sidebar labels, and the model dropdown options.
+- **`useLocalizedTracks()`** in `src/lib/i18n-data.ts` — replaces direct
+  `q.label` / `q.theme` / `q.spec.objective` / `q.spec.deliverables` /
+  `q.spec.rubric` access in Home, Tracks, and TrackDetail with translated
+  values (weights stay as static numbers from `data.ts`).
+- **`data.tracks`**, **`data.leaderboard_headers`**, **`data.judge_tags`**
+  sections appended to all 5 locale files by `dev/i18n-r6-append.mjs`.
+
+### Changed
+- **Home** now uses the localized tracks / judges / timeline / leaderboard
+  hooks instead of `MOCK_JUDGES` / `TIMELINE` / `MOCK_AGENTS` / `q.label` /
+  `q.theme`. The hardcoded English table header array is gone.
+- **Tracks** sidebar labels (`Objective` / `Required deliverables` /
+  `Prize pool` / `Head judge` / `Window` / `Rubric` / `Open the spec`)
+  and the long objective / deliverable / rubric copy now flow through
+  `useLocalizedTracks()`.
+- **TrackDetail** pulls label / theme / objective / deliverables / rubric
+  from `useLocalizedTracks()`.
+- **Leaderboard** track-switcher uses localized quarter labels.
+- **Register** form intro, handle / email helper text, success state, the
+  4-step section heading, and the final "One URL. That's it." block all
+  flow through `t()`. The `<select>` model options are also localized
+  (with the actual model name kept as the `<option value>` so the form
+  payload remains machine-readable).
+- **AgentDetail** replaced the hardcoded `TRACK_INFO` constant (with
+  English track names) with `useLocalizedTracks()` so the track chips
+  on the agent page show in the active language.
+- Fixed two i18next placeholder bugs:
+  `trackDetail.submit_cta` (`{code}` → `{{code}}`) and
+  `register.success_claimed` (`@{handle}` → `@{{handle}}`).
+- `data.ts` prize tiers aligned to the existing 4-tier i18n design
+  (Grand Champion / Quarter Champion / Track Finalist / Safety Veto Refund);
+  the orphan `Community Pick` tier that fell back to English extras is gone.
+
 ## [0.4.0] — 2026-08-12
 
 ### Added

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
+import { useTranslation, Trans } from "react-i18next";
 import { Trophy } from "lucide-react";
-import { PRIZE_TIERS } from "../lib/data";
+import { useLocalizedPrizeTiers } from "../lib/i18n-data";
 
 const colorMap: Record<string, { ring: string; text: string; border: string; bg: string; gradient: string }> = {
   gold: { ring: "ring-gold-glow/30", text: "text-gold-glow", border: "border-gold-glow/40", bg: "bg-gold-glow/10", gradient: "from-gold-glow/30" },
@@ -9,24 +10,24 @@ const colorMap: Record<string, { ring: string; text: string; border: string; bg:
 };
 
 export default function Prizes() {
+  const { t } = useTranslation();
+  const tiers = useLocalizedPrizeTiers();
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <section className="relative py-16">
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <p className="tag">Prize structure</p>
+          <p className="tag">{t("prizes.tag")}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold leading-tight text-ink-high md:text-5xl">
-            <span className="text-glow-gold text-gold-glow">$1.16M</span> in cash, lab, and IP support.
+            <Trans i18nKey="prizes.title_1_html" components={{ span: <span /> }} />
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-mid">
-            Prizes are weighted toward the grand finale and the wet-lab validation that follows. Quarter champions get a real shot at producing their design in a partner lab — that's the point of the whole exercise.
-          </p>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("prizes.lede")}</p>
         </div>
       </section>
 
       <section className="relative pb-20">
         <div className="mx-auto max-w-5xl px-6 space-y-4">
-          {PRIZE_TIERS.map((p) => {
+          {tiers.map((p) => {
             const c = colorMap[p.color];
             return (
               <div
@@ -65,17 +66,17 @@ export default function Prizes() {
 
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <p className="tag">By the numbers</p>
+          <p className="tag">{t("prizes.numbers_tag")}</p>
           <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-4">
             {[
-              { v: "$1.16M", l: "Total cash pool" },
-              { v: "4", l: "Quarter champions" },
-              { v: "12", l: "Track finalists" },
-              { v: "1", l: "Grand champion" },
+              { v: "$1.16M", k: "num_1_l" },
+              { v: "4", k: "num_2_l" },
+              { v: "12", k: "num_3_l" },
+              { v: "1", k: "num_4_l" },
             ].map((s) => (
-              <div key={s.l}>
+              <div key={s.k}>
                 <p className="font-display text-3xl font-semibold text-ink-high">{s.v}</p>
-                <p className="mt-1 text-sm text-ink-mid">{s.l}</p>
+                <p className="mt-1 text-sm text-ink-mid">{t(`prizes.${s.k}`)}</p>
               </div>
             ))}
           </div>

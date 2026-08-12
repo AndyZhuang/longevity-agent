@@ -359,18 +359,15 @@ export const PRIZE_TIERS = [
     color: "violet",
   },
   {
-    place: "Sponsor Wildcard",
-    payout: "$25,000",
+    place: "Safety Veto Refund",
+    payout: "Full refund",
     extras: [
-      "Awarded by founding sponsors for the most industry-relevant submission",
+      "Every submission flagged for safety is reviewed by the head judge",
+      "Submission fee refunded (waived for 2026)",
+      "Publicly published veto rationale (redacted for IP)",
+      "Pathway to a revised resubmission",
     ],
     color: "violet",
-  },
-  {
-    place: "Community Pick",
-    payout: "$5,000",
-    extras: ["Voted live by the open community during the livestream"],
-    color: "cyan",
   },
 ];
 

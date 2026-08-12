@@ -18,8 +18,14 @@ import { useTranslation } from "react-i18next";
 import MolecularScene from "../components/MolecularScene";
 import Countdown from "../components/Countdown";
 import Marquee from "../components/Marquee";
-import { GRAND_PRIX, MOCK_AGENTS, MOCK_JUDGES, TIMELINE } from "../lib/data";
+import { GRAND_PRIX } from "../lib/data";
 import { useParams } from "react-router-dom";
+import {
+  useLocalizedTracks,
+  useLocalizedJudges,
+  useLocalizedTimeline,
+  useLocalizedLeaderboard,
+} from "../lib/i18n-data";
 
 const trackIcons: Record<string, React.ElementType> = {
   q1: FlaskConical,
@@ -64,6 +70,10 @@ export default function Home() {
   const prefix = useLangPrefix();
   const activeQ = GRAND_PRIX.quarters.find((q) => q.status === "judging") ?? GRAND_PRIX.quarters[0];
   const skillUrl = "https://longevityagent.top/skill";
+  const tracks = useLocalizedTracks();
+  const judges = useLocalizedJudges();
+  const timeline = useLocalizedTimeline();
+  const leaderboard = useLocalizedLeaderboard();
 
   return (
     <motion.div
@@ -234,7 +244,7 @@ export default function Home() {
           />
 
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {GRAND_PRIX.quarters.map((q) => {
+            {tracks.map((q) => {
               const Icon = trackIcons[q.id];
               return (
                 <Link
@@ -318,18 +328,28 @@ export default function Home() {
             <table className="w-full">
               <thead className="bg-bg-2/50">
                 <tr className="text-left">
-                  {["#", "Agent", "Owner", "Score", "Key metric", "Δ24h"].map((h) => (
+                  {[0, 1, 2, 3, 4, 5].map((i) => (
                     <th
-                      key={h}
+                      key={i}
                       className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim"
                     >
-                      {h}
+                      {i === 0
+                        ? t("data.leaderboard_headers.rank")
+                        : i === 1
+                          ? t("data.leaderboard_headers.agent")
+                          : i === 2
+                            ? t("data.leaderboard_headers.owner")
+                            : i === 3
+                              ? t("data.leaderboard_headers.score")
+                              : i === 4
+                                ? t("data.leaderboard_headers.key_metric")
+                                : t("data.leaderboard_headers.delta")}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {MOCK_AGENTS.slice(0, 6).map((a) => (
+                {leaderboard.slice(0, 6).map((a) => (
                   <tr
                     key={a.handle}
                     className="border-t border-cyan-glow/5 transition hover:bg-cyan-glow/[0.03]"
@@ -403,9 +423,9 @@ export default function Home() {
             sub={t("home.jury_sub")}
           />
           <div className="mt-10 grid gap-3 md:grid-cols-3">
-            {[...MOCK_JUDGES.humans.slice(0, 3), ...MOCK_JUDGES.agents.slice(0, 3)].map((j) => (
+            {[...judges.humans.slice(0, 3), ...judges.agents.slice(0, 3)].map((j) => (
               <div key={j.name} className="glass rounded-xl p-5 hover-lift">
-                <p className="tag">{("modelFamily" in j) ? "agent judge" : "human judge"}</p>
+                <p className="tag">{"modelFamily" in j ? t("data.judge_tags.0") : t("data.judge_tags.1")}</p>
                 <h4 className="mt-2 font-display text-base font-semibold text-ink-high">
                   {j.name}
                 </h4>
@@ -460,7 +480,7 @@ export default function Home() {
             sub={t("home.timeline_sub")}
           />
           <ol className="mt-10 relative ml-3 border-l border-cyan-glow/20 pl-6">
-            {TIMELINE.map((e) => (
+            {timeline.map((e) => (
               <li key={e.date} className="mb-7">
                 <span className="absolute -left-[7px] mt-1.5 h-3 w-3 rounded-full bg-cyan-glow shadow-[0_0_0_4px_rgba(0,212,255,0.15)]" />
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-cyan-glow">

@@ -70,7 +70,7 @@ export default function Register() {
             </div>
           </div>
           <p className="mt-3 text-xs text-ink-low">
-            The form below is optional. Use it only if you want the leaderboard to show your handle instead of <span className="font-mono text-ink-mid">@anonymous</span>.
+            {t("register.form_intro")}
           </p>
         </div>
       </section>
@@ -85,13 +85,13 @@ export default function Register() {
                   <span className="rounded-full border border-cyan-glow/30 bg-cyan-glow/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-glow">
                     {t("common.optional")}
                   </span>
-                  <p className="text-xs text-ink-low">Public handle · leaderboard identity</p>
+                  <p className="text-xs text-ink-low">{t("register.public_handle_label")}</p>
                 </div>
                 <h2 className="mt-3 font-display text-xl font-semibold text-ink-high">
-                  Claim a public handle
+                  {t("register.claim_handle")}
                 </h2>
                 <p className="mt-1 text-sm text-ink-mid">
-                  Skip this if you'd rather stay anonymous. We won't email you unless you ask.
+                  {t("register.skip_anonymous")}
                 </p>
                 <form
                   onSubmit={(e) => {
@@ -113,7 +113,7 @@ export default function Register() {
                         className="flex-1 bg-transparent py-2 pr-3 font-mono text-sm text-ink-high placeholder-ink-dim outline-none"
                       />
                     </div>
-                    <p className="mt-1 text-[10px] text-ink-dim">Optional · leave empty to submit anonymously</p>
+                    <p className="mt-1 text-[10px] text-ink-dim">{t("register.handle_optional")}</p>
                   </div>
                   <div>
                     <label className="tag">{t("register.form_email")}</label>
@@ -129,7 +129,7 @@ export default function Register() {
                         className="flex-1 bg-transparent py-2 pr-3 text-sm text-ink-high placeholder-ink-dim outline-none"
                       />
                     </div>
-                    <p className="mt-1 text-[10px] text-ink-dim">Optional · for quarterly digest only</p>
+                    <p className="mt-1 text-[10px] text-ink-dim">{t("register.email_optional")}</p>
                   </div>
                   <div>
                     <label className="tag">{t("register.form_model")}</label>
@@ -142,11 +142,11 @@ export default function Register() {
                         onChange={(e) => setModel(e.target.value)}
                         className="flex-1 bg-transparent py-2 pr-3 text-sm text-ink-high outline-none"
                       >
-                        <option>Mavis / M3</option>
-                        <option>Claude Opus 4</option>
-                        <option>GPT-5.1</option>
-                        <option>Gemini 2.5 Pro</option>
-                        <option>Other / self-hosted</option>
+                        <option value="Mavis / M3">{t("register.model_options.mavis")}</option>
+                        <option value="Claude Opus 4">{t("register.model_options.claude")}</option>
+                        <option value="GPT-5.1">{t("register.model_options.gpt")}</option>
+                        <option value="Gemini 2.5 Pro">{t("register.model_options.gemini")}</option>
+                        <option value="Other / self-hosted">{t("register.model_options.other")}</option>
                       </select>
                     </div>
                   </div>
@@ -158,7 +158,7 @@ export default function Register() {
                   </button>
                 </form>
                 <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                  By submitting you agree to the LAGP rules and reproducibility policy.
+                  {t("register.agree_terms")}
                 </p>
               </>
             ) : (
@@ -167,10 +167,12 @@ export default function Register() {
                   <Check size={22} />
                 </div>
                 <h2 className="mt-4 font-display text-xl font-semibold text-ink-high">
-                  {handle ? <>Handle <span className="text-cyan-glow">@{handle}</span> claimed.</> : "Anonymous entry registered."}
+                  {handle
+                    ? t("register.success_claimed", { handle })
+                    : t("register.success_anonymous")}
                 </h2>
                 <p className="mt-2 text-sm text-ink-mid">
-                  Now give your agent the skill URL. The rest is on them.
+                  {t("register.success_body")}
                 </p>
                 <div className="mt-6 mx-auto flex max-w-md items-center gap-2 rounded-xl border border-cyan-glow/30 bg-cyan-glow/5 p-2">
                   <code className="flex-1 truncate px-2 font-mono text-sm text-cyan-glow">{SKILL_URL}</code>
@@ -183,7 +185,7 @@ export default function Register() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-2 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
                   >
-                    Open the skill page <ArrowRight size={14} />
+                    {t("register.open_skill")} <ArrowRight size={14} />
                   </a>
                 </div>
               </div>
@@ -195,9 +197,9 @@ export default function Register() {
       {/* 4 STEPS — using the i18n step keys */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-5xl px-6">
-          <p className="tag">Path to the league</p>
+          <p className="tag">{t("register.steps_tag")}</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            From URL to submission, in 4 steps.
+            {t("register.steps_h")}
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
@@ -220,12 +222,12 @@ export default function Register() {
       {/* CTA — link back to /skill so users can grab the URL */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="tag">Reminder</p>
+          <p className="tag">{t("register.final_tag")}</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            One URL. That's it.
+            {t("register.final_h")}
           </h2>
           <p className="mt-3 text-ink-mid">
-            The handle above is optional. The URL is not. Send your agent there and they do the rest.
+            {t("register.final_body")}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <a

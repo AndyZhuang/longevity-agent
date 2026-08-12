@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { ArrowRight, FlaskConical, Sparkles, Apple, Brain } from "lucide-react";
-import { GRAND_PRIX } from "../lib/data";
+import { useLocalizedTracks } from "../lib/i18n-data";
 
 function useLangPrefix() {
   const { lang } = useParams();
@@ -26,6 +26,7 @@ const trackAccents: Record<string, { dot: string; ring: string; text: string; bg
 export default function Tracks() {
   const { t } = useTranslation();
   const prefix = useLangPrefix();
+  const tracks = useLocalizedTracks();
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <section className="relative py-16">
@@ -43,7 +44,7 @@ export default function Tracks() {
 
       <section className="relative pb-20">
         <div className="mx-auto max-w-7xl px-6 space-y-6">
-          {GRAND_PRIX.quarters.map((q) => {
+          {tracks.map((q) => {
             const Icon = trackIcons[q.id];
             const a = trackAccents[q.id];
             return (
@@ -70,14 +71,14 @@ export default function Tracks() {
 
                   {/* Middle: objective + rubric */}
                   <div className="border-r border-cyan-glow/10 p-8">
-                    <p className="tag">Objective</p>
+                    <p className="tag">{t("tracks.objective")}</p>
                     <p className="mt-2 text-base leading-relaxed text-ink-high">
-                      {q.spec.objective}
+                      {q.objective}
                     </p>
                     <div className="mt-6">
-                      <p className="tag">Required deliverables</p>
+                      <p className="tag">{t("tracks.deliverables_tag")}</p>
                       <ul className="mt-2 space-y-1.5 text-sm text-ink-mid">
-                        {q.spec.deliverables.map((d) => (
+                        {q.deliverables.map((d) => (
                           <li key={d} className="flex gap-2">
                             <span className={`mt-2 inline-block h-1 w-1 rounded-full ${a.dot}`} />
                             <span>{d}</span>
@@ -91,25 +92,25 @@ export default function Tracks() {
                   <div className="p-8">
                     <div className="space-y-4">
                       <div>
-                        <p className="tag">Prize pool</p>
+                        <p className="tag">{t("tracks.prize_pool")}</p>
                         <p className="mt-1 font-display text-2xl font-semibold text-ink-high">
                           ${(q.spec.prizePool / 1000).toFixed(0)}k
                         </p>
                       </div>
                       <div>
-                        <p className="tag">Head judge</p>
+                        <p className="tag">{t("tracks.head_judge")}</p>
                         <p className="mt-1 text-sm text-ink-mid">{q.spec.headJudge}</p>
                       </div>
                       <div>
-                        <p className="tag">Window</p>
+                        <p className="tag">{t("tracks.window")}</p>
                         <p className="mt-1 text-sm text-ink-mid">
                           {new Date(q.startsAt).toLocaleDateString()} → {new Date(q.endsAt).toLocaleDateString()}
                         </p>
                       </div>
                       <div>
-                        <p className="tag">Rubric</p>
+                        <p className="tag">{t("tracks.rubric_tag")}</p>
                         <div className="mt-2 space-y-1.5">
-                          {q.spec.rubric.map((r) => (
+                          {q.rubric.map((r) => (
                             <div key={r.name} className="flex items-center gap-2 text-xs">
                               <span className="text-ink-mid">{r.name}</span>
                               <span className="ml-auto font-mono text-ink-dim">
@@ -123,7 +124,7 @@ export default function Tracks() {
                         to={`${prefix}/tracks/${q.id}`}
                         className={`mt-2 inline-flex items-center gap-1.5 rounded-full ${a.bg} ${a.border} border ${a.text} px-4 py-2 text-sm transition hover:opacity-90`}
                       >
-                        Open the spec <ArrowRight size={14} />
+                        {t("tracks.open_spec")} <ArrowRight size={14} />
                       </Link>
                     </div>
                   </div>

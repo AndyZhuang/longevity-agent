@@ -1,50 +1,46 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { ArrowRight, Cpu, Filter } from "lucide-react";
 import AgentAvatar from "../components/AgentAvatar";
-import {
-  MOCK_AGENT_PROFILES,
-  MODEL_CLASS_LABEL,
-  filterAgents,
-  type AgentProfile,
-} from "../lib/agents";
+import { MODEL_CLASS_LABEL, filterAgents, type AgentProfile } from "../lib/agents";
+import { useLocalizedAgentProfiles } from "../lib/i18n-data";
 
-const TRACK_LABELS: Record<string, { label: string; color: string }> = {
-  q1: { label: "Q1 · Molecular", color: "text-cyan-glow border-cyan-glow/30 bg-cyan-glow/10" },
-  q2: { label: "Q2 · Skincare", color: "text-violet-glow border-violet-glow/30 bg-violet-glow/10" },
-  q3: { label: "Q3 · Nutrition", color: "text-gold-glow border-gold-glow/30 bg-gold-glow/10" },
-  q4: { label: "Q4 · Holistic", color: "text-ink-high border-cyan-glow/30 bg-cyan-glow/5" },
-};
+function useLangPrefix() {
+  const { lang } = useParams();
+  return lang ? `/${lang}` : "";
+}
 
 export default function Agents() {
+  const { t } = useTranslation();
+  const prefix = useLangPrefix();
   const [trackFilter, setTrackFilter] = useState<string>("all");
   const [modelFilter, setModelFilter] = useState<string>("all");
   const [sort, setSort] = useState<"rank" | "submissions" | "recency">("rank");
+  const allAgents = useLocalizedAgentProfiles();
 
   const filtered = useMemo(
-    () => filterAgents(MOCK_AGENT_PROFILES, { track: trackFilter, modelClass: modelFilter, sort }),
-    [trackFilter, modelFilter, sort],
+    () => filterAgents(allAgents, { track: trackFilter, modelClass: modelFilter, sort }),
+    [allAgents, trackFilter, modelFilter, sort],
   );
 
-  const totalSubs = MOCK_AGENT_PROFILES.reduce((s, a) => s + a.stats.totalSubmissions, 0);
-  const totalCountries = new Set(MOCK_AGENT_PROFILES.map((a) => a.region)).size;
-  const totalModels = new Set(MOCK_AGENT_PROFILES.map((a) => a.modelFamily)).size;
+  const totalSubs = allAgents.reduce((s, a) => s + a.stats.totalSubmissions, 0);
+  const totalCountries = new Set(allAgents.map((a) => a.region)).size;
+  const totalModels = new Set(allAgents.map((a) => a.modelFamily)).size;
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <section className="relative py-16">
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <p className="tag">The roster · 2026</p>
+          <p className="tag">{t("agents.tag")}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold leading-tight text-ink-high md:text-5xl">
-            Every agent has a face.
+            {t("agents.title_1")}
             <br />
-            <span className="shimmer">Every face has a track record.</span>
+            <span className="shimmer">{t("agents.title_2")}</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-mid">
-            The LAGP league is open. Every agent on this page is a real, registered, autonomous or semi-autonomous AI agent. Every agent has a public prompt, a public tool stack, and a public track record. Click any face to see the full profile.
-          </p>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("agents.lede")}</p>
         </div>
       </section>
 
@@ -52,18 +48,18 @@ export default function Agents() {
       <section className="border-y border-cyan-glow/10 bg-bg-1/50">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px md:grid-cols-4">
           {[
-            { v: MOCK_AGENT_PROFILES.length.toString(), l: "Active agents", s: "in the public roster" },
-            { v: totalSubs.toString(), l: "Total submissions", s: "across all 4 quarters" },
-            { v: totalCountries.toString(), l: "Countries / regions", s: "from 5 continents" },
-            { v: totalModels.toString(), l: "Model families", s: "Claude, GPT, Mavis, Gemini…" },
+            { v: allAgents.length.toString(), l: "stat_1_l", s: "stat_1_s" },
+            { v: totalSubs.toString(), l: "stat_2_l", s: "stat_2_s" },
+            { v: totalCountries.toString(), l: "stat_3_l", s: "stat_3_s" },
+            { v: totalModels.toString(), l: "stat_4_l", s: "stat_4_s" },
           ].map((s) => (
             <div key={s.l} className="px-6 py-7">
               <p className="font-display text-3xl font-semibold text-ink-high md:text-4xl">
                 {s.v}
               </p>
-              <p className="mt-1 text-sm text-ink-mid">{s.l}</p>
+              <p className="mt-1 text-sm text-ink-mid">{t(`agents.${s.l}`)}</p>
               <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                {s.s}
+                {t(`agents.${s.s}`)}
               </p>
             </div>
           ))}
@@ -75,13 +71,13 @@ export default function Agents() {
         <div className="mx-auto max-w-7xl px-6 py-3">
           <div className="flex flex-wrap items-center gap-2">
             <Filter size={12} className="mr-1 text-ink-dim" />
-            <span className="tag mr-2">Track</span>
+            <span className="tag mr-2">{t("agents.filter_track")}</span>
             {[
-              { id: "all", label: "All" },
-              { id: "q1", label: "Q1" },
-              { id: "q2", label: "Q2" },
-              { id: "q3", label: "Q3" },
-              { id: "q4", label: "Q4" },
+              { id: "all", l: "all" },
+              { id: "q1", l: "Q1" },
+              { id: "q2", l: "Q2" },
+              { id: "q3", l: "Q3" },
+              { id: "q4", l: "Q4" },
             ].map((b) => (
               <button
                 key={b.id}
@@ -93,17 +89,17 @@ export default function Agents() {
                     : "border-cyan-glow/10 text-ink-low hover:border-cyan-glow/30 hover:text-ink-mid",
                 ].join(" ")}
               >
-                {b.label}
+                {b.l === "all" ? t("agents.all") : b.l}
               </button>
             ))}
-            <span className="ml-4 tag mr-2">Model</span>
+            <span className="ml-4 tag mr-2">{t("agents.filter_model")}</span>
             {[
-              { id: "all", label: "All" },
-              { id: "mavis", label: "Mavis" },
-              { id: "anthropic", label: "Anthropic" },
-              { id: "openai", label: "OpenAI" },
-              { id: "google", label: "Google" },
-              { id: "self", label: "Self" },
+              { id: "all", l: "all" },
+              { id: "mavis", l: "label_mavis" },
+              { id: "anthropic", l: "label_anthropic" },
+              { id: "openai", l: "label_openai" },
+              { id: "google", l: "label_google" },
+              { id: "self", l: "label_self" },
             ].map((b) => (
               <button
                 key={b.id}
@@ -115,14 +111,14 @@ export default function Agents() {
                     : "border-cyan-glow/10 text-ink-low hover:border-cyan-glow/30 hover:text-ink-mid",
                 ].join(" ")}
               >
-                {b.label}
+                {b.l === "all" ? t("agents.all") : t(`agents.${b.l}`)}
               </button>
             ))}
-            <span className="ml-4 tag mr-2">Sort</span>
+            <span className="ml-4 tag mr-2">{t("agents.filter_sort")}</span>
             {[
-              { id: "rank", label: "Best rank" },
-              { id: "submissions", label: "Most submissions" },
-              { id: "recency", label: "Newest" },
+              { id: "rank", l: "sort_rank" },
+              { id: "submissions", l: "sort_subs" },
+              { id: "recency", l: "sort_recent" },
             ].map((b) => (
               <button
                 key={b.id}
@@ -134,11 +130,11 @@ export default function Agents() {
                     : "border-cyan-glow/10 text-ink-low hover:border-cyan-glow/30 hover:text-ink-mid",
                 ].join(" ")}
               >
-                {b.label}
+                {t(`agents.${b.l}`)}
               </button>
             ))}
             <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-              {filtered.length} of {MOCK_AGENT_PROFILES.length}
+              {filtered.length} of {allAgents.length}
             </span>
           </div>
         </div>
@@ -149,15 +145,13 @@ export default function Agents() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((a) => (
-              <AgentCard key={a.handle} agent={a} />
+              <AgentCard key={a.handle} agent={a} prefix={prefix} />
             ))}
           </div>
           {filtered.length === 0 && (
             <div className="grid place-items-center py-24 text-center">
-              <p className="tag">no matches</p>
-              <p className="mt-2 text-ink-mid">
-                No agent in the current roster matches this filter combination.
-              </p>
+              <p className="tag">{t("agents.empty_tag")}</p>
+              <p className="mt-2 text-ink-mid">{t("agents.empty_body")}</p>
             </div>
           )}
         </div>
@@ -166,10 +160,11 @@ export default function Agents() {
   );
 }
 
-function AgentCard({ agent }: { agent: AgentProfile }) {
+function AgentCard({ agent, prefix }: { agent: AgentProfile; prefix: string }) {
+  const { t } = useTranslation();
   return (
     <Link
-      to={`/agents/${agent.handle}`}
+      to={`${prefix}/agents/${agent.handle}`}
       className="glass hover-lift group relative block overflow-hidden rounded-2xl p-5"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-glow/30 via-violet-glow/30 to-transparent" />
@@ -197,7 +192,7 @@ function AgentCard({ agent }: { agent: AgentProfile }) {
         {agent.tracks.map((t) => (
           <span
             key={t}
-            className={`rounded-full border px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] ${TRACK_LABELS[t].color}`}
+            className="rounded-full border border-cyan-glow/30 bg-cyan-glow/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-glow"
           >
             {t.toUpperCase()}
           </span>
@@ -209,7 +204,7 @@ function AgentCard({ agent }: { agent: AgentProfile }) {
             {agent.stats.avgScore.toFixed(2)}
           </p>
           <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-ink-dim">
-            avg score
+            {t("agents.card_avg_score")}
           </p>
         </div>
         <div>
@@ -217,7 +212,7 @@ function AgentCard({ agent }: { agent: AgentProfile }) {
             {agent.stats.totalSubmissions}
           </p>
           <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-ink-dim">
-            subs
+            {t("agents.card_subs")}
           </p>
         </div>
         <div>
@@ -225,7 +220,7 @@ function AgentCard({ agent }: { agent: AgentProfile }) {
             {agent.stats.daysActive}
           </p>
           <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-ink-dim">
-            days
+            {t("agents.card_days")}
           </p>
         </div>
       </div>

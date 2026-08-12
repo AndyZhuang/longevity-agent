@@ -1,7 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { ArrowLeft, ArrowRight, Calendar, Trophy, FileText, Cpu, FlaskConical, Sparkles, Apple, Brain } from "lucide-react";
-import { GRAND_PRIX } from "../lib/data";
+import { useLocalizedTracks } from "../lib/i18n-data";
+
+function useLangPrefix() {
+  const { lang } = useParams();
+  return lang ? `/${lang}` : "";
+}
 
 const trackIcons: Record<string, React.ElementType> = {
   q1: FlaskConical,
@@ -11,15 +17,18 @@ const trackIcons: Record<string, React.ElementType> = {
 };
 
 export default function TrackDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
-  const q = GRAND_PRIX.quarters.find((x) => x.id === id);
+  const prefix = useLangPrefix();
+  const tracks = useLocalizedTracks();
+  const q = tracks.find((x) => x.id === id);
   if (!q) {
     return (
       <div className="mx-auto max-w-2xl px-6 py-24 text-center">
-        <p className="tag">404</p>
-        <h1 className="mt-2 font-display text-3xl text-ink-high">Track not found</h1>
-        <Link to="/tracks" className="mt-6 inline-block text-cyan-glow hover:underline">
-          ← Back to all tracks
+        <p className="tag">{t("trackDetail.not_found_tag")}</p>
+        <h1 className="mt-2 font-display text-3xl text-ink-high">{t("trackDetail.not_found_h")}</h1>
+        <Link to={`${prefix}/tracks`} className="mt-6 inline-block text-cyan-glow hover:underline">
+          {t("trackDetail.not_found_back")}
         </Link>
       </div>
     );
@@ -32,10 +41,10 @@ export default function TrackDetail() {
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-5xl px-6">
           <Link
-            to="/tracks"
+            to={`${prefix}/tracks`}
             className="inline-flex items-center gap-1.5 text-sm text-ink-low transition hover:text-cyan-glow"
           >
-            <ArrowLeft size={14} /> All tracks
+            <ArrowLeft size={14} /> {t("trackDetail.back")}
           </Link>
           <div className="mt-6 flex items-center gap-3">
             <div className="rounded-xl border border-cyan-glow/30 bg-cyan-glow/10 p-2.5 text-cyan-glow">
@@ -51,31 +60,31 @@ export default function TrackDetail() {
           <p className="mt-3 max-w-2xl text-lg text-ink-mid">{q.theme}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
-              to="/register"
+              to={`${prefix}/register`}
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
             >
-              Submit to {q.code} <ArrowRight size={14} />
+              {t("trackDetail.submit_cta", { code: q.code })} <ArrowRight size={14} />
             </Link>
             <Link
-              to="/docs"
+              to={`${prefix}/docs`}
               className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-5 py-2.5 font-display text-sm text-cyan-glow transition hover:bg-cyan-glow/10"
             >
-              <FileText size={14} /> Read full spec
+              <FileText size={14} /> {t("trackDetail.read_spec")}
             </Link>
           </div>
         </div>
       </section>
 
       <section className="relative py-12">
-        <div className="mx-auto grid max-w-5xl gap-6 px-6 md:grid-cols-3">
+        <div className="mx-auto max-w-5xl gap-6 px-6 grid md:grid-cols-3">
           {[
-            { icon: Calendar, label: "Submission window", v: `${new Date(q.startsAt).toLocaleDateString()} → ${new Date(q.endsAt).toLocaleDateString()}` },
-            { icon: Trophy, label: "Prize pool", v: `$${(q.spec.prizePool / 1000).toFixed(0)}k` },
-            { icon: Cpu, label: "Head judge", v: q.spec.headJudge },
+            { icon: Calendar, k: "meta_window", v: `${new Date(q.startsAt).toLocaleDateString()} → ${new Date(q.endsAt).toLocaleDateString()}` },
+            { icon: Trophy, k: "meta_prize", v: `$${(q.spec.prizePool / 1000).toFixed(0)}k` },
+            { icon: Cpu, k: "meta_judge", v: q.spec.headJudge },
           ].map((m) => (
-            <div key={m.label} className="glass rounded-xl p-5">
+            <div key={m.k} className="glass rounded-xl p-5">
               <m.icon className="text-cyan-glow" size={18} />
-              <p className="mt-3 tag">{m.label}</p>
+              <p className="mt-3 tag">{t(`trackDetail.${m.k}`)}</p>
               <p className="mt-1 font-display text-lg text-ink-high">{m.v}</p>
             </div>
           ))}
@@ -84,18 +93,18 @@ export default function TrackDetail() {
 
       <section className="relative py-12">
         <div className="mx-auto max-w-4xl px-6">
-          <p className="tag">The objective</p>
+          <p className="tag">{t("trackDetail.objective_tag")}</p>
           <p className="mt-3 text-xl leading-relaxed text-ink-high">
-            {q.spec.objective}
+            {q.objective}
           </p>
         </div>
       </section>
 
       <section className="relative py-12">
         <div className="mx-auto max-w-4xl px-6">
-          <p className="tag">Required deliverables</p>
+          <p className="tag">{t("trackDetail.deliverables_tag")}</p>
           <ol className="mt-4 space-y-3">
-            {q.spec.deliverables.map((d, i) => (
+            {q.deliverables.map((d, i) => (
               <li key={d} className="glass flex items-start gap-3 rounded-lg p-4">
                 <span className="font-mono text-xs text-cyan-glow">
                   {String(i + 1).padStart(2, "0")}
@@ -109,9 +118,9 @@ export default function TrackDetail() {
 
       <section className="relative py-12">
         <div className="mx-auto max-w-4xl px-6">
-          <p className="tag">Judging rubric</p>
+          <p className="tag">{t("trackDetail.rubric_tag")}</p>
           <div className="mt-4 space-y-3">
-            {q.spec.rubric.map((r) => (
+            {q.rubric.map((r) => (
               <div key={r.name} className="glass rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <span className="font-display text-base text-ink-high">{r.name}</span>
@@ -133,19 +142,16 @@ export default function TrackDetail() {
 
       <section className="relative py-12">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="tag">Build, don't read</p>
+          <p className="tag">{t("trackDetail.build_tag")}</p>
           <h2 className="mt-2 font-display text-2xl font-semibold text-ink-high">
-            Stop reading. Start the agent.
+            {t("trackDetail.build_h")}
           </h2>
-          <p className="mt-3 text-ink-mid">
-            The spec is structured. The contract is one URL. Give it to your agent and they can be
-            designing in 15 minutes — no install, no clone, no registration wall.
-          </p>
+          <p className="mt-3 text-ink-mid">{t("trackDetail.build_body")}</p>
           <Link
-            to="/skill"
+            to={`${prefix}/skill`}
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-5 py-2.5 font-display text-sm font-semibold text-bg-0 transition hover:opacity-95"
           >
-            Give your agent the URL <ArrowRight size={14} />
+            {t("trackDetail.build_cta")} <ArrowRight size={14} />
           </Link>
         </div>
       </section>

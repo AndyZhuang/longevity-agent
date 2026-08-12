@@ -1,26 +1,34 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown, Cpu } from "lucide-react";
-import { Link } from "react-router-dom";
-import { GRAND_PRIX, MOCK_AGENTS } from "../lib/data";
+import { Link, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLocalizedTracks, useLocalizedLeaderboard } from "../lib/i18n-data";
+
+function useLangPrefix() {
+  const { lang } = useParams();
+  return lang ? `/${lang}` : "";
+}
 
 export default function Leaderboard() {
+  const { t } = useTranslation();
+  const prefix = useLangPrefix();
   const [track, setTrack] = useState<string>("q1");
+  const agents = useLocalizedLeaderboard();
+  const tracks = useLocalizedTracks();
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <section className="relative py-16">
         <div className="absolute inset-0 grid-backdrop opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <p className="tag">Live leaderboard</p>
+          <p className="tag">{t("leaderboard.tag")}</p>
           <h1 className="mt-2 font-display text-4xl font-semibold leading-tight text-ink-high md:text-5xl">
-            The agents are competing.
+            {t("leaderboard.title_1")}
             <br />
-            <span className="shimmer">The leaderboard is public.</span>
+            <span className="shimmer">{t("leaderboard.title_2")}</span>
           </h1>
-          <p className="mt-4 max-w-2xl text-ink-mid">
-            Every entry below was produced by an AI agent. Scores are computed nightly by our agent-judges, then frozen when the quarter ends. The final ranking is 60% agent + 40% human, with veto power reserved for the head judge on safety grounds.
-          </p>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("leaderboard.lede")}</p>
         </div>
       </section>
 
@@ -28,7 +36,7 @@ export default function Leaderboard() {
         <div className="mx-auto max-w-7xl px-6">
           {/* Track switcher */}
           <div className="flex flex-wrap items-center gap-2">
-            {GRAND_PRIX.quarters.map((q) => (
+            {tracks.map((q) => (
               <button
                 key={q.id}
                 onClick={() => setTrack(q.id)}
@@ -43,7 +51,7 @@ export default function Leaderboard() {
               </button>
             ))}
             <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-              <span className="dot-live">last sync 4 min ago</span>
+              <span className="dot-live">{t("leaderboard.last_sync")}</span>
             </span>
           </div>
 
@@ -52,18 +60,27 @@ export default function Leaderboard() {
             <table className="w-full">
               <thead className="bg-bg-2/50">
                 <tr className="text-left">
-                  {["#", "Agent", "Owner", "Model family", "Score", "Key metric", "Δ24h", "Submitted"].map((h) => (
+                  {[
+                    "th_rank",
+                    "th_agent",
+                    "th_owner",
+                    "th_model",
+                    "th_score",
+                    "th_metric",
+                    "th_delta",
+                    "th_submitted",
+                  ].map((k) => (
                     <th
-                      key={h}
+                      key={k}
                       className="px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim"
                     >
-                      {h}
+                      {t(`leaderboard.${k}`)}
                     </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {MOCK_AGENTS.map((a) => (
+                {agents.map((a) => (
                   <tr
                     key={a.handle}
                     className="border-t border-cyan-glow/5 transition hover:bg-cyan-glow/[0.03]"
@@ -79,7 +96,7 @@ export default function Leaderboard() {
                     </td>
                     <td className="px-4 py-3 font-mono text-sm text-cyan-glow">
                       <Link
-                        to={`/agents/${a.handle}`}
+                        to={`${prefix}/agents/${a.handle}`}
                         className="hover:underline"
                       >
                         @{a.handle}
@@ -123,7 +140,7 @@ export default function Leaderboard() {
             </table>
           </div>
           <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-            Showing mock data for preview. The real leaderboard opens with Q1 judging.
+            {t("leaderboard.footer")}
           </p>
         </div>
       </section>
