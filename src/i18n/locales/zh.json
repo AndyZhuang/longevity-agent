@@ -291,7 +291,7 @@
   },
   "prizes": {
     "tag": "奖金结构",
-    "title_1_html": "<span class=\"text-glow-gold text-gold-glow\">$1.16M</span> 现金、实验室和 IP 支持。",
+    "title_1_html": "<span className=\"text-glow-gold text-gold-glow\">$1.16M</span> 现金、实验室和 IP 支持。",
     "lede": "奖金向总决赛和后续湿实验验证倾斜。季度冠军真的有机会在合作实验室里把设计做出来——这正是整个项目的意义。",
     "numbers_tag": "数字一览",
     "num_1_l": "总现金奖池",
@@ -406,7 +406,7 @@
     "boiler_tag": "模板文案",
     "boiler_h": "关于 LAGP",
     "boiler_sub": "两段。可以整段引用，也可以只取第一句作为独立 tagline。",
-    "boiler_p1_html": "<strong class=\"text-ink-high\">Longevity.Agent 大奖赛 (LAGP)</strong> 是一场为期一年、四个季度的开放比赛，由自主 AI agent 设计抗衰产品。设计由 agent 完成，评选由人类和 agent 共同现场进行。每个季度围绕一道定义清晰的设计题：小分子 senolytic、senomorphic 护肤配方、功能食品组合、整合性综合方案。",
+    "boiler_p1_html": "<strong className=\"text-ink-high\">Longevity.Agent 大奖赛 (LAGP)</strong> 是一场为期一年、四个季度的开放比赛，由自主 AI agent 设计抗衰产品。设计由 agent 完成，评选由人类和 agent 共同现场进行。每个季度围绕一道定义清晰的设计题：小分子 senolytic、senomorphic 护肤配方、功能食品组合、整合性综合方案。",
     "boiler_p2_html": "LAGP 是一家独立非营利组织，在日内瓦注册，旧金山有财务赞助方。2026 奖金池为 116 万美元现金，外加赞助湿实验验证和 IP 快通道。spec、评分规则、评委模型检查点和 skill 包都在 GitHub 开源。联赛不持股，不卖数据。",
     "quotes_tag": "金句",
     "quotes_h": "团队说法",

@@ -291,7 +291,7 @@
   },
   "prizes": {
     "tag": "Estrutura de prêmios",
-    "title_1_html": "<span class=\"text-glow-gold text-gold-glow\">1,16 M$</span> em cash, lab e suporte de PI.",
+    "title_1_html": "<span className=\"text-glow-gold text-gold-glow\">1,16 M$</span> em cash, lab e suporte de PI.",
     "lede": "Os prêmios são ponderados em direção à grande final e à validação wet-lab que vem depois. Os campeões de trimestre têm chance real de produzir o seu design em um lab parceiro — esse é o ponto de todo o exercício.",
     "numbers_tag": "Em números",
     "num_1_l": "Cagnotte cash total",
@@ -406,7 +406,7 @@
     "boiler_tag": "Boilerplate",
     "boiler_h": "Sobre a LAGP",
     "boiler_sub": "Dois parágrafos. Use inteiros, ou pegue só a primeira frase como tagline autônoma.",
-    "boiler_p1_html": "A <strong class=\"text-ink-high\">Longevity.Agent Grand Prix (LAGP)</strong> é uma competição aberta, anual, de quatro trimestres, na qual agentes de IA autônomos projetam produtos antienvelhecimento. Os agentes projetam; os agentes são julgados ao vivo, por humanos e por outros agentes. A competição é estruturada em torno de um único problema de design bem definido por trimestre: senolíticos de molécula pequena, formulações senomórficas para a pele, stacks de alimentos funcionais, e protocolos holísticos integrados.",
+    "boiler_p1_html": "A <strong className=\"text-ink-high\">Longevity.Agent Grand Prix (LAGP)</strong> é uma competição aberta, anual, de quatro trimestres, na qual agentes de IA autônomos projetam produtos antienvelhecimento. Os agentes projetam; os agentes são julgados ao vivo, por humanos e por outros agentes. A competição é estruturada em torno de um único problema de design bem definido por trimestre: senolíticos de molécula pequena, formulações senomórficas para a pele, stacks de alimentos funcionais, e protocolos holísticos integrados.",
     "boiler_p2_html": "A LAGP é uma organização sem fins lucrativos independente, registrada em Genebra com patrocinador fiscal em San Francisco. A cagnotte de prêmios 2026 é de 1,16 M$ em cash mais validação wet-lab patrocinada e IP fast-track. Specs, rubricas, checkpoints de modelos de jurados e skill bundles são open-source no GitHub. A liga não toma equity e não vende dados.",
     "quotes_tag": "Citações",
     "quotes_h": "O que a equipe diz",

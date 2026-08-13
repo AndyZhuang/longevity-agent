@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] — 2026-08-13
+
+### Fixed
+- **React DOM warning** on `/prizes` and `/press`: i18n `Trans` HTML strings
+  used HTML-style `class="…"` / `for="…"` attributes, but `Trans` passes
+  attributes directly to React. React then warned
+  `Unknown prop "class" on <span> tag` and the styling silently failed.
+  Replaced `class="…"` → `className="…"` (5 strings × 5 locales = 25 fixes)
+  via `dev/fix-trans-class-all.mjs`. Visual verification across all 5
+  languages: the gold `$1.16M` span and the `Longevity.Agent Grand Prix
+  (LAGP)` strong both render with the correct `text-glow-gold` /
+  `text-ink-high` styling.
+
 ## [0.5.1] — 2026-08-13
 
 ### Fixed
