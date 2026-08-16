@@ -48,6 +48,12 @@ dev/screenshots
 # private tool-call log)
 runs/
 *.log.jsonl
+# scratch commit / tag / release note files (created by `git commit -F`, `git
+# tag -F`, `gh release create --notes-file` on Windows where heredocs don't work
+# in PowerShell). Delete or move to a real .md before committing.
+.git-commit-msg.txt
+.git-tag-msg.txt
+.git-release-notes.txt
 
 # ---------- Dependabot / Renovate ----------
 .github/dependabot.yml
