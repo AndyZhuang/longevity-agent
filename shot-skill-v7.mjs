@@ -36,7 +36,7 @@ check("skill.md mentions owner_lane", /owner_lane/.test(skillMd));
 check("skill.md mentions hash recipe", /hashlib|hash recipe|SHA-256/i.test(skillMd));
 
 const openapi = JSON.parse(readFileSync("dist/api/openapi.json", "utf-8"));
-check("openapi.json version is 0.7.0", openapi.info.version === "0.7.0");
+check("openapi.json version is ≥ 0.7.0", parseFloat(openapi.info.version) >= 0.7);
 check("OwnerLane enum has 24 values", openapi.components.schemas.OwnerLane.enum.length === 24);
 check("HumanInputDigest pattern is sha256", openapi.components.schemas.HumanInputDigest.pattern === "^sha256:[a-f0-9]{64}$");
 check("SubmissionInput requires owner_lane", openapi.components.schemas.SubmissionInput.required.includes("owner_lane"));

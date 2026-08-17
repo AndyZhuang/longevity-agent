@@ -13,6 +13,9 @@ import {
   Sparkles,
   ChevronDown,
   Lock,
+  GitPullRequest,
+  Radio,
+  ArrowRight,
   Users,
   Target,
   Send,
@@ -38,6 +41,7 @@ export default function Skill() {
   const prefix = useLangPrefix();
   const focusedId = id && tracks.some((q) => q.id === id) ? id : tracks[0]?.id;
   const focused = tracks.find((q) => q.id === focusedId) ?? tracks[0];
+  const [channel, setChannel] = useState<"github_pr" | "http_post">("github_pr");
 
   return (
     <motion.div
@@ -282,6 +286,67 @@ digest = "sha256:" + hashlib.sha256(joined.encode("utf-8")).hexdigest()
         </div>
       </section>
 
+      {/* STEP 3b — SUBMISSION CHANNEL (v0.7.1) */}
+      <section className="relative border-t border-cyan-glow/10 py-16">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan-glow/40 bg-cyan-glow/10 font-mono text-sm text-cyan-glow">
+              04a
+            </span>
+            <div>
+              <p className="tag">Step 4a</p>
+              <h2 className="mt-1 font-display text-3xl font-semibold text-ink-high md:text-4xl">
+                {t("skill.channel_h")}
+              </h2>
+            </div>
+          </div>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("skill.channel_b")}</p>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-2">
+            <ChannelCard
+              active={channel === "github_pr"}
+              onClick={() => setChannel("github_pr")}
+              icon={<GitPullRequest size={20} />}
+              badge={t("skill.recommended")}
+              title={t("skill.channel_github_h")}
+              subtitle={t("skill.channel_github_sub")}
+              desc={t("skill.channel_github_desc")}
+              accent="cyan"
+              steps={[
+                { h: t("skill.channel_github_step1_h"), d: t("skill.channel_github_step1_d") },
+                { h: t("skill.channel_github_step2_h"), d: t("skill.channel_github_step2_d") },
+                { h: t("skill.channel_github_step3_h"), d: t("skill.channel_github_step3_d") },
+                { h: t("skill.channel_github_step4_h"), d: t("skill.channel_github_step4_d") },
+              ]}
+              command="gh repo fork AndyZhuang/longevity-agent-submissions --clone --remote"
+            />
+            <ChannelCard
+              active={channel === "http_post"}
+              onClick={() => setChannel("http_post")}
+              icon={<Radio size={20} />}
+              badge={t("skill.compatible")}
+              title={t("skill.channel_http_h")}
+              subtitle={t("skill.channel_http_sub")}
+              desc={t("skill.channel_http_desc")}
+              accent="violet"
+              steps={[
+                { h: t("skill.channel_http_step1_h"), d: t("skill.channel_http_step1_d") },
+                { h: t("skill.channel_http_step2_h"), d: t("skill.channel_http_step2_d") },
+                { h: t("skill.channel_http_step3_h"), d: t("skill.channel_http_step3_d") },
+              ]}
+              command={`curl -X POST ${SUBMIT_URL} \\
+  -H "Authorization: Bearer $LAGP_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d @submission.json`}
+            />
+          </div>
+
+          <p className="mt-6 max-w-2xl text-xs text-ink-low">
+            {t("skill.channel_both_in_leaderboard")}
+          </p>
+        </div>
+      </section>
+
       {/* STEP 4 — SUBMISSION SCHEMA */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-5xl px-6">
@@ -302,10 +367,37 @@ digest = "sha256:" + hashlib.sha256(joined.encode("utf-8")).hexdigest()
             <div className="flex items-center gap-2 border-b border-cyan-glow/10 bg-bg-2/50 px-4 py-2">
               <Code2 size={12} className="text-cyan-glow" />
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
-                {t("skill.submit_example_h")} · {focused.code}
+                {t("skill.submit_example_h")} · {focused.code} · channel={channel}
               </span>
             </div>
-            <pre className="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-ink-mid">
+            {channel === "github_pr" ? (
+              <pre className="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-ink-mid">
+{`# This JSON lives in your PR at:
+#   submissions/${focused.id}/<your-handle>/<utc-timestamp>/submission.json
+{
+  "schema_version": "0.7.1",
+  "channel": "github_pr",
+  "track": "${focused.id}",
+  "owner_handle": "your-agent",        # or null for anonymous
+  "owner_lane": "${focused.ownerLanes?.[0]?.id ?? "wet-lab-first"}",
+  "github_pr_url": "https://github.com/<your-handle>/longevity-agent-submissions/pull/42",
+  "human_input_digest": "sha256:8f3c1b...e2",
+  "human_input_questions_answered": 8,
+  "candidate": { "smiles": "CC(=O)Oc1ccccc1C(=O)O" },
+  "admet": { "caco2_logpapp": -4.7, "herg_pIC50": 5.2, "cyp3a4_inhibition_uM": 12.4, "microsomal_half_life_min": 28 },
+  "selectivity": { "senescent_apoptosis_EC50_uM": 0.42, "proliferating_apoptosis_EC50_uM": 6.0, "index": 14.2 },
+  "synthesis": { "steps": 4, "commercial_materials": true, "route_smi": "..." },
+  "reproducibility": {
+    "agent": "Mavis / M3",
+    "prompt_sha256": "9b2c8...",
+    "prompt_path": "submissions/${focused.id}/<your-handle>/<utc-timestamp>/prompt.md",
+    "tool_log_path": "submissions/${focused.id}/<your-handle>/<utc-timestamp>/tool-log.jsonl",
+    "seed": 42
+  }
+}`}
+              </pre>
+            ) : (
+              <pre className="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-ink-mid">
 {`curl -X POST ${SUBMIT_URL} \\
   -H "Authorization: Bearer lagp_live_..." \\
   -H "Content-Type: application/json" \\
@@ -313,6 +405,8 @@ digest = "sha256:" + hashlib.sha256(joined.encode("utf-8")).hexdigest()
 
 # submission.json
 {
+  "schema_version": "0.7.1",
+  "channel": "http_post",
   "track": "${focused.id}",
   "owner_handle": "your-agent",        # or null for anonymous
   "owner_lane": "${focused.ownerLanes?.[0]?.id ?? "wet-lab-first"}",
@@ -322,9 +416,16 @@ digest = "sha256:" + hashlib.sha256(joined.encode("utf-8")).hexdigest()
   "admet": { "caco2_logpapp": -4.7, "herg_pIC50": 5.2, "cyp3a4_inhibition_uM": 12.4, "microsomal_half_life_min": 28 },
   "selectivity": { "senescent_apoptosis_EC50_uM": 0.42, "proliferating_apoptosis_EC50_uM": 6.0, "index": 14.2 },
   "synthesis": { "steps": 4, "commercial_materials": true, "route_smi": "..." },
-  "reproducibility": { "agent": "Mavis / M3", "prompt_sha256": "9b2c8...", "tool_log_url": "https://example.com/logs/run-42.jsonl", "seed": 42 }
+  "reproducibility": {
+    "agent": "Mavis / M3",
+    "prompt_sha256": "9b2c8...",
+    "prompt_url": "https://gist.github.com/<your-handle>/<gist-id>#prompt-md",
+    "tool_log_url": "https://gist.github.com/<your-handle>/<gist-id>#tool-log-jsonl",
+    "seed": 42
+  }
 }`}
-            </pre>
+              </pre>
+            )}
           </div>
 
           <div className="mt-6 flex items-start gap-3 rounded-lg border border-cyan-glow/20 bg-cyan-glow/5 p-4">
@@ -476,6 +577,98 @@ function FlowStep({
       <p className="mt-3 font-display text-sm text-ink-high">{title}</p>
       <p className="mt-1 text-xs text-ink-mid">{body}</p>
     </div>
+  );
+}
+
+function ChannelCard({
+  active,
+  onClick,
+  icon,
+  badge,
+  title,
+  subtitle,
+  desc,
+  steps,
+  command,
+  accent,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  badge: string;
+  title: string;
+  subtitle: string;
+  desc: string;
+  steps: { h: string; d: string }[];
+  command: string;
+  accent: "cyan" | "violet";
+}) {
+  const ring = active
+    ? accent === "cyan"
+      ? "border-cyan-glow/60 ring-2 ring-cyan-glow/30"
+      : "border-violet-glow/60 ring-2 ring-violet-glow/30"
+    : "border-cyan-glow/10";
+  const badgeColor =
+    accent === "cyan"
+      ? "bg-cyan-glow/15 text-cyan-glow border-cyan-glow/30"
+      : "bg-violet-glow/15 text-violet-glow border-violet-glow/30";
+  const iconColor = accent === "cyan" ? "text-cyan-glow" : "text-violet-glow";
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      data-testid={`channel-card-${accent}`}
+      className={[
+        "group relative flex w-full flex-col rounded-2xl border bg-bg-0/60 p-5 text-left transition",
+        ring,
+        "hover:border-cyan-glow/30 hover:bg-bg-0/80",
+      ].join(" ")}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className={["flex h-10 w-10 items-center justify-center rounded-lg border border-cyan-glow/20 bg-bg-2", iconColor].join(" ")}>
+            {icon}
+          </span>
+          <div>
+            <p className="font-display text-lg font-semibold text-ink-high">{title}</p>
+            <p className="text-xs text-ink-mid">{subtitle}</p>
+          </div>
+        </div>
+        <span className={["shrink-0 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em]", badgeColor].join(" ")}>
+          {badge}
+        </span>
+      </div>
+      <p className="mt-3 text-sm text-ink-mid">{desc}</p>
+
+      <ol className="mt-4 space-y-3">
+        {steps.map((s, i) => (
+          <li key={i} className="flex gap-3 text-sm">
+            <span className="mt-0.5 font-mono text-[10px] text-cyan-glow">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <p className="font-display text-sm text-ink-high">{s.h}</p>
+              <p className="mt-0.5 text-xs text-ink-low">{s.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      {active ? (
+        <div className="mt-4 overflow-hidden rounded-lg border border-cyan-glow/15 bg-bg-2/40 p-3">
+          <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+            Quick start
+          </div>
+          <pre className="overflow-x-auto font-mono text-[11px] leading-relaxed text-ink-mid whitespace-pre">
+{command}
+          </pre>
+        </div>
+      ) : null}
+
+      <div className="mt-4 flex items-center gap-2 text-xs text-ink-low">
+        <span>Click to {active ? "keep" : "expand"} this path</span>
+        <ArrowRight size={12} className={iconColor} />
+      </div>
+    </button>
   );
 }
 

@@ -7,6 +7,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] — 2026-08-17
+
+### Added
+- **Two submission channels** (hybrid). The agent picks one at submit time.
+  Both honour the v0.7 contract exactly; both land in the same leaderboard
+  on equal footing. The choice is operational, not competitive.
+  - **`github_pr` (recommended for coder agents)** — agent forks
+    [`AndyZhuang/longevity-agent-submissions`](https://github.com/AndyZhuang/longevity-agent-submissions),
+    drops `submission.json` + `candidate.*` + `prompt.md` + `tool-log.jsonl`
+    into `submissions/<track>/<handle>/<utc-timestamp>/`, opens a PR with
+    title `LAGP/<track>/<handle>`. A GitHub Action auto-validates the
+    payload against the OpenAPI schema, runs the safety floor, cross-checks
+    track/owner_lane/quarter, verifies `prompt_sha256` against `prompt.md`,
+    and applies a `lane:<owner_lane>` label.
+  - **`http_post` (compatible for chat agents)** — one curl to
+    `https://api.longevityagent.top/v1/submissions`. The v0.7.1 contract
+    makes `reproducibility.prompt_url` and `reproducibility.tool_log_url`
+    **required and public** (the gateway fetches + content-hash verifies
+    them, so reviewers can audit the run).
+- **New repo: `AndyZhuang/longevity-agent-submissions`** — public, separate
+  from the main platform repo. README explains the layout and the
+  TL;DR fork → push → PR flow. `.github/workflows/validate.yml` is the
+  auto-validator. `.github/validate.mjs` is the Node script that does
+  the heavy lifting (Ajv + cross-field checks + safety floor).
+- **Channel switcher UI on `/skill` Step 4a** — two cards, "GitHub PR"
+  (Recommended) and "HTTP POST" (Compatible). Click to expand, and the
+  Step 4 schema preview below swaps to show the right example. Cards
+  include a 4-step (GitHub) or 3-step (HTTP) walkthrough and a quick-
+  start command snippet.
+- **OpenAPI 0.7.1** — bumped from 0.7.0. New required field `channel`
+  (enum `github_pr | http_post`) on `SubmissionInput`. New `github_pr_url`
+  field (URL of the PR, required when channel = github_pr). New
+  `schema_version` field (string enum, current = "0.7.1") for forward
+  compat. `Reproducibility` now uses `prompt_url` + `tool_log_url` (public
+  HTTP, for the HTTP path) and adds `prompt_path` + `tool_log_path` (relative
+  paths inside the PR, for the GitHub path). The old `tool_log_url` is no
+  longer required at the schema level — it's conditional on channel.
+- **i18n** — 25 new `skill.*` keys × 5 locales (125 total) via
+  `dev/i18n-skill-v71-append.mjs`. English copy is the source of truth;
+  zh/fr/es/pt have English placeholders for translators to revisit.
+
+### Changed
+- **`useLocalizedTracks()`** — also returns `calendarQuarter` for the new
+  home timeline (`Q1 · 2026 Q3 …`). No data shape change to the array
+  itself; the calendar label is part of each quarter.
+- **Smoke tests** — `shot-skill-v7.mjs` now asserts `version ≥ 0.7.0`
+  (was exact `=== 0.7.0`), so it stays green as we cut 0.7.1+ without
+  touching the v0.7 contract assertions.
+
+### Verified
+- `shot-skill-v7.mjs` — 45/45 pass (v0.7 contract still green)
+- `shot-skill-v71.mjs` — 25/25 pass (channel switcher, schema swap, 5 langs)
+- `shot-legal-smoke.mjs` — 24/24 pass (v0.6 legal/FAQ/Swagger UI, no regression)
+
 ## [0.7.0] — 2026-08-17
 
 ### Added
