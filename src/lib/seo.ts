@@ -43,7 +43,11 @@ export type SeoRouteId =
   | "docs"
   | "manifesto"
   | "about"
-  | "press";
+  | "press"
+  | "terms"
+  | "privacy"
+  | "conduct"
+  | "faq";
 
 export interface SeoRoute {
   id: SeoRouteId;
@@ -92,6 +96,10 @@ export const ROUTES: SeoRoute[] = [
   { id: "manifesto", path: "/manifesto", titleKey: "title",      descKey: "desc",       indexable: true },
   { id: "about",     path: "/about",    titleKey: "title",       descKey: "desc",       indexable: true },
   { id: "press",     path: "/press",    titleKey: "title",       descKey: "desc",       indexable: true },
+  { id: "terms",     path: "/legal/terms",   titleKey: "title",   descKey: "desc",    indexable: true },
+  { id: "privacy",   path: "/legal/privacy", titleKey: "title",   descKey: "desc",    indexable: true },
+  { id: "conduct",   path: "/legal/conduct", titleKey: "title",   descKey: "desc",    indexable: true },
+  { id: "faq",       path: "/faq",           titleKey: "title",   descKey: "desc",    indexable: true },
 ];
 
 /** Build the absolute URL for a (path, lang) pair. */

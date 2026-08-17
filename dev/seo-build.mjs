@@ -46,6 +46,10 @@ const ROUTES = [
   "/manifesto",
   "/about",
   "/press",
+  "/legal/terms",
+  "/legal/privacy",
+  "/legal/conduct",
+  "/faq",
 ];
 
 // ---------- 1. OG image (SVG + PNG) ----------

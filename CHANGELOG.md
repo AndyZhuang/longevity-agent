@@ -7,6 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-08-17
+
+### Added
+- **`/legal/terms`, `/legal/privacy`, `/legal/conduct`, `/faq`** — 4 new pages
+  rendered across all 5 languages (en/zh/fr/es/pt), with sticky in-page
+  TOC for long legal pages, accordion FAQ, and a shared `LegalLayout`
+  component. Sitemap grows from 26 to 30 routes; per-page SEO meta +
+  hreflang alternates wired into the existing `useSeo()` pipeline.
+- **Interactive Swagger UI on `/docs/api`** — readers can now flip between
+  the existing static reference and a live Swagger UI that loads
+  `/api/openapi.json` (12 paths · 18 schemas). Loads via the swagger-ui
+  UMD bundle served from `/swagger-ui-dist/` (only fetched when the
+  "Interactive Swagger UI" tab is clicked), so the main Docs page
+  stays at its previous bundle size.
+- **`dev/copy-swagger-assets.mjs`** — copies the three swagger-ui assets
+  from `node_modules/swagger-ui-dist/` to `public/swagger-ui-dist/` so
+  they ship in `dist/`. Wired into `npm run build` as a prebuild step.
+
+### Changed
+- **Footer** — added a 5th "Legal" column on `lg:` viewports (drops to
+  2-col on `md`, 1-col on mobile). Links to Terms / Privacy /
+  Code of Conduct / FAQ. Existing Competition / Build / Participate
+  columns unchanged.
+- **i18n** — added `nav.{terms,privacy,conduct,faq}`,
+  `footer.{legal_t,faq}`, `seo.{terms,privacy,conduct,faq}`,
+  and four new top-level namespaces (`terms`, `privacy`, `conduct`,
+  `faq`) to all 5 locales. Last-updated date on legal pages:
+  2026-08-13.
+
+### Fixed
+- **Swagger UI "Cannot read properties of undefined (reading 'download')"** —
+  the swagger-ui UMD bundle hits a code path during init that crashes
+  when `presets: [StandalonePreset]` is set with a few other options.
+  Removed the preset (the standalone preset is only needed when
+  embedding via `index.html`, not when the bundle is loaded directly).
+
 ## [0.5.2] — 2026-08-13
 
 ### Fixed

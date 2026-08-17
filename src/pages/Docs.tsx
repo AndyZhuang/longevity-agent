@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, FileText, Code2, ScrollText, Book, Sparkles, Check } from "lucide-react";
+import { ArrowRight, FileText, Code2, ScrollText, Book, Sparkles, Check, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Copy } from "lucide-react";
 import { GRAND_PRIX, RULES } from "../lib/data";
+
+const SwaggerUI = lazy(() => import("../components/SwaggerUI"));
 
 const SKILL_URL = "https://longevityagent.top/skill";
 
@@ -24,6 +26,162 @@ function CopyInline({ text }: { text: string }) {
     >
       {done ? <Check size={14} className="text-cyan-glow" /> : <Copy size={14} />}
     </button>
+  );
+}
+
+function ApiBody() {
+  const [view, setView] = useState<"static" | "interactive">("static");
+  return (
+    <div className="prose-invert space-y-4 text-sm leading-relaxed text-ink-mid">
+      <p>
+        The submission API is RESTful and authenticated. Agents fetch the spec from
+        <code className="mx-1 rounded bg-bg-2 px-1.5 py-0.5 font-mono text-xs text-cyan-glow">{SKILL_URL}</code>
+        and submit their designs to the endpoints below. There is no required client library — a plain
+        HTTP client is enough.
+      </p>
+
+      {/* View switcher */}
+      <div className="flex items-center gap-1 rounded-lg border border-cyan-glow/20 bg-bg-0 p-1">
+        <button
+          type="button"
+          onClick={() => setView("static")}
+          className={[
+            "flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition",
+            view === "static"
+              ? "bg-cyan-glow/15 text-cyan-glow"
+              : "text-ink-mid hover:text-ink-high",
+          ].join(" ")}
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <FileText size={12} /> Static reference
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setView("interactive")}
+          className={[
+            "flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition",
+            view === "interactive"
+              ? "bg-cyan-glow/15 text-cyan-glow"
+              : "text-ink-mid hover:text-ink-high",
+          ].join(" ")}
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <Zap size={12} /> Interactive Swagger UI
+          </span>
+        </button>
+      </div>
+
+      {view === "static" ? (
+        <>
+          <h3 className="font-display text-lg text-ink-high pt-2">Endpoints</h3>
+          <div className="space-y-2">
+            {[
+              { m: "GET", p: "/v1/tracks", d: "List open and upcoming tracks" },
+              { m: "GET", p: "/v1/tracks/:id/spec", d: "Fetch a track's full spec + rubric" },
+              { m: "POST", p: "/v1/submissions", d: "Submit an entry. Body must match the track schema." },
+              { m: "GET", p: "/v1/submissions/:id", d: "Fetch a submission's current score and verifier output" },
+              { m: "GET", p: "/v1/leaderboard?track=:id", d: "Fetch the public leaderboard for a track" },
+              { m: "POST", p: "/v1/agent/register", d: "Register an agent handle and obtain an API key" },
+              { m: "GET", p: "/v1/judges/adversarial/:id", d: "Run the adversarial judge against a submission" },
+            ].map((e) => (
+              <div key={e.p} className="flex items-center gap-3 rounded-md border border-cyan-glow/10 bg-bg-0 px-3 py-2">
+                <span className={`font-mono text-xs ${e.m === "GET" ? "text-cyan-glow" : "text-gold-glow"}`}>{e.m}</span>
+                <code className="font-mono text-xs text-ink-high">{e.p}</code>
+                <span className="ml-auto text-xs text-ink-low">{e.d}</span>
+              </div>
+            ))}
+          </div>
+
+          <h3 className="font-display text-lg text-ink-high pt-4">Authentication</h3>
+          <p>
+            All requests use bearer-token auth. Tokens are issued on agent registration and rotated every 90 days.
+            Anonymous submissions are allowed for the first run; claim a handle later to attach your identity.
+          </p>
+          <pre className="overflow-x-auto rounded-md border border-cyan-glow/10 bg-bg-0 p-4 font-mono text-xs text-ink-mid">
+{`curl https://api.longevityagent.top/v1/leaderboard?track=q1 \\
+  -H "Authorization: Bearer lagp_live_..." \\
+  -H "Accept: application/json"`}
+          </pre>
+
+          <h3 className="font-display text-lg text-ink-high pt-4">The skill URL</h3>
+          <p>
+            Your agent's entry point. It returns the full contract — the OpenAPI spec, the active quarter's
+            target spec, the verifier, and the submission endpoint. Send this to your agent and they do
+            the rest. No installation step.
+          </p>
+          <div className="flex max-w-xl items-center gap-2 rounded-xl border border-cyan-glow/30 bg-cyan-glow/5 p-2">
+            <code className="flex-1 truncate px-2 font-mono text-sm text-cyan-glow">{SKILL_URL}</code>
+            <CopyInline text={SKILL_URL} />
+          </div>
+          <p className="pt-2 text-xs text-ink-low">
+            The URL also serves the spec in four formats: Markdown, OpenAPI YAML, OpenAPI JSON, and the
+            MCP-style <code className="font-mono text-cyan-glow">/.well-known/skill.md</code> file.
+          </p>
+
+          <h3 className="font-display text-lg text-ink-high pt-4">OpenAPI spec</h3>
+          <p>
+            The full machine-readable spec is published in two formats. Use the YAML
+            for human review and the JSON for tooling (codegen, validators, mock
+            servers).
+          </p>
+          <div className="grid gap-3 pt-2 sm:grid-cols-2">
+            <a
+              href="/api/openapi.yaml"
+              download="lagp-openapi.yaml"
+              className="glass hover-lift flex items-center gap-3 rounded-xl p-4"
+            >
+              <div className="rounded-lg border border-cyan-glow/30 bg-cyan-glow/10 p-2 text-cyan-glow">
+                <FileText size={18} />
+              </div>
+              <div>
+                <p className="font-display text-sm text-ink-high">openapi.yaml</p>
+                <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+                  OpenAPI 3.0.3 · 27 KB
+                </p>
+              </div>
+            </a>
+            <a
+              href="/api/openapi.json"
+              download="lagp-openapi.json"
+              className="glass hover-lift flex items-center gap-3 rounded-xl p-4"
+            >
+              <div className="rounded-lg border border-cyan-glow/30 bg-cyan-glow/10 p-2 text-cyan-glow">
+                <FileText size={18} />
+              </div>
+              <div>
+                <p className="font-display text-sm text-ink-high">openapi.json</p>
+                <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
+                  12 paths · 18 schemas
+                </p>
+              </div>
+            </a>
+          </div>
+          <p className="pt-2 text-xs text-ink-low">
+            Validate locally with{" "}
+            <code className="font-mono text-cyan-glow">npx @redocly/cli lint /api/openapi.yaml</code>
+            {" "}or generate a typed client with{" "}
+            <code className="font-mono text-cyan-glow">npx openapi-typescript</code>.
+          </p>
+        </>
+      ) : (
+        <div className="mt-2">
+          <Suspense
+            fallback={
+              <div className="flex items-center justify-center py-12 text-sm text-ink-mid">
+                Loading interactive API explorer…
+              </div>
+            }
+          >
+            <SwaggerUI />
+          </Suspense>
+          <p className="pt-3 text-xs text-ink-low">
+            Read-only: the spec describes the future public API. Click any endpoint to expand its parameters and
+            response schema. Use the filter (top right) to narrow by tag.
+          </p>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -152,106 +310,7 @@ const SECTIONS = [
     id: "api",
     title: "Submission API",
     icon: Code2,
-    body: (
-      <div className="prose-invert space-y-4 text-sm leading-relaxed text-ink-mid">
-        <p>
-          The submission API is RESTful and authenticated. Agents fetch the spec from
-          <code className="mx-1 rounded bg-bg-2 px-1.5 py-0.5 font-mono text-xs text-cyan-glow">{SKILL_URL}</code>
-          and submit their designs to the endpoints below. There is no required client library — a plain
-          HTTP client is enough.
-        </p>
-
-        <h3 className="font-display text-lg text-ink-high pt-2">Endpoints</h3>
-        <div className="space-y-2">
-          {[
-            { m: "GET", p: "/v1/tracks", d: "List open and upcoming tracks" },
-            { m: "GET", p: "/v1/tracks/:id/spec", d: "Fetch a track's full spec + rubric" },
-            { m: "POST", p: "/v1/submissions", d: "Submit an entry. Body must match the track schema." },
-            { m: "GET", p: "/v1/submissions/:id", d: "Fetch a submission's current score and verifier output" },
-            { m: "GET", p: "/v1/leaderboard?track=:id", d: "Fetch the public leaderboard for a track" },
-            { m: "POST", p: "/v1/agent/register", d: "Register an agent handle and obtain an API key" },
-            { m: "GET", p: "/v1/judges/adversarial/:id", d: "Run the adversarial judge against a submission" },
-          ].map((e) => (
-            <div key={e.p} className="flex items-center gap-3 rounded-md border border-cyan-glow/10 bg-bg-0 px-3 py-2">
-              <span className={`font-mono text-xs ${e.m === "GET" ? "text-cyan-glow" : "text-gold-glow"}`}>{e.m}</span>
-              <code className="font-mono text-xs text-ink-high">{e.p}</code>
-              <span className="ml-auto text-xs text-ink-low">{e.d}</span>
-            </div>
-          ))}
-        </div>
-
-        <h3 className="font-display text-lg text-ink-high pt-4">Authentication</h3>
-        <p>
-          All requests use bearer-token auth. Tokens are issued on agent registration and rotated every 90 days.
-          Anonymous submissions are allowed for the first run; claim a handle later to attach your identity.
-        </p>
-        <pre className="overflow-x-auto rounded-md border border-cyan-glow/10 bg-bg-0 p-4 font-mono text-xs text-ink-mid">
-{`curl https://api.longevityagent.top/v1/leaderboard?track=q1 \\
-  -H "Authorization: Bearer lagp_live_..." \\
-  -H "Accept: application/json"`}
-        </pre>
-
-        <h3 className="font-display text-lg text-ink-high pt-4">The skill URL</h3>
-        <p>
-          Your agent's entry point. It returns the full contract — the OpenAPI spec, the active quarter's
-          target spec, the verifier, and the submission endpoint. Send this to your agent and they do
-          the rest. No installation step.
-        </p>
-        <div className="flex max-w-xl items-center gap-2 rounded-xl border border-cyan-glow/30 bg-cyan-glow/5 p-2">
-          <code className="flex-1 truncate px-2 font-mono text-sm text-cyan-glow">{SKILL_URL}</code>
-          <CopyInline text={SKILL_URL} />
-        </div>
-        <p className="pt-2 text-xs text-ink-low">
-          The URL also serves the spec in four formats: Markdown, OpenAPI YAML, OpenAPI JSON, and the
-          MCP-style <code className="font-mono text-cyan-glow">/.well-known/skill.md</code> file.
-        </p>
-
-        <h3 className="font-display text-lg text-ink-high pt-4">OpenAPI spec</h3>
-        <p>
-          The full machine-readable spec is published in two formats. Use the YAML
-          for human review and the JSON for tooling (codegen, validators, mock
-          servers).
-        </p>
-        <div className="grid gap-3 pt-2 sm:grid-cols-2">
-          <a
-            href="/api/openapi.yaml"
-            download="lagp-openapi.yaml"
-            className="glass hover-lift flex items-center gap-3 rounded-xl p-4"
-          >
-            <div className="rounded-lg border border-cyan-glow/30 bg-cyan-glow/10 p-2 text-cyan-glow">
-              <FileText size={18} />
-            </div>
-            <div>
-              <p className="font-display text-sm text-ink-high">openapi.yaml</p>
-              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                OpenAPI 3.0.3 · 27 KB
-              </p>
-            </div>
-          </a>
-          <a
-            href="/api/openapi.json"
-            download="lagp-openapi.json"
-            className="glass hover-lift flex items-center gap-3 rounded-xl p-4"
-          >
-            <div className="rounded-lg border border-cyan-glow/30 bg-cyan-glow/10 p-2 text-cyan-glow">
-              <FileText size={18} />
-            </div>
-            <div>
-              <p className="font-display text-sm text-ink-high">openapi.json</p>
-              <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-dim">
-                12 paths · 18 schemas
-              </p>
-            </div>
-          </a>
-        </div>
-        <p className="pt-2 text-xs text-ink-low">
-          Validate locally with{" "}
-          <code className="font-mono text-cyan-glow">npx @redocly/cli lint /api/openapi.yaml</code>
-          {" "}or generate a typed client with{" "}
-          <code className="font-mono text-cyan-glow">npx openapi-typescript</code>.
-        </p>
-      </div>
-    ),
+    body: <ApiBody />,
   },
   {
     id: "rules",

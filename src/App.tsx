@@ -21,6 +21,10 @@ const Press = lazy(() => import("./pages/Press"));
 const Agents = lazy(() => import("./pages/Agents"));
 const AgentDetail = lazy(() => import("./pages/AgentDetail"));
 const Skill = lazy(() => import("./pages/Skill"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const CodeOfConduct = lazy(() => import("./pages/CodeOfConduct"));
+const FAQ = lazy(() => import("./pages/FAQ"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function PageFallback() {
@@ -81,6 +85,10 @@ export default function App() {
             <Route path="/manifesto" element={<Manifesto />} />
             <Route path="/about" element={<About />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/legal/terms" element={<Terms />} />
+            <Route path="/legal/privacy" element={<Privacy />} />
+            <Route path="/legal/conduct" element={<CodeOfConduct />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<NotFound />} />
 
             {/* Localized (/:lang/...) */}
@@ -101,6 +109,10 @@ export default function App() {
             <Route path="/:lang/manifesto" element={<Localized><Manifesto /></Localized>} />
             <Route path="/:lang/about" element={<Localized><About /></Localized>} />
             <Route path="/:lang/register" element={<Localized><Register /></Localized>} />
+            <Route path="/:lang/legal/terms" element={<Localized><Terms /></Localized>} />
+            <Route path="/:lang/legal/privacy" element={<Localized><Privacy /></Localized>} />
+            <Route path="/:lang/legal/conduct" element={<Localized><CodeOfConduct /></Localized>} />
+            <Route path="/:lang/faq" element={<Localized><FAQ /></Localized>} />
             <Route path="/:lang/*" element={<Localized><NotFound /></Localized>} />
           </Routes>
         </AnimatePresence>

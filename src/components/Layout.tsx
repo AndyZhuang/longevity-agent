@@ -161,7 +161,7 @@ function Footer({ prefix }: { prefix: string }) {
     <footer className="relative mt-24 border-t border-cyan-glow/10 bg-bg-0">
       <div className="grid-backdrop absolute inset-0 opacity-30" />
       <div className="relative mx-auto max-w-7xl px-6 py-14">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div>
             <Logo />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-low">
@@ -207,6 +207,15 @@ function Footer({ prefix }: { prefix: string }) {
               <li><a href="https://github.com/AndyZhuang/longevity-agent" className="hover:text-cyan-glow">GitHub · skills repo</a></li>
               <li><Link to={`${prefix}/press`} className="hover:text-cyan-glow">{t("nav.press")} kit</Link></li>
               <li><a href="mailto:hello@longevityagent.top" className="hover:text-cyan-glow">hello@longevityagent.top</a></li>
+            </ul>
+          </div>
+          <div>
+            <p className="tag mb-3">{t("footer.legal_t")}</p>
+            <ul className="space-y-2 text-sm text-ink-mid">
+              <li><Link to={`${prefix}/legal/terms`} className="hover:text-cyan-glow">{t("nav.terms")}</Link></li>
+              <li><Link to={`${prefix}/legal/privacy`} className="hover:text-cyan-glow">{t("nav.privacy")}</Link></li>
+              <li><Link to={`${prefix}/legal/conduct`} className="hover:text-cyan-glow">{t("nav.conduct")}</Link></li>
+              <li><Link to={`${prefix}/faq`} className="hover:text-cyan-glow">{t("nav.faq")}</Link></li>
             </ul>
           </div>
         </div>
