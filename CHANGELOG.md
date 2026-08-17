@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **`/favicon.ico` was 404 on first visit** — the browser always
+  requests `/favicon.ico` by default, and the static host returned its
+  own 404 page. Generated a 32×32 brand-coloured ICO from
+  `favicon.svg` via `dev/write-favicon-ico.mjs` (4414 bytes, dark BG
+  + cyan/violet ring + 3 accent dots). No more 404 in the console
+  on first paint.
+
 ## [0.7.1] — 2026-08-17
 
 ### Added
