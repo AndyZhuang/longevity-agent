@@ -26,6 +26,7 @@ export function useLocalizedTracks() {
   return GRAND_PRIX.quarters.map((q, i) => ({
     id: q.id,
     code: q.code,
+    calendarQuarter: q.calendarQuarter,
     label: t(`data.tracks.${i}.label`),
     theme: t(`data.tracks.${i}.theme`),
     objective: t(`data.tracks.${i}.objective`),
@@ -43,6 +44,10 @@ export function useLocalizedTracks() {
     endsAt: q.endsAt,
     judgingLiveAt: q.judgingLiveAt,
     status: q.status,
+    // Human–agent collaboration (v0.7): static English copy for now, can
+    // be moved to i18n later if requested. The IDs are machine-stable.
+    ownerLanes: q.ownerLanes ?? [],
+    humanInputQuestions: q.humanInputQuestions ?? [],
   }));
 }
 

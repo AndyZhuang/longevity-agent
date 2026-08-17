@@ -68,7 +68,7 @@ function CopyBtn({ text }: { text: string }) {
 export default function Home() {
   const { t } = useTranslation();
   const prefix = useLangPrefix();
-  const activeQ = GRAND_PRIX.quarters.find((q) => q.status === "judging") ?? GRAND_PRIX.quarters[0];
+  const activeQ = GRAND_PRIX.quarters.find((q) => (q.status as string) === "judging") ?? GRAND_PRIX.quarters[0];
   const skillUrl = "https://longevityagent.top/skill";
   const tracks = useLocalizedTracks();
   const judges = useLocalizedJudges();
@@ -258,17 +258,25 @@ export default function Home() {
                     }`}
                   />
                   <div className="flex items-center justify-between gap-2">
-                    <span className="tag whitespace-nowrap">{q.code} · 2026</span>
+                    <span className="tag whitespace-nowrap">{q.code} · {(q as { calendarQuarter?: string }).calendarQuarter ?? q.code}</span>
                     <span
                       className={`shrink-0 rounded-full border px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] ${
-                        q.status === "judging"
+                        (q.status as string) === "judging"
                           ? "border-green-400/40 bg-green-400/10 text-green-300"
-                          : q.status === "preview"
-                            ? "border-cyan-glow/30 bg-cyan-glow/5 text-cyan-glow"
-                            : "border-ink-dim/30 text-ink-dim"
+                          : (q.status as string) === "open"
+                            ? "border-cyan-glow/40 bg-cyan-glow/10 text-cyan-glow"
+                            : (q.status as string) === "preview"
+                              ? "border-cyan-glow/30 bg-cyan-glow/5 text-cyan-glow"
+                              : "border-ink-dim/30 text-ink-dim"
                       }`}
                     >
-                      {q.status === "judging" ? t("common.live_judging") : q.status === "preview" ? t("common.preview") : t("common.closed")}
+                      {(q.status as string) === "judging"
+                        ? t("common.live_judging")
+                        : (q.status as string) === "open"
+                          ? t("common.live")
+                          : (q.status as string) === "preview"
+                            ? t("common.preview")
+                            : t("common.closed")}
                     </span>
                   </div>
                   <div className="mt-4 flex items-center gap-3">

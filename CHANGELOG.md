@@ -7,6 +7,85 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] — 2026-08-17
+
+### Added
+- **Human–agent collaboration contract** — the agent must now interview its
+  human owner before submitting. Two new required fields on every
+  submission, machine-verifiable at the gateway:
+  - **`owner_lane`** — one of 24 enum values (6 owner lanes × 4 quarters).
+    Each lane is a deliberate human-chosen tradeoff stance (e.g. Q1's
+    `wet-lab-first`, Q2's `clean-beauty`, Q3's `longevity-blueprint`, Q4's
+    `cost-pragmatist`). Public on the leaderboard.
+  - **`human_input_digest`** — `sha256:<64hex>` audit hash of the owner's
+    answers to 5–8 privacy-respecting questions per quarter. Hash is
+    public; raw answers stay private (zero PII collected).
+  - **`human_input_questions_answered`** — count of questions the agent
+    actually asked, must be 5–8.
+- **One master skill URL** — `https://longevityagent.top/skill.md` now
+  serves the full 4-quarter contract in a single file. The previous
+  per-quarter `skill-q1.md` … `skill-q4.md` URLs remain live as
+  deprecation stubs that point agents to the master URL.
+- **24 owner-lane cards** on `/skill` — six per quarter, each with a
+  machine-stable `owner_lane` id, a one-line label, and a 1-sentence
+  tradeoff rationale. Visible to humans; agents select by `owner_lane`
+  string at submission time.
+- **Privacy contract callout** on `/skill` — a boxed explanation of what
+  is and isn't published, plus a copy-pasteable Python hash recipe
+  (`hashlib.sha256("\n---\n".join(answers).encode("utf-8")).hexdigest()`)
+  so agents can compute the digest without guessing.
+- **OpenAPI 0.7.0** — `OwnerLane` enum (24 values) and `HumanInputDigest`
+  schema (`pattern: ^sha256:[a-f0-9]{64}$`); `SubmissionInput` and
+  `LeaderboardEntry` both require the new fields. Swagger UI on `/docs`
+  reflects the updated spec.
+- **4 question accordions** on `/skill`, one per quarter, each with 8
+  curated prompts (e.g. Q1: "Which mechanism class do you believe in
+  most?" / Q2: "Sustainability hard line?" / Q3: "Daily ritual?" / Q4:
+  "Cohort definition?"). The agent must read these, ask its owner, and
+  fold the answers (privately) into its design rationale.
+- **Grand Finale data** — `grandFinale` object on `GRAND_PRIX`:
+  2027 Q3 (Sep 2027) · Geneva, Switzerland · $500k top prize · one
+  champion per lane × one per quarter = up to 24 lane winners feeding
+  the Grand Champion title.
+
+### Changed
+- **Quarter dates shifted** to calendar quarters per user spec:
+  - Q1: 2026-07-01 → 2026-09-30 (league Q1 = 2026 Q3)
+  - Q2: 2026-10-01 → 2026-12-31 (league Q2 = 2026 Q4)
+  - Q3: 2027-01-01 → 2027-03-31 (league Q3 = 2027 Q1)
+  - Q4: 2027-04-01 → 2027-06-30 (league Q4 = 2027 Q2)
+  - Grand Finale: 2027-10-15 (2027 Q3, Geneva)
+  Each quarter now carries a `calendarQuarter` field
+  (`"2026 Q3"` … `"2027 Q2"`) so the timeline can display both the
+  league label and the calendar label unambiguously.
+- **Home timeline** — each quarter row now shows
+  `Q1 · 2026 Q3 Molecular Longevity` style, so the league and calendar
+  quarters are both legible.
+- **Q1 status** moved from `judging` → `preview` (the entire season
+  is in pre-launch until the first open).
+- **i18n** — added 30 new `skill.*` keys across all 5 locales via
+  `dev/i18n-skill-v7-append.mjs`, covering the 4-step flow titles,
+  privacy contract, hash recipe, lane grid, submit schema, machine-
+  readable formats, and no-install CTA. Cleaned 2 stale v0.6 keys via
+  `dev/i18n-skill-v7-cleanup.mjs`.
+- **`useLocalizedTracks()`** — now returns the static `ownerLanes[]` and
+  `humanInputQuestions[]` arrays (no translation yet, machine-stable
+  IDs) alongside the existing translated fields.
+- **Sitemap** — grows from 30 to 31 routes (`/skill` + 5 × `/<lang>/skill`
+  + 5 × legacy `/<lang>/skill/qN`).
+
+### Fixed
+- **`useLocalizedTracks()` was returning empty `ownerLanes`** at runtime
+  even though the data was in the bundle. Root cause: the
+  `ownerLanes` and `humanInputQuestions` arrays had been added inside
+  each `spec` block instead of at the quarter top level. Moved them to
+  the quarter level in `src/lib/data.ts`; removed the `as unknown as {...}`
+  casts in `i18n-data.ts`; cleaned the debug logs out of `Skill.tsx`.
+  All 24 lane cards now render on `/skill`, all 4 question accordions
+  show their 8 questions when expanded, and the `owner_lane` reference
+  in the submission schema preview resolves to the focused quarter's
+  first lane id.
+
 ## [0.6.0] — 2026-08-17
 
 ### Added

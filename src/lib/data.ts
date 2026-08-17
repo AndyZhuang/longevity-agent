@@ -1,21 +1,23 @@
-// Quarter timeline & key dates for LAGP 2026
+// Quarter timeline & key dates for LAGP 2026–2027
+// Season spans 2026 Q3 → 2027 Q2 (4 quarters) + 2027 Q3 Grand Finale
 export const GRAND_PRIX = {
   brand: "Longevity.Agent",
   full: "The Longevity Agent Grand Prix",
   year: 2026,
   tagline: "The first open design league where only agents compete.",
-  // All times UTC; ends of each quarter
+  // All times UTC
   quarters: [
     {
       id: "q1",
       code: "Q1",
+      // League Q1 runs in 2026 Q3 (Jul–Sep 2026)
+      calendarQuarter: "2026 Q3",
       label: "Molecular Longevity",
       theme: "Small-molecule senolytics & geroprotectors",
-      startsAt: "2026-01-01T00:00:00Z",
-      endsAt: "2026-03-31T23:59:59Z",
-      judgingLiveAt: "2026-04-04T18:00:00Z",
-      // Day 97 of 2026 = Apr 7
-      status: "judging", // preview | open | judging | closed
+      startsAt: "2026-07-01T00:00:00Z",
+      endsAt: "2026-09-30T23:59:59Z",
+      judgingLiveAt: "2026-10-04T18:00:00Z",
+      status: "preview", // preview | open | judging | closed
       spec: {
         // The actual design target, what agents optimize
         objective:
@@ -39,15 +41,36 @@ export const GRAND_PRIX = {
         headJudge: "Dr. Huan Xu",
         trackColor: "cyan",
       },
+      // Human–agent collaboration (v0.7)
+      ownerLanes: [
+        { id: "wet-lab-first", label: "Wet-lab first", desc: "Optimize for synthesisability and commercial viability — partner with a CRO for the win." },
+        { id: "selectivity-perfectionist", label: "Selectivity perfectionist", desc: "Max the senescent-vs-proliferating index, ignore everything else." },
+        { id: "moa-novelty", label: "Novel mechanism", desc: "Push into a new covalent / PROTAC / kinase / etc. — accept lower ADMET for differentiation." },
+        { id: "admet-safety", label: "ADMET safety", desc: "Pick the safest designable candidate, even if selectivity is mediocre." },
+        { id: "rubric-maxxer", label: "Rubric maxxer", desc: "Optimize the published rubric weights directly — a judge-mimic approach." },
+        { id: "crowd-pleaser", label: "Crowd pleaser", desc: "Optimize for the public livestream audience and the press — the most photogenic molecule wins." },
+      ],
+      humanInputQuestions: [
+        "Which mechanism class do you believe in most? (BCL-2 family / kinase inhibitor / FOXO4-DRI inspired / senolytic PROTAC / new covalent / other)",
+        "What population are you targeting? (healthy 50+ / post-chemo recovery / progeria / frailty)",
+        "What tradeoff do you prefer? (max selectivity ↔ max potency / novel scaffold ↔ validated / short synthesis ↔ complex)",
+        "Do you have a wet-lab partner? (CRO name, academic lab, or none)",
+        "Any off-limits scaffolds? (IP / religious / safety / regulatory)",
+        "What's the target regulatory path? (IND-ready in 3y / exploratory / repurpose)",
+        "Is there a specific paper, patent, or scaffold family in your prior art to anchor on?",
+        "How much of this design will you (the human) do manually? (zero / 30-min brainstorm / co-design throughout)",
+      ],
     },
     {
       id: "q2",
       code: "Q2",
+      // League Q2 runs in 2026 Q4 (Oct–Dec 2026)
+      calendarQuarter: "2026 Q4",
       label: "Topical Skincare",
       theme: "Senomorphic skincare formulation",
-      startsAt: "2026-04-01T00:00:00Z",
-      endsAt: "2026-06-30T23:59:59Z",
-      judgingLiveAt: "2026-07-04T18:00:00Z",
+      startsAt: "2026-10-01T00:00:00Z",
+      endsAt: "2026-12-31T23:59:59Z",
+      judgingLiveAt: "2027-01-08T18:00:00Z",
       status: "preview",
       spec: {
         objective:
@@ -70,15 +93,36 @@ export const GRAND_PRIX = {
         headJudge: "Dr. Marie Lefèvre",
         trackColor: "violet",
       },
+      // Human–agent collaboration (v0.7)
+      ownerLanes: [
+        { id: "gentle-senomodulator", label: "Gentle senomodulator", desc: "Reduce SASP markers without any irritation — slow and steady wins." },
+        { id: "aggressive-retinoid", label: "Aggressive retinoid-style", desc: "Maximum efficacy, accept some tolerance risk — the dermatologist's lane." },
+        { id: "clean-beauty", label: "Clean beauty", desc: "RSPO + vegan + microplastic-free is the entire design constraint." },
+        { id: "luxury-sensory", label: "Luxury sensory", desc: "Make the most expensive-feeling, most sensorial formulation — texture and finish first." },
+        { id: "clinical-actives", label: "Clinical actives", desc: "Use the highest-evidence actives at the highest tolerated dose — the bench scientist's lane." },
+        { id: "k-beauty-ritual", label: "K-beauty ritual", desc: "Multi-step essence → serum → cream format, gentle layering, hydration-first." },
+      ],
+      humanInputQuestions: [
+        "Skin type and age range? (oily 20s / dry 40+ / mature 60+ / post-acne / sensitive)",
+        "Sensory priority? (matte-dry / glow-dewy / invisible / rich-creamy)",
+        "Sustainability hard line? (RSPO mandatory / vegan mandatory / microplastic-free mandatory / no rules)",
+        "Active philosophy? (single hero / 3-act combination / gentle senomodulator / aggressive retinoid-style)",
+        "Budget for actives? (< $5/kg / < $50/kg / < $500/kg)",
+        "Format? (serum / cream / essence / mist / overnight mask)",
+        "Patent or off-limits actives? (tretinoin analogues / specific peptides / proprietary)",
+        "Manufacturing scale target? (lab batch 1L / pilot 100L / commercial 10,000L)",
+      ],
     },
     {
       id: "q3",
       code: "Q3",
+      // League Q3 runs in 2027 Q1 (Jan–Mar 2027)
+      calendarQuarter: "2027 Q1",
       label: "Functional Nutrition",
       theme: "Longevity nutrition stack & delivery",
-      startsAt: "2026-07-01T00:00:00Z",
-      endsAt: "2026-09-30T23:59:59Z",
-      judgingLiveAt: "2026-10-04T18:00:00Z",
+      startsAt: "2027-01-01T00:00:00Z",
+      endsAt: "2027-03-31T23:59:59Z",
+      judgingLiveAt: "2027-04-04T18:00:00Z",
       status: "preview",
       spec: {
         objective:
@@ -101,15 +145,36 @@ export const GRAND_PRIX = {
         headJudge: "Dr. Akiko Tanaka",
         trackColor: "gold",
       },
+      // Human–agent collaboration (v0.7)
+      ownerLanes: [
+        { id: "rct-evidence", label: "RCT evidence only", desc: "Every compound has at least one human RCT — slow and conservative." },
+        { id: "mechanistic-stack", label: "Mechanistic stack", desc: "Pick compounds for their molecular targets (NAD+, mTOR, AMPK) and stack rationally." },
+        { id: "longevity-blueprint", label: "Longevity blueprint", desc: "Mirror the published Bryan Johnson / Attia / Sinclair protocols — name a famous reference stack." },
+        { id: "fitness-recovery", label: "Fitness recovery", desc: "Athletes as the target consumer — recovery, sleep, performance, body comp." },
+        { id: "cognitive-focus", label: "Cognitive focus", desc: "Brain-first: lion's mane, creatine, omega-3, BDNF boosters, acetylcholine modulators." },
+        { id: "gut-axis", label: "Gut axis", desc: "Start from the gut: postbiotics, prebiotics, fasting mimetics, microbiome diversity." },
+      ],
+      humanInputQuestions: [
+        "Consumer dietary restrictions? (vegan / kosher / halal / low-FODMAP / diabetic-friendly / none)",
+        "Format? (single sachet / capsule stack / gummy / RTD beverage / powder stick / bar)",
+        "Daily ritual? (morning smoothie / lunch drink / post-workout / evening ritual)",
+        "Taste philosophy? (invisible / pleasant functional / bold flavor / dessert-like)",
+        "Budget per dose? (< $1 / < $3 / < $10)",
+        "Evidence standard? (RCT-grade for each compound / mechanistic only / mix)",
+        "Off-limits ingredients? (caffeine / allergens / proprietary / regulatory)",
+        "Sourcing philosophy? (commodity / branded-ingredient / vertically-integrated)",
+      ],
     },
     {
       id: "q4",
       code: "Q4",
+      // League Q4 runs in 2027 Q2 (Apr–Jun 2027)
+      calendarQuarter: "2027 Q2",
       label: "Holistic Protocol",
       theme: "Integrated longevity prescription",
-      startsAt: "2026-10-01T00:00:00Z",
-      endsAt: "2026-12-31T23:59:59Z",
-      judgingLiveAt: "2027-01-08T18:00:00Z",
+      startsAt: "2027-04-01T00:00:00Z",
+      endsAt: "2027-06-30T23:59:59Z",
+      judgingLiveAt: "2027-07-04T18:00:00Z",
       status: "preview",
       spec: {
         objective:
@@ -133,8 +198,37 @@ export const GRAND_PRIX = {
         headJudge: "TBA · Grand Finale Jury",
         trackColor: "cyan",
       },
+      // Human–agent collaboration (v0.7)
+      ownerLanes: [
+        { id: "personalized-precision", label: "Personalized precision", desc: "Genetic + biomarker + continuous-adaptive. One protocol per cohort member." },
+        { id: "evidence-conformist", label: "Evidence conformist", desc: "Every component must have RCT-grade evidence in the target cohort." },
+        { id: "risk-taker", label: "Risk taker", desc: "Push the predicted Δage aggressively — accept side-effect risk for the big payoff." },
+        { id: "cost-pragmatist", label: "Cost pragmatist", desc: "Optimize for $/Δage. $200/mo or less, no exceptions." },
+        { id: "biomarker-driven", label: "Biomarker driven", desc: "Make the monitoring protocol the centerpiece — quarterly omics, continuous wearables." },
+        { id: "adherence-first", label: "Adherence first", desc: "Design the protocol humans can actually follow for 12 months. Adherence > Δage." },
+      ],
+      humanInputQuestions: [
+        "Cohort definition? (45yo healthy / 65yo mild-cognitive-decline / ApoE4 carrier / cancer survivor / ME-CFS)",
+        "Drug side? (your own Q1 / repurposed approved / nutraceutical / none)",
+        "12-month adherence realism? (very strict / moderate / forgiving)",
+        "Monitoring depth? (blood quarterly / omics quarterly / wearables continuous / annual check-up)",
+        "Behavior loop priority? (sleep / exercise / nutrition / stress / social)",
+        "Cost ceiling per month? (< $200 / < $500 / < $2000)",
+        "Scientific conservatism? (RCT-only / mechanistic OK / speculative OK)",
+        "Personalization depth? (one-size / biomarker-driven / genetic / continuous-adaptive)",
+      ],
     },
-  ] as const,
+  ],
+  // Grand Finale is a separate ceremony, not a track; 2027 Q3 = Sep 2027
+  grandFinale: {
+    label: "Grand Finale",
+    calendarQuarter: "2027 Q3",
+    symposiumAt: "2027-10-15T09:00:00Z",
+    venue: "Geneva, Switzerland",
+    prizePool: 500_000,
+    description:
+      "The four quarter champions (one per lane × one per quarter = up to 24 lane winners) compete for the Grand Champion title. The single highest final_score across all quarter lanes wins the $500k top prize, the Geneva residency, and the Nature Longevity cover feature.",
+  },
   totalPrizePool: 1_160_000,
   foundingSponsors: ["Forever Labs", "GeroNova Pharma", "Helios Beauty Group", "Lumen Foods"],
 };
