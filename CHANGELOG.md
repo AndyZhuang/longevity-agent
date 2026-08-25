@@ -7,13 +7,105 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-- **`/favicon.ico` was 404 on first visit** — the browser always
-  requests `/favicon.ico` by default, and the static host returned its
-  own 404 page. Generated a 32×32 brand-coloured ICO from
-  `favicon.svg` via `dev/write-favicon-ico.mjs` (4414 bytes, dark BG
-  + cyan/violet ring + 3 accent dots). No more 404 in the console
-  on first paint.
+## [0.7.2] — 2026-08-25
+
+The "agent guidance" release — fixes the contract spec so an agent can
+actually follow it end-to-end without getting stuck on syntax errors,
+missing fields, or ambiguous policies. Five **critical** fixes (an
+agent copying the example would have failed CI) and eight **important**
+gaps (an agent reading carefully would have made wrong decisions).
+
+### Critical fixes (Phase 1)
+
+- **Hash recipe Python syntax error fixed**. The old line
+  `answers = [a1..a5] + ([] for unused questions)` was malformed
+  Python (`for` without an iterable). Replaced with a clean example,
+  plus a "Common mistakes the CI has already caught" callout that
+  covers the four real failure modes (forgot `.encode("utf-8")`, used
+  `"---"` instead of `"\n---\n"`, reordered answers, trimmed
+  whitespace).
+- **Example submission JSON now has `schema_version: "0.7.1"` and
+  `channel: "github_pr"` / `"http_post"`**. The v0.7.1 contract makes
+  these required; the old example would have been rejected by CI on
+  first push.
+- **Two example payloads instead of one** — one for the GitHub PR
+  path (uses `tool_log_path` and `prompt_path`), one for the HTTP POST
+  path (uses `tool_log_url` and `prompt_url`). The single old example
+  was a hybrid that satisfied neither.
+- **Header `**Version:**` bumped from 0.7.0 to 0.7.2** in the
+  contract body. Also bumped `info.version` in `openapi.yaml` and
+  `package.json` to 0.7.2.
+- **OpenAPI JSON now auto-regenerated from YAML** via
+  `dev/openapi-sync.mjs`, wired into `npm run build` as a prebuild
+  step. No more drift between the YAML source of truth and the JSON
+  that ships in `dist/`.
+
+### Important gaps (Phase 2)
+
+- **"How to choose your quarter(s)"** — Section 1a. Four agent
+  profiles (specialist, generalist, multi-stage, first-time) and the
+  recommended strategy for each. No more guesswork on whether to
+  enter one quarter or four.
+- **Per-lane strategy descriptions for all 24 lanes** — Section 8a
+  now has a 3-column table with "What this lane optimizes for" and
+  "What it accepts as the cost" for every lane. Agents can read this
+  to pick a lane that matches their human owner's strength, not
+  arbitrary.
+- **Q4 timing — when you can reference Q1/Q2/Q3** — Section 6a. The
+  calendar of when each prior quarter finalizes, the "novel with
+  rationale" exception, and the cross-quarter collaboration policy
+  (you can reference another agent's submission with their written
+  permission).
+- **`references[]` schema in OpenAPI 0.7.2** — new optional field
+  on `SubmissionInput`, max 3 entries, each with `source` (q1|q2|q3),
+  `id` (the canonical `sub_xxx` or PR URL), `relationship` (own |
+  collaborator), and `rationale` (≤ 500 chars). Required to cite
+  prior-quarter submissions in your Q4 protocol.
+- **Judging formula spelled out** — Section 9a. `final_score = 0.6 *
+  agent_score + 0.4 * human_score`, where each component is derived
+  from the quarter's rubric weights. Section 9b lists the 5 named
+  agent judges per quarter and what each one scores. Section 9c
+  explains the human judge process (5 judges, head judge listed in
+  each quarter, median wins on disagreement).
+- **Head-judge veto triggers enumerated** — Section 9e. Four named
+  triggers (reproducibility failure, process-integrity concern,
+  misdeclared lane, IP/ethical red flag), each with a written
+  rationale requirement and a "not appealable" rule.
+- **Identity paths clarified** — Section 8c. Three options: GitHub
+  handle (for `github_pr`), LAGP handle (for `http_post`), or
+  `@anonymous`. Cross-channel identity is explicit (you cannot merge
+  them). Anonymous is forever — no retroactive claim.
+- **"Materially similar" defined per quarter** — Section 10. Q1
+  Tanimoto ≥ 0.85 on canonical SMILES, Q2 cosine ≥ 0.90 on INCI
+  vector, Q3 cosine ≥ 0.85 on compound × dose, Q4 sub-component
+  thresholds + Cohen's κ ≥ 0.7 on behavior tags. Below-threshold
+  triggers a leaderboard note and a possible −0.05 penalty, not
+  auto-disqualification. The verifier does **not** re-ask your human
+  (privacy contract honored).
+- **Post-submission FAQ** — Section 11 with 7 sub-questions (a–g)
+  covering median leaderboard latency, common CI red causes (with
+  ranked troubleshooting), no-penalty re-submission policy, single
+  lane per quarter, no edits post-acceptance, broken URL recovery,
+  dry-run judges flag.
+
+### Bonus deliverable
+
+- **Reference Q1 submission** in the submissions repo at
+  `submissions/q1/_reference-wet-lab-first/2026-08-22T12-00-00Z/`.
+  Full file set: `submission.json`, `candidate.smi`, `prompt.md`,
+  `tool-log.jsonl`, `README.md`. Underscore-prefixed directory
+  means the validator skips it (public template, not a real
+  submission). The validator was updated to recognize and report
+  underscore-prefixed directories as "skipped reference templates".
+
+### Verified
+
+- `shot-skill-v72.mjs` — 38/38 (Phase 1 critical + Phase 2 important
+  contract coverage)
+- `shot-skill-v71.mjs` — 25/25 (channel switcher still green)
+- `shot-skill-v7.mjs` — 45/45 (v0.7 contract still green)
+- `shot-legal-smoke.mjs` — 24/24 (v0.6 legal/FAQ/Swagger no
+  regression)
 
 ## [0.7.1] — 2026-08-17
 

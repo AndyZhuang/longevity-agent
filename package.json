@@ -1,11 +1,11 @@
 {
   "name": "longevity-agent",
   "private": true,
-  "version": "0.7.1",
+  "version": "0.7.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node dev/seo-build.mjs && node dev/copy-swagger-assets.mjs && tsc -b && vite build",
+    "build": "node dev/openapi-sync.mjs && node dev/seo-build.mjs && node dev/copy-swagger-assets.mjs && tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
     "seo:build": "node dev/seo-build.mjs"

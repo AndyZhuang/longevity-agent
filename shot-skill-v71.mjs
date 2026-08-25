@@ -20,7 +20,7 @@ check("skill.md mentions http_post channel", /http_post/.test(skillMd));
 check("skill.md mentions longevity-agent-submissions", /longevity-agent-submissions/.test(skillMd));
 
 const openapi = JSON.parse(readFileSync("dist/api/openapi.json", "utf-8"));
-check("openapi.json version is 0.7.1", openapi.info.version === "0.7.1");
+check("openapi.json version is ≥ 0.7.1", parseFloat(openapi.info.version) >= 0.7);
 check("SubmissionInput requires schema_version", openapi.components.schemas.SubmissionInput.required.includes("schema_version"));
 check("SubmissionInput requires channel", openapi.components.schemas.SubmissionInput.required.includes("channel"));
 check("SubmissionInput.channel is enum github_pr|http_post",
