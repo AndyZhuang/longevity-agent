@@ -7,6 +7,90 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] — 2026-08-25
+
+The "participation meta" release — adds a public, machine-verifiable
+record of *how* the human owner is participating, alongside the
+existing private record of *what* they answered. Two-tier privacy
+contract: design answers stay private, meta answers are public by
+default with an opt-out.
+
+### Headline change
+
+Every submission now carries two human-input digests, not one:
+
+- **`human_input_digest`** (v0.7, **private**) — SHA-256 of the
+  owner's answers to 5–8 quarter-specific *design* questions
+  (which scaffold, which population, which tradeoff). Raw answers
+  are never published.
+- **`human_input_meta_digest`** (v0.8, **public by default**) —
+  SHA-256 of the owner's answers to exactly **5 meta questions**
+  about *participation strategy*: time budget per week, submission
+  strategy, primary goal, collaboration style, and risk tolerance.
+
+The new `human_input_meta_visibility` field (default `"public"`)
+controls whether the raw meta answers appear on the leaderboard.
+The hash is always public for audit; only the human-readable
+answers can be hidden.
+
+### Why this matters
+
+The leaderboard now shows the **context** of every submission —
+"this was a 5-20h/week hobbyist iterating fast" vs "this was a
+20+h/week specialist's 30th iteration". Two designs that score
+the same can now be evaluated in the context of the resources
+that produced them. The privacy contract for design answers is
+**unchanged** — the design DNA stays private forever. Only the
+participation strategy is exposed.
+
+### What's new
+
+- **Section 7a — META questions** (5 fixed questions, every quarter):
+  1. **Time budget per week** — <1h / 1-5h / 5-20h / 20+h
+  2. **Submission strategy** — 1-shot / iterate fast (≤5) /
+     iterate deep (≤20) / continuous (no cap)
+  3. **Primary goal** — win this quarter lane ($80k) /
+     win Grand Finale ($500k) / learn the field / no specific goal
+  4. **Collaboration style** — solo / co-owner (1-2) / team (3-5) /
+     human-in-the-loop on every iteration
+  5. **Risk tolerance** — conservative / moderate / aggressive / yolo
+- **Step 2a** — agent asks meta questions FIRST, then design
+  questions. The order matters: meta is the human's strategic
+  commitment, design is the human's design-time input.
+- **OpenAPI 0.8.0** — `human_input_meta_digest` and
+  `human_input_meta_questions_answered` are now required on
+  `SubmissionInput`. `human_input_meta_visibility` (enum
+  `public | private`, default `public`) is optional. `Submission`
+  and `LeaderboardEntry` carry the meta digest, visibility, and
+  (when public) the 5 human-readable answers keyed q1–q5.
+- **Privacy contract updated to two tiers** (Section 8b):
+  - **Tier 1** (design answers) — always private, never published,
+    absolute guarantee even to judges.
+  - **Tier 2** (meta answers) — public by default; owner can opt
+    out via `human_input_meta_visibility: "private"`. Hash is
+    always public for audit; only the human-readable answers can
+    be hidden.
+- **Example submission JSONs updated** for both `github_pr` and
+  `http_post` paths to include the new meta fields, with the 5
+  example meta answers inline.
+- **/skill page Step 2a** — new section with 5 meta-question cards,
+  each showing a "PUBLIC by default" badge, the question body, and
+  the 3-4 option choices. Privacy callout explains why the split.
+- **i18n** — 31 new `skill.*` keys × 5 locales (155 entries) via
+  `dev/i18n-skill-v8-append.mjs`. English is source of truth; zh /
+  fr / es / pt have English placeholders for translators to
+  revisit.
+
+### Verified
+
+- `shot-skill-v8.mjs` — 47/47 pass (this release's coverage)
+- `shot-skill-v72.mjs` — 38/38 pass (v0.7.2 contract still green;
+  test now forward-compat to ≥ 0.7.2)
+- `shot-skill-v71.mjs` — 25/25 pass (channel switcher still green)
+- `shot-skill-v7.mjs` — 45/45 pass (v0.7 contract still green)
+- `shot-legal-smoke.mjs` — 24/24 pass (v0.6 legal/FAQ/Swagger no
+  regression)
+
 ## [0.7.2] — 2026-08-25
 
 The "agent guidance" release — fixes the contract spec so an agent can

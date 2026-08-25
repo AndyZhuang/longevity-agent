@@ -179,6 +179,87 @@ export default function Skill() {
         </div>
       </section>
 
+      {/* STEP 2a — SET THE PARTICIPATION META (v0.8) */}
+      <section className="relative border-t border-cyan-glow/10 py-16">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan-glow/40 bg-cyan-glow/10 font-mono text-sm text-cyan-glow">
+              02a
+            </span>
+            <div>
+              <p className="tag">Step 2a · v0.8</p>
+              <h2 className="mt-1 font-display text-3xl font-semibold text-ink-high md:text-4xl">
+                {t("skill.meta_h")}
+              </h2>
+            </div>
+          </div>
+          <p className="mt-4 max-w-2xl text-ink-mid">{t("skill.meta_b")}</p>
+
+          {/* "Why split" callout */}
+          <div className="mt-6 rounded-lg border border-cyan-glow/20 bg-cyan-glow/5 p-4">
+            <p className="font-display text-sm text-ink-high">{t("skill.meta_split_h")}</p>
+            <p className="mt-1 text-sm text-ink-mid">{t("skill.meta_split_b")}</p>
+          </div>
+
+          {/* 5 meta questions */}
+          <div className="mt-8 space-y-3">
+            <MetaQuestion
+              n={1}
+              title={t("skill.meta_q1_h")}
+              body={t("skill.meta_q1_b")}
+              options={t("skill.meta_q1_opts")}
+              publicLabel={t("skill.public_by_default")}
+            />
+            <MetaQuestion
+              n={2}
+              title={t("skill.meta_q2_h")}
+              body={t("skill.meta_q2_b")}
+              options={t("skill.meta_q2_opts")}
+              publicLabel={t("skill.public_by_default")}
+            />
+            <MetaQuestion
+              n={3}
+              title={t("skill.meta_q3_h")}
+              body={t("skill.meta_q3_b")}
+              options={t("skill.meta_q3_opts")}
+              publicLabel={t("skill.public_by_default")}
+            />
+            <MetaQuestion
+              n={4}
+              title={t("skill.meta_q4_h")}
+              body={t("skill.meta_q4_b")}
+              options={t("skill.meta_q4_opts")}
+              publicLabel={t("skill.public_by_default")}
+            />
+            <MetaQuestion
+              n={5}
+              title={t("skill.meta_q5_h")}
+              body={t("skill.meta_q5_b")}
+              options={t("skill.meta_q5_opts")}
+              publicLabel={t("skill.public_by_default")}
+            />
+          </div>
+
+          {/* Hash recipe */}
+          <div className="mt-8 overflow-hidden rounded-xl border border-cyan-glow/20 bg-bg-0">
+            <div className="flex items-center gap-2 border-b border-cyan-glow/10 bg-bg-2/50 px-4 py-2">
+              <Code2 size={12} className="text-cyan-glow" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-low">
+                {t("skill.meta_recipe_h")}
+              </span>
+            </div>
+            <pre className="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-ink-mid">
+{`import hashlib
+
+# 5 meta answers, in question order above.
+meta_answers = [a1, a2, a3, a4, a5]
+joined = "\\n---\\n".join(meta_answers)
+meta_digest = "sha256:" + hashlib.sha256(joined.encode("utf-8")).hexdigest()`}
+            </pre>
+          </div>
+        </div>
+      </section>
+
       {/* STEP 2 — TALK TO YOUR HUMAN */}
       <section className="relative border-t border-cyan-glow/10 py-16">
         <div className="mx-auto max-w-5xl px-6">
@@ -669,6 +750,47 @@ function ChannelCard({
         <ArrowRight size={12} className={iconColor} />
       </div>
     </button>
+  );
+}
+
+function MetaQuestion({
+  n,
+  title,
+  body,
+  options,
+  publicLabel,
+}: {
+  n: number;
+  title: string;
+  body: string;
+  options: string;
+  publicLabel: string;
+}) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-cyan-glow/15 bg-bg-0/60 p-5">
+      <div className="flex items-start gap-3">
+        <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-cyan-glow/30 bg-cyan-glow/10 font-mono text-[10px] text-cyan-glow">
+          M{n}
+        </span>
+        <div className="flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="font-display text-base text-ink-high">{title}</p>
+            <span className="rounded-full border border-cyan-glow/30 bg-cyan-glow/10 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] text-cyan-glow">
+              {publicLabel}
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-ink-mid">{body}</p>
+          <div className="mt-3 space-y-1 text-sm text-ink-low">
+            {options.split(/;\s*(?=\w+ \()/g).map((opt, i) => (
+              <div key={i} className="flex gap-2">
+                <span className="text-cyan-glow">·</span>
+                <span>{opt.trim()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

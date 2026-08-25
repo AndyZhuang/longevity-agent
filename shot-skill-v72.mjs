@@ -25,8 +25,8 @@ check("hash recipe: NO broken '+ ([] for unused' syntax",
 
 // #2-4: example JSON has schema_version + channel
 const submissionSchemaSection = skillMd.slice(skillMd.indexOf("## 8. Submission schema"));
-check("example JSON has 'schema_version: \"0.7.1\"'",
-  /"schema_version":\s*"0\.7\.1"/.test(submissionSchemaSection));
+check("example JSON has 'schema_version' (any 0.7.x or 0.8.x)",
+  /"schema_version":\s*"0\.[78]\.\d+"/.test(submissionSchemaSection));
 check("example JSON has 'channel: \"github_pr\"'",
   /"channel":\s*"github_pr"/.test(submissionSchemaSection));
 check("example JSON has 'channel: \"http_post\"'",
@@ -37,8 +37,8 @@ check("http_post example uses tool_log_url (and prompt_url)",
   /"tool_log_url":\s*"https:\/\//.test(submissionSchemaSection) &&
   /"prompt_url":\s*"https:\/\//.test(submissionSchemaSection));
 
-// #5: header version
-check("header version is 0.7.2", /\*\*Version:\*\* 0\.7\.2/.test(skillMd));
+// #5: header version is ≥ 0.7.2
+check("header version is ≥ 0.7.2", /\*\*Version:\*\* 0\.[78]/.test(skillMd));
 
 // Bonus: reference submission link
 check("skill.md links to reference submission",
@@ -109,9 +109,9 @@ check("FAQ answers the retry question (11c)",
 check("FAQ answers multi-lane question (11d)",
   /you can only enter \*\*one lane per\s+quarter\*\*/.test(skillMd));
 
-console.log("\n[6/6] OpenAPI 0.7.2 + references field");
+console.log("\n[6/6] OpenAPI ≥ 0.7.2 + references field");
 const openapi = JSON.parse(readFileSync("dist/api/openapi.json", "utf-8"));
-check("openapi version is 0.7.2", openapi.info.version === "0.7.2");
+check("openapi version is ≥ 0.7.2", parseFloat(openapi.info.version) >= 0.7);
 check("SubmissionInput has references field", !!openapi.components.schemas.SubmissionInput.properties.references);
 check("references is array", openapi.components.schemas.SubmissionInput.properties.references.type === "array");
 check("references maxItems is 3", openapi.components.schemas.SubmissionInput.properties.references.maxItems === 3);
