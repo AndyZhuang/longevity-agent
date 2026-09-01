@@ -48,6 +48,28 @@ dev/screenshots
 # private tool-call log)
 runs/
 *.log.jsonl
+# Playwright debug artifacts created by `shot-debug-*.mjs` scripts
+shot-debug-*.mjs
+shot-debug-*.html
+shot-debug-*.json
+shot-debug-*.png
+# Local stub test data left over from `npm test`
+dev/lagp-api-stub/test-data/
+# Temporary deploy step scripts (kept locally for replay, not part of the
+# product surface)
+dev/_step*.py
+dev/_step*.sh
+dev/_api_check*.sh
+dev/_api_check*.py
+dev/_ssl_*.sh
+dev/_ssl_*.py
+dev/_verify_og.py
+dev/_audit*_run.py
+dev/diag-*.py
+dev/_step4c_out.txt
+dev/_full_audit.sh
+dev/_full_audit2.sh
+dev/_full_audit_run.py
 # scratch commit / tag / release note files (created by `git commit -F`, `git
 # tag -F`, `gh release create --notes-file` on Windows where heredocs don't work
 # in PowerShell). Delete or move to a real .md before committing.
