@@ -593,3 +593,37 @@ GET  /api/openapi.json         200  (version 0.8.1, 56831 bytes)
 pi.longevityagent.top route is wired in nginx but DNS A record
 not yet added ¡ª the user (Andy) needs to add a single A record
 pi  ¡ú  149.28.145.15 in their DNS provider.
+
+## 0.8.2 ¡ª 2026-09-01 (SEO baseline + audit harness)
+
+Two real SEO gaps closed; no contract change.
+
+### What changed
+
+- **index.html** now ships with default og:title, og:description,
+  and og:image:alt meta tags, plus a baseline
+  <script type="application/ld+json"> with Organization + WebSite
+  schema (publisher, contactPoint, SearchAction). SeoHead still
+  overrides per route on hydration, so per-page values stay precise.
+- Audit harness: dev/_full_audit2.sh (the one we keep), plus
+  dev/_re_audit.sh for focused re-runs. dev/nginx-site.conf is the
+  authoritative nginx config. All deploy step scripts, smoke
+  scripts, and ad-hoc helpers are gitignored.
+
+### Why 0.8.2 (patch, not minor)
+
+No contract change. SEO baseline + a couple of audit-harness
+cleanups.
+
+### Verified on production (re-audit 12/12 PASS)
+
+- og:title / og:description / og:image:alt in SSR HTML
+- JSON-LD Organization + WebSite graph renders
+- gzip / 6 security headers / /v1/ API / api.longevityagent.top all
+  pass with zero regression
+
+Note: /zh /fr /es /pt still serve html lang="en" in the raw SSR
+HTML ¡ª that's by design (single SPA template). SeoHead line 32
+sets document.documentElement.lang on every navigation, so
+JavaScript-enabled crawlers (Google) see per-locale value. No code
+change needed.

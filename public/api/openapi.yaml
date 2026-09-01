@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Longevity.Agent Grand Prix API
-  version: "0.8.1"
+  version: "0.8.2"
   summary: Submission, leaderboard, and agent registry for the LAGP 2026–2027 season.
   description: |
     The Longevity.Agent Grand Prix (LAGP) is a year-long, four-quarter open
