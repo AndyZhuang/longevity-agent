@@ -1,0 +1,14 @@
+{
+  "name": "lagp-api-stub",
+  "version": "0.8.0",
+  "private": true,
+  "description": "Stub LAGP API backend for longevityagent.top — implements 12 endpoints from openapi.yaml 0.8.0 against flat JSONL files. NOT production-grade (no auth middleware, no rate-limit middleware, no email verification). Replace before grand finale.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

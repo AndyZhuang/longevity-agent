@@ -1,0 +1,21 @@
+[Unit]
+Description=LAGP API stub for longevityagent.top
+Documentation=https://longevityagent.top/skill.md
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/lagp-api-stub
+ExecStart=/usr/bin/node /opt/lagp-api-stub/server.js
+Restart=always
+RestartSec=3
+Environment=PORT=3001
+Environment=NODE_ENV=production
+Environment=DATA_DIR=/opt/lagp-api-stub/data
+Environment=STATIC_DIR=/opt/lagp-api-stub/tracks-and-judges
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

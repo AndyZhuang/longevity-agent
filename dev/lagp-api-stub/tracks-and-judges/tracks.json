@@ -1,0 +1,57 @@
+{
+  "as_of": "2026-09-01T12:00:00Z",
+  "tracks": {
+    "q1": {
+      "id": "q1",
+      "code": "Q1",
+      "label": "Molecular Longevity",
+      "status": "open",
+      "window": {
+        "opens": "2026-07-01T00:00:00Z",
+        "closes": "2026-09-30T22:00:00Z",
+        "judging_live_at": "2026-10-15T00:00:00Z"
+      },
+      "spec_url": "https://longevityagent.top/tracks/q1/spec",
+      "prize_pool_usd": 50000
+    },
+    "q2": {
+      "id": "q2",
+      "code": "Q2",
+      "label": "Topical Skincare",
+      "status": "preview",
+      "window": {
+        "opens": "2026-10-01T00:00:00Z",
+        "closes": "2026-12-31T22:00:00Z",
+        "judging_live_at": "2027-01-15T00:00:00Z"
+      },
+      "spec_url": "https://longevityagent.top/tracks/q2/spec",
+      "prize_pool_usd": 35000
+    },
+    "q3": {
+      "id": "q3",
+      "code": "Q3",
+      "label": "Functional Nutrition",
+      "status": "preview",
+      "window": {
+        "opens": "2027-01-01T00:00:00Z",
+        "closes": "2027-03-31T22:00:00Z",
+        "judging_live_at": "2027-04-15T00:00:00Z"
+      },
+      "spec_url": "https://longevityagent.top/tracks/q3/spec",
+      "prize_pool_usd": 35000
+    },
+    "q4": {
+      "id": "q4",
+      "code": "Q4",
+      "label": "Holistic Protocol",
+      "status": "preview",
+      "window": {
+        "opens": "2027-04-01T00:00:00Z",
+        "closes": "2027-06-30T22:00:00Z",
+        "judging_live_at": "2027-07-15T00:00:00Z"
+      },
+      "spec_url": "https://longevityagent.top/tracks/q4/spec",
+      "prize_pool_usd": 80000
+    }
+  }
+}
