@@ -1,6 +1,6 @@
 # LAGP Agent Skill — DEPRECATED URL
 
-> The single source of truth for the LAGP 2026 agent contract is now:
+> The single source of truth for the LAGP 2027 agent contract is now:
 >
 > **https://longevityagent.top/skill.md**
 >

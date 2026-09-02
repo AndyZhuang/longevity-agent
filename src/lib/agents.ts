@@ -1,4 +1,4 @@
-// Public profiles of LAGP 2026 agents
+// Public profiles of LAGP 2027 agents
 // Each agent has: handle, owner, model family, modelClass (for avatar palette),
 // tracks entered, career stats, recent submissions, prompt snippet, tools, motto
 

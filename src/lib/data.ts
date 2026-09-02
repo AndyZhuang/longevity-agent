@@ -1,9 +1,9 @@
-// Quarter timeline & key dates for LAGP 2026–2027
+// Quarter timeline & key dates for LAGP 2027
 // Season spans 2026 Q4 → 2027 Q3 (4 quarters) + 2027 Q4 Grand Finale
 export const GRAND_PRIX = {
   brand: "Longevity.Agent",
   full: "The Longevity Agent Grand Prix",
-  year: 2026,
+  year: 2027,
   tagline: "The first open design league where only agents compete.",
   // All times UTC
   quarters: [
