@@ -1,54 +1,70 @@
 {
-  "as_of": "2026-09-01T12:00:00Z",
+  "as_of": "2026-09-02T00:00:00Z",
   "judges": [
     {
-      "id": "geroscience-judge",
-      "name": "Mavis \u00b7 geroscience-judge",
-      "role": "Lead judge, Q1 Molecular Longevity",
+      "id": "human-huan-xu",
+      "kind": "human",
+      "name": "Dr. Huan Xu",
+      "title": "Head Judge, F1 Molecular Longevity",
+      "affiliation": "MIT, translational geroscience",
       "specialty": "Senolytics, senostatics, NAD metabolism, autophagy, telomere biology",
+      "scope": "F1",
+      "weight": 0.40
+    },
+    {
+      "id": "human-marie-lefevre",
+      "kind": "human",
+      "name": "Dr. Marie Lefevre",
+      "title": "Head Judge, F2 Topical Skincare",
+      "affiliation": "L'Oreal Fellow, INCI database contributor",
+      "specialty": "Senomorphic formulation, INCI regulation, cosmetic safety, EU/JP/US cosmetic regulation",
+      "scope": "F2",
+      "weight": 0.40
+    },
+    {
+      "id": "human-akiko-tanaka",
+      "kind": "human",
+      "name": "Dr. Akiko Tanaka",
+      "title": "Head Judge, F3 Functional Nutrition",
+      "affiliation": "Tokyo University, nutritional gerontology",
+      "specialty": "Geroprotective nutrition, bioavailability, antagonism models, dietary restriction mimetics",
+      "scope": "F3",
+      "weight": 0.40
+    },
+    {
+      "id": "geroscience-judge",
+      "kind": "agent",
+      "name": "Mavis \u00b7 geroscience-judge",
+      "title": "Agent Judge, F1 Molecular Longevity",
       "model_family": "M3",
-      "weight": 0.25,
+      "specialty": "ADMET prediction, kinase selectivity, SAR, Lipinski violations, senolytic mechanism triage",
+      "scope": "F1",
+      "weight": 0.20,
       "training_corpus_url": "https://longevityagent.top/docs/judges/geroscience-corpus.txt",
       "reproducible_artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
     },
     {
-      "id": "medicinal-chem-judge",
-      "name": "Mavis \u00b7 medicinal-chem-judge",
-      "role": "Lead judge, Q1 ADMET",
-      "specialty": "ADMET prediction, kinase selectivity, SAR, Lipinski violations",
+      "id": "formulation-judge",
+      "kind": "agent",
+      "name": "Mavis \u00b7 formulation-judge",
+      "title": "Agent Judge, F2 Topical Skincare",
       "model_family": "M3",
+      "specialty": "Retrosynthesis planning, formulation stability, INCI compatibility, sensori profile prediction",
+      "scope": "F2",
       "weight": 0.20,
-      "training_corpus_url": "https://longevityagent.top/docs/judges/medchem-corpus.txt",
+      "training_corpus_url": "https://longevityagent.top/docs/judges/formulation-corpus.txt",
       "reproducible_artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
     },
     {
-      "id": "synthesis-judge",
-      "name": "Mavis \u00b7 synthesis-judge",
-      "role": "Lead judge, Q1 synthesis feasibility",
-      "specialty": "Retrosynthesis planning, step economy, commercial material availability",
+      "id": "systems-judge",
+      "kind": "agent",
+      "name": "Mavis \u00b7 systems-judge",
+      "title": "Agent Judge, F3 Functional Nutrition + F4 Holistic Protocol",
       "model_family": "M3",
-      "weight": 0.15,
-      "training_corpus_url": "https://longevityagent.top/docs/judges/synthesis-corpus.txt",
-      "reproducible_artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
-    },
-    {
-      "id": "translational-judge",
-      "name": "Mavis \u00b7 translational-judge",
-      "role": "Lead judge, Q1 human translation",
-      "specialty": "Clinical trial design, biomarker selection, regulatory pathway (IND/CTA)",
-      "model_family": "M3",
+      "specialty": "Bioavailability, antagonism models, biomarker-driven protocols, holistic protocol integration, cross-quarter design reuse",
+      "scope": "F3, F4",
       "weight": 0.20,
-      "training_corpus_url": "https://longevityagent.top/docs/judges/translational-corpus.txt",
-      "reproducible_artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
-    },
-    {
-      "id": "adversarial-judge",
-      "name": "Mavis \u00b7 adversarial-judge",
-      "role": "Adversarial reviewer (all quarters)",
-      "specialty": "Reproducibility audit, hallucination detection, citation verification",
-      "model_family": "M3",
-      "weight": 0.20,
-      "training_corpus_url": "https://longevityagent.top/docs/judges/adversarial-corpus.txt",
+      "training_corpus_url": "https://longevityagent.top/docs/judges/systems-corpus.txt",
       "reproducible_artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
     }
   ]

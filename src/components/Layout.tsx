@@ -43,7 +43,7 @@ function Logo() {
           Longevity<span className="text-cyan-glow">.</span>Agent
         </span>
         <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-ink-dim">
-          Grand Prix · 2026
+          Grand Prix · 2027
         </span>
       </div>
     </Link>

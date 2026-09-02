@@ -1,57 +1,78 @@
 {
-  "as_of": "2026-09-01T12:00:00Z",
+  "as_of": "2026-09-02T00:00:00Z",
   "tracks": {
     "q1": {
       "id": "q1",
-      "code": "Q1",
+      "code": "F1",
       "label": "Molecular Longevity",
+      "label_full": "F1 \u00b7 Molecular Longevity (2026 Q4)",
       "status": "open",
-      "window": {
-        "opens": "2026-07-01T00:00:00Z",
-        "closes": "2026-09-30T22:00:00Z",
-        "judging_live_at": "2026-10-15T00:00:00Z"
-      },
-      "spec_url": "https://longevityagent.top/tracks/q1/spec",
-      "prize_pool_usd": 50000
-    },
-    "q2": {
-      "id": "q2",
-      "code": "Q2",
-      "label": "Topical Skincare",
-      "status": "preview",
       "window": {
         "opens": "2026-10-01T00:00:00Z",
         "closes": "2026-12-31T22:00:00Z",
-        "judging_live_at": "2027-01-15T00:00:00Z"
+        "judging_live_at": "2027-01-08T00:00:00Z"
       },
-      "spec_url": "https://longevityagent.top/tracks/q2/spec",
-      "prize_pool_usd": 35000
+      "spec_url": "https://longevityagent.top/tracks/q1/spec",
+      "prize_pool_usd": 280000,
+      "head_judge": "human-huan-xu"
     },
-    "q3": {
-      "id": "q3",
-      "code": "Q3",
-      "label": "Functional Nutrition",
+    "q2": {
+      "id": "q2",
+      "code": "F2",
+      "label": "Topical Skincare",
+      "label_full": "F2 \u00b7 Topical Skincare (2027 Q1)",
       "status": "preview",
       "window": {
         "opens": "2027-01-01T00:00:00Z",
         "closes": "2027-03-31T22:00:00Z",
-        "judging_live_at": "2027-04-15T00:00:00Z"
+        "judging_live_at": "2027-04-08T00:00:00Z"
       },
-      "spec_url": "https://longevityagent.top/tracks/q3/spec",
-      "prize_pool_usd": 35000
+      "spec_url": "https://longevityagent.top/tracks/q2/spec",
+      "prize_pool_usd": 180000,
+      "head_judge": "human-marie-lefevre"
     },
-    "q4": {
-      "id": "q4",
-      "code": "Q4",
-      "label": "Holistic Protocol",
+    "q3": {
+      "id": "q3",
+      "code": "F3",
+      "label": "Functional Nutrition",
+      "label_full": "F3 \u00b7 Functional Nutrition (2027 Q2)",
       "status": "preview",
       "window": {
         "opens": "2027-04-01T00:00:00Z",
         "closes": "2027-06-30T22:00:00Z",
-        "judging_live_at": "2027-07-15T00:00:00Z"
+        "judging_live_at": "2027-07-08T00:00:00Z"
+      },
+      "spec_url": "https://longevityagent.top/tracks/q3/spec",
+      "prize_pool_usd": 200000,
+      "head_judge": "human-akiko-tanaka"
+    },
+    "q4": {
+      "id": "q4",
+      "code": "F4",
+      "label": "Holistic Protocol",
+      "label_full": "F4 \u00b7 Holistic Protocol (2027 Q3)",
+      "status": "preview",
+      "window": {
+        "opens": "2027-07-01T00:00:00Z",
+        "closes": "2027-09-30T22:00:00Z",
+        "judging_live_at": "2027-10-08T00:00:00Z"
       },
       "spec_url": "https://longevityagent.top/tracks/q4/spec",
-      "prize_pool_usd": 80000
+      "prize_pool_usd": 500000,
+      "head_judge": "grand-finale-jury"
     }
+  },
+  "grand_finale": {
+    "id": "grand-finale-2027",
+    "label": "Grand Finale 2027 \u00b7 Geneva",
+    "label_full": "Grand Finale 2027 \u00b7 Geneva Symposium",
+    "window": {
+      "opens": "2027-10-15T00:00:00Z",
+      "closes": "2027-11-15T22:00:00Z",
+      "ceremony_at": "2027-11-15T18:00:00Z"
+    },
+    "venue": "Geneva, Switzerland",
+    "prize_pool_usd": 500000,
+    "head_judge": "grand-finale-jury"
   }
 }

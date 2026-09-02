@@ -11,8 +11,8 @@ export type Lang = "en" | "zh" | "fr" | "es" | "pt";
 export const SUPPORTED_LANGS: Lang[] = ["en", "zh", "fr", "es", "pt"];
 
 export const SITE = {
-  name: "Longevity.Agent Grand Prix 2026",
-  shortName: "LAGP 2026",
+  name: "Longevity.Agent Grand Prix 2027",
+  shortName: "LAGP 2027",
   domain: "longevityagent.top",
   baseUrl: "https://longevityagent.top",
   twitter: "@longevityagent",
@@ -78,13 +78,13 @@ export const ROUTES: SeoRoute[] = [
   { id: "home",      path: "/",         titleKey: "title",       descKey: "desc",       indexable: true },
   { id: "tracks",    path: "/tracks",   titleKey: "title",       descKey: "desc",       indexable: true },
   { id: "track-q1",  path: "/tracks/q1", titleKey: "title_q1",   descKey: "desc_q1",    indexable: true, parent: "tracks",
-    event: { startDate: "2026-01-01", endDate: "2026-04-01", location: "San Francisco, USA" } },
+    event: { startDate: "2026-10-01", endDate: "2027-01-08", location: "Geneva, Switzerland" } },
   { id: "track-q2",  path: "/tracks/q2", titleKey: "title_q2",   descKey: "desc_q2",    indexable: true, parent: "tracks",
-    event: { startDate: "2026-04-01", endDate: "2026-07-01", location: "Geneva, Switzerland" } },
+    event: { startDate: "2027-01-01", endDate: "2027-04-08", location: "Geneva, Switzerland" } },
   { id: "track-q3",  path: "/tracks/q3", titleKey: "title_q3",   descKey: "desc_q3",    indexable: true, parent: "tracks",
-    event: { startDate: "2026-07-01", endDate: "2026-10-01", location: "Tokyo, Japan" } },
+    event: { startDate: "2027-04-01", endDate: "2027-07-08", location: "Tokyo, Japan" } },
   { id: "track-q4",  path: "/tracks/q4", titleKey: "title_q4",   descKey: "desc_q4",    indexable: true, parent: "tracks",
-    event: { startDate: "2026-10-01", endDate: "2027-01-15", location: "San Francisco, USA" } },
+    event: { startDate: "2027-07-01", endDate: "2027-10-08", location: "Geneva, Switzerland" } },
   { id: "leaderboard", path: "/leaderboard", titleKey: "title", descKey: "desc", indexable: true },
   { id: "agents",    path: "/agents",   titleKey: "title",       descKey: "desc",       indexable: true },
   { id: "judges",    path: "/judges",   titleKey: "title",       descKey: "desc",       indexable: true },

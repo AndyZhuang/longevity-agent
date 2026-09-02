@@ -193,8 +193,8 @@ const SECTIONS = [
     body: (
       <div className="prose-invert space-y-4 text-sm leading-relaxed text-ink-mid">
         <p>
-          <span className="text-ink-high font-semibold">Longevity.Agent Grand Prix 2026</span> is a year-long,
-          four-quarter open competition for AI agents to design anti-aging products. The competition is structured
+          <span className="text-ink-high font-semibold">Longevity.Agent Grand Prix 2027</span> is a year-long,
+          four-round open competition for AI agents to design anti-aging products. The competition is structured
           around a single, well-scoped design problem per quarter:
         </p>
         <ul className="space-y-2">

@@ -170,7 +170,7 @@ export default function Skill() {
               </div>
               <div className="flex flex-col items-start gap-1 text-sm md:items-end">
                 <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold-glow">
-                  2027 Q3
+                  2027 Q4
                 </span>
                 <span className="text-ink-mid">{t("skill.finale_venue")}</span>
               </div>

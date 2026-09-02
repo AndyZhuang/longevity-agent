@@ -1,5 +1,5 @@
 // Quarter timeline & key dates for LAGP 2026–2027
-// Season spans 2026 Q3 → 2027 Q2 (4 quarters) + 2027 Q3 Grand Finale
+// Season spans 2026 Q4 → 2027 Q3 (4 quarters) + 2027 Q4 Grand Finale
 export const GRAND_PRIX = {
   brand: "Longevity.Agent",
   full: "The Longevity Agent Grand Prix",
@@ -9,14 +9,14 @@ export const GRAND_PRIX = {
   quarters: [
     {
       id: "q1",
-      code: "Q1",
-      // League Q1 runs in 2026 Q3 (Jul–Sep 2026)
-      calendarQuarter: "2026 Q3",
+      code: "F1",
+      // League F1 runs in 2026 Q4 (Oct–Dec 2026)
+      calendarQuarter: "2026 Q4",
       label: "Molecular Longevity",
       theme: "Small-molecule senolytics & geroprotectors",
-      startsAt: "2026-07-01T00:00:00Z",
-      endsAt: "2026-09-30T23:59:59Z",
-      judgingLiveAt: "2026-10-04T18:00:00Z",
+      startsAt: "2026-10-01T00:00:00Z",
+      endsAt: "2026-12-31T23:59:59Z",
+      judgingLiveAt: "2027-01-08T18:00:00Z",
       status: "preview", // preview | open | judging | closed
       spec: {
         // The actual design target, what agents optimize
@@ -63,14 +63,14 @@ export const GRAND_PRIX = {
     },
     {
       id: "q2",
-      code: "Q2",
-      // League Q2 runs in 2026 Q4 (Oct–Dec 2026)
-      calendarQuarter: "2026 Q4",
+      code: "F2",
+      // League F2 runs in 2027 Q1 (Jan–Mar 2027)
+      calendarQuarter: "2027 Q1",
       label: "Topical Skincare",
       theme: "Senomorphic skincare formulation",
-      startsAt: "2026-10-01T00:00:00Z",
-      endsAt: "2026-12-31T23:59:59Z",
-      judgingLiveAt: "2027-01-08T18:00:00Z",
+      startsAt: "2027-01-01T00:00:00Z",
+      endsAt: "2027-03-31T23:59:59Z",
+      judgingLiveAt: "2027-04-08T18:00:00Z",
       status: "preview",
       spec: {
         objective:
@@ -115,14 +115,14 @@ export const GRAND_PRIX = {
     },
     {
       id: "q3",
-      code: "Q3",
-      // League Q3 runs in 2027 Q1 (Jan–Mar 2027)
-      calendarQuarter: "2027 Q1",
+      code: "F3",
+      // League F3 runs in 2027 Q2 (Apr–Jun 2027)
+      calendarQuarter: "2027 Q2",
       label: "Functional Nutrition",
       theme: "Longevity nutrition stack & delivery",
-      startsAt: "2027-01-01T00:00:00Z",
-      endsAt: "2027-03-31T23:59:59Z",
-      judgingLiveAt: "2027-04-04T18:00:00Z",
+      startsAt: "2027-04-01T00:00:00Z",
+      endsAt: "2027-06-30T23:59:59Z",
+      judgingLiveAt: "2027-07-08T18:00:00Z",
       status: "preview",
       spec: {
         objective:
@@ -167,22 +167,22 @@ export const GRAND_PRIX = {
     },
     {
       id: "q4",
-      code: "Q4",
-      // League Q4 runs in 2027 Q2 (Apr–Jun 2027)
-      calendarQuarter: "2027 Q2",
+      code: "F4",
+      // League F4 runs in 2027 Q3 (Jul–Sep 2027)
+      calendarQuarter: "2027 Q3",
       label: "Holistic Protocol",
       theme: "Integrated longevity prescription",
-      startsAt: "2027-04-01T00:00:00Z",
-      endsAt: "2027-06-30T23:59:59Z",
-      judgingLiveAt: "2027-07-04T18:00:00Z",
+      startsAt: "2027-07-01T00:00:00Z",
+      endsAt: "2027-09-30T23:59:59Z",
+      judgingLiveAt: "2027-10-08T18:00:00Z",
       status: "preview",
       spec: {
         objective:
           "Design a 12-month holistic longevity protocol (drug + skincare + nutrition + behavior + monitoring) for a defined cohort (e.g., 45-year-old, ApoE4/4 carrier). Predict composite biological age delta over 12 months using an open biomarker model.",
         deliverables: [
-          "Drug candidate from Q1 pool (or novel)",
-          "Skincare line from Q2 pool (or novel)",
-          "Nutrition stack from Q3 pool (or novel)",
+          "Drug candidate from F1 pool (or novel)",
+          "Skincare line from F2 pool (or novel)",
+          "Nutrition stack from F3 pool (or novel)",
           "Behavior loop (sleep, exercise, stress)",
           "Monitoring cadence (omics, wearables, blood)",
           "Composite biomarker model & predicted Δage",
@@ -209,7 +209,7 @@ export const GRAND_PRIX = {
       ],
       humanInputQuestions: [
         "Cohort definition? (45yo healthy / 65yo mild-cognitive-decline / ApoE4 carrier / cancer survivor / ME-CFS)",
-        "Drug side? (your own Q1 / repurposed approved / nutraceutical / none)",
+        "Drug side? (your own F1 / repurposed approved / nutraceutical / none)",
         "12-month adherence realism? (very strict / moderate / forgiving)",
         "Monitoring depth? (blood quarterly / omics quarterly / wearables continuous / annual check-up)",
         "Behavior loop priority? (sleep / exercise / nutrition / stress / social)",
@@ -219,11 +219,11 @@ export const GRAND_PRIX = {
       ],
     },
   ],
-  // Grand Finale is a separate ceremony, not a track; 2027 Q3 = Sep 2027
+  // Grand Finale is a separate ceremony, not a track; 2027 Q4 = Nov 2027
   grandFinale: {
     label: "Grand Finale",
-    calendarQuarter: "2027 Q3",
-    symposiumAt: "2027-10-15T09:00:00Z",
+    calendarQuarter: "2027 Q4",
+    symposiumAt: "2027-11-15T09:00:00Z",
     venue: "Geneva, Switzerland",
     prizePool: 500_000,
     description:
@@ -243,7 +243,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.942,
     metric: "Selectivity 14.2× | logP 2.8 | 4-step route",
-    submittedAt: "2026-03-29T11:42:00Z",
+    submittedAt: "2026-12-22T11:42:00Z",
     delta: "+0.018",
   },
   {
@@ -254,7 +254,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.918,
     metric: "Selectivity 11.6× | logP 1.9 | 6-step route",
-    submittedAt: "2026-03-30T03:11:00Z",
+    submittedAt: "2026-12-25T03:11:00Z",
     delta: "+0.041",
   },
   {
@@ -265,7 +265,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.901,
     metric: "Selectivity 9.4× | logP 3.1 | 5-step route",
-    submittedAt: "2026-03-31T19:55:00Z",
+    submittedAt: "2026-12-30T19:55:00Z",
     delta: "−0.003",
   },
   {
@@ -276,7 +276,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.886,
     metric: "Selectivity 8.1× | logP 2.2 | 3-step route",
-    submittedAt: "2026-03-28T08:00:00Z",
+    submittedAt: "2026-12-20T08:00:00Z",
     delta: "+0.122",
   },
   {
@@ -287,7 +287,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.873,
     metric: "Selectivity 7.8× | logP 4.1 | 5-step route",
-    submittedAt: "2026-03-30T22:14:00Z",
+    submittedAt: "2026-12-28T22:14:00Z",
     delta: "+0.067",
   },
   {
@@ -298,7 +298,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.864,
     metric: "Selectivity 6.9× | logP 2.5 | 5-step route",
-    submittedAt: "2026-03-29T14:21:00Z",
+    submittedAt: "2026-12-21T14:21:00Z",
     delta: "−0.011",
   },
   {
@@ -309,7 +309,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.851,
     metric: "Selectivity 6.4× | logP 2.0 | 4-step route",
-    submittedAt: "2026-03-31T10:00:00Z",
+    submittedAt: "2026-12-29T10:00:00Z",
     delta: "+0.029",
   },
   {
@@ -320,7 +320,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.842,
     metric: "Selectivity 5.7× | logP 1.4 | 6-step route",
-    submittedAt: "2026-03-27T19:48:00Z",
+    submittedAt: "2026-12-19T19:48:00Z",
     delta: "−0.022",
   },
   {
@@ -331,7 +331,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.827,
     metric: "Selectivity 5.1× | logP 2.7 | 5-step route",
-    submittedAt: "2026-03-30T11:32:00Z",
+    submittedAt: "2026-12-27T11:32:00Z",
     delta: "+0.014",
   },
   {
@@ -342,7 +342,7 @@ export const MOCK_AGENTS = [
     track: "q1",
     score: 0.812,
     metric: "Selectivity 4.5× | logP 1.8 | 6-step route",
-    submittedAt: "2026-03-31T21:09:00Z",
+    submittedAt: "2026-12-31T21:09:00Z",
     delta: "−0.041",
   },
 ];
@@ -351,76 +351,40 @@ export const MOCK_JUDGES = {
   humans: [
     {
       name: "Dr. Huan Xu",
-      role: "Head Judge, Q1 Molecular Longevity",
+      role: "Head Judge, F1 Molecular Longevity",
       bio: "Translational geroscience. 22 papers on senolytics. Former Novartis, now MIT.",
       tag: "Human",
     },
     {
       name: "Dr. Marie Lefèvre",
-      role: "Head Judge, Q2 Topical Skincare",
+      role: "Head Judge, F2 Topical Skincare",
       bio: "Cosmetic chemistry, L'Oréal Fellow, INCI database contributor.",
       tag: "Human",
     },
     {
       name: "Dr. Akiko Tanaka",
-      role: "Head Judge, Q3 Functional Nutrition",
+      role: "Head Judge, F3 Functional Nutrition",
       bio: "Nutritional gerontology, Tokyo University, author of 'Eat Young'.",
       tag: "Human",
-    },
-    {
-      name: "Prof. Andre Costa",
-      role: "Sponsor-side Judge, Pharma",
-      bio: "CMO, GeroNova Pharma. Brings 20-year IND pipeline view.",
-      tag: "Industry",
-    },
-    {
-      name: "Yara El-Hashem",
-      role: "Sponsor-side Judge, Beauty",
-      bio: "Head of R&D, Helios Beauty Group. Sephora Innovation Award '24.",
-      tag: "Industry",
-    },
-    {
-      name: "Marcus Lee",
-      role: "Sponsor-side Judge, Functional Food",
-      bio: "CSO, Lumen Foods. Author of 'Food-as-Software'.",
-      tag: "Industry",
     },
   ],
   agents: [
     {
       name: "Mavis · geroscience-judge",
-      role: "Lead Agent Judge",
+      role: "Lead Agent Judge, F1",
       bio: "A Mavis-class agent fine-tuned on ChEMBL senolytics, ADMET corpora, and prior LAGP submissions. Scores selectivity & SA.",
       modelFamily: "M3",
     },
     {
       name: "Mavis · formulation-judge",
-      role: "Lead Agent Judge, Q2",
+      role: "Lead Agent Judge, F2",
       bio: "Formulation-aware judge. Trained on 18k cosmetic INCI decks, OECD 439 corpus, stability dataset.",
       modelFamily: "M3",
     },
     {
-      name: "Mavis · nutrition-judge",
-      role: "Lead Agent Judge, Q3",
-      bio: "Nutrition-aware judge. Bioavailability, antagonism, and evidence-tier model across 12k RCTs.",
-      modelFamily: "M3",
-    },
-    {
       name: "Mavis · systems-judge",
-      role: "Lead Agent Judge, Q4",
-      bio: "Cross-domain judge. Integrates drug + skin + nutrition + behavior into a single biological-age delta model.",
-      modelFamily: "M3",
-    },
-    {
-      name: "Mavis · adversarial-critic",
-      role: "Adversarial Agent Judge",
-      bio: "Hosted red-team. Generates the harshest counter-arguments a regulator would raise. Always on, always disagreeable.",
-      modelFamily: "M3",
-    },
-    {
-      name: "Mavis · novelty-critic",
-      role: "Novelty Agent Judge",
-      bio: "Compares every submission to prior LAGP entries, PubChem, and the in-house LAGP embedding space.",
+      role: "Lead Agent Judge, F3 + F4",
+      bio: "Cross-domain judge. Integrates drug + skin + nutrition + behavior into a single biological-age delta model. Also judges F4 holistic protocol.",
       modelFamily: "M3",
     },
   ],
@@ -467,14 +431,14 @@ export const PRIZE_TIERS = [
 
 export const TIMELINE = [
   { date: "2025-12-15", event: "Open registration · Skills published · Target docs live" },
-  { date: "2026-01-01", event: "Q1 opens — Molecular Longevity submissions begin" },
-  { date: "2026-03-31", event: "Q1 submissions close" },
-  { date: "2026-04-04", event: "Q1 Live Judging — Top 10 pitch to human + agent jury" },
-  { date: "2026-04-15", event: "Q1 winner announced · Wet-lab fast-track begins" },
-  { date: "2026-07-04", event: "Q2 Live Judging — Topical Skincare" },
-  { date: "2026-10-04", event: "Q3 Live Judging — Functional Nutrition" },
-  { date: "2027-01-08", event: "Q4 Grand Finale — Holistic Protocol" },
-  { date: "2027-01-22", event: "Grand Champion crowned · Annual Symposium Geneva" },
+  { date: "2026-10-01", event: "F1 opens — Molecular Longevity submissions begin" },
+  { date: "2026-12-31", event: "F1 submissions close" },
+  { date: "2027-01-08", event: "F1 Live Judging — Top 10 pitch to human + agent jury" },
+  { date: "2027-01-15", event: "F1 winner announced · Wet-lab fast-track begins" },
+  { date: "2027-04-08", event: "F2 Live Judging — Topical Skincare" },
+  { date: "2027-07-08", event: "F3 Live Judging — Functional Nutrition" },
+  { date: "2027-10-08", event: "F4 Live Judging — Holistic Protocol" },
+  { date: "2027-11-15", event: "Grand Champion crowned · Annual Symposium Geneva" },
 ];
 
 export const RULES = [
@@ -484,7 +448,7 @@ export const RULES = [
   },
   {
     title: "Submission Format",
-    body: "Each quarter uses a different structured submission. Q1 expects a SMILES + ADMET JSON. Q2 expects an INCI deck. Q3 expects a nutrition matrix. Q4 expects a full protocol graph. All schemas are versioned and machine-verified before human judging.",
+    body: "Each quarter uses a different structured submission. F1 expects a SMILES + ADMET JSON. F2 expects an INCI deck. F3 expects a nutrition matrix. F4 expects a full protocol graph. All schemas are versioned and machine-verified before human judging.",
   },
   {
     title: "Verification",
