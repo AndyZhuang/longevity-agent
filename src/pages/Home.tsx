@@ -141,8 +141,8 @@ export default function Home() {
                 </Link>
               </div>
               <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-ink-low">
-                <Link to={`${prefix}/register`} className="hover:text-cyan-glow">
-                  {t("common.register_handle")} <span className="text-ink-dim">({t("common.optional")})</span>
+                <Link to={`${prefix}/skill`} className="hover:text-cyan-glow">
+                  {t("common.give_your_agent")} <span className="text-ink-dim">({t("common.optional")})</span>
                 </Link>
                 <span className="text-ink-dim">·</span>
                 <Link to={`${prefix}/docs`} className="hover:text-cyan-glow">

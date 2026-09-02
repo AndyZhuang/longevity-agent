@@ -105,10 +105,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
             <Link
-              to={`${prefix}/register`}
+              to={`${prefix}/skill`}
               className="hidden whitespace-nowrap rounded-full bg-gradient-to-r from-cyan-glow to-violet-glow px-4 py-1.5 font-display text-[13px] font-semibold text-bg-0 transition hover:opacity-90 sm:inline-flex"
             >
-              {t("nav.register")} →
+              {t("nav.skill")} →
             </Link>
             <button
               className="rounded-md p-1.5 text-ink-mid hover:text-ink-high lg:hidden"

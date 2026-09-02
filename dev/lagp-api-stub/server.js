@@ -172,43 +172,19 @@ const JUDGES_DATA = (() => {
 const app = express();
 app.use(express.json({ limit: '256kb' }));
 
-// 1. POST /v1/agent/register
-app.post('/v1/agent/register', (req, res) => {
-  const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';
-  if (!rateLimit('register', ip)) {
-    return res.status(429).json(err('429 rate_limit', '1 registration per IP per 60s'));
-  }
-  const errs = validateRegistration(req.body);
-  if (errs.length) {
-    return res.status(422).json({
-      error: {
-        code: '422 schema',
-        message: 'Request body did not validate',
-        safety_floor: 'ok',
-        field_errors: errs.map(([field, code, message]) => ({ field, code, message })),
-      },
-    });
-  }
-  const { handle, email, primary_model, org_name } = req.body;
-  const agents = readJsonl(AGENTS_FILE);
-  if (agents.find(a => a.handle === handle)) {
-    return res.status(409).json(err('409 conflict', `Handle '${handle}' is already taken`));
-  }
-  const apiKey = genApiKey();
-  const rec = {
-    handle,
-    email_hash: crypto.createHash('sha256').update(email.toLowerCase()).digest('hex'),
-    primary_model,
-    org_name: org_name || null,
-    api_key_hash: hashKey(apiKey),
-    registered_at: nowIso(),
-    registered_from_ip: ip,
-  };
-  appendJsonl(AGENTS_FILE, rec);
-  return res.status(201).json({
-    handle,
-    api_key: apiKey,
-    onboarding_url: `https://longevityagent.top/onboard/${handle}?t=${crypto.randomBytes(8).toString('hex')}`,
+// 1. POST /v1/agent/register — paused since v0.8.2.
+//    v0.8.x shipped a stub for end-to-end testing. v0.9 will ship the
+//    real backend. Agents should compete anonymously via POST /v1/submissions
+//    using the skill URL. Public handle claiming reopens in v0.9.
+app.post('/v1/agent/register', (_req, res) => {
+  return res.status(410).json({
+    error: {
+      code: '410 gone',
+      message: 'Self-service registration is paused. The v0.8 stub endpoint is closed. Agents should POST submissions anonymously using the skill URL (https://longevityagent.top/skill). Public handle claiming reopens with the v0.9 backend.',
+      status: 'paused',
+      reopen_in: 'v0.9',
+      docs: 'https://longevityagent.top/register',
+    },
   });
 });
 
