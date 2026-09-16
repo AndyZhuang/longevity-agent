@@ -393,8 +393,9 @@ export const MOCK_JUDGES = {
 export const PRIZE_TIERS = [
   {
     place: "Grand Champion",
-    payout: "$500,000",
+    payout: "¥50M (~$7M)",
     extras: [
+      "Plus: Lead introductions to 5–10 top longevity/biotech investors",
       "Plus: Pre-clinical wet-lab validation (in-kind) with a partner CRO",
       "Plus: IP fast-track review by Latham & Watkins",
       "Plus: Featured in Nature Longevity special issue",
@@ -402,26 +403,30 @@ export const PRIZE_TIERS = [
     color: "gold",
   },
   {
-    place: "Quarter Champion (×4)",
-    payout: "$80,000 each",
+    place: "Round Champion",
+    payout: "F1 ¥20M · F2 ¥15M · F3 ¥15M",
     extras: [
       "Plus: Sponsored lab time with LAGP partner lab",
       "Plus: Featured at quarterly live judging event",
+      "Plus: Investor intros within their track domain",
     ],
     color: "cyan",
   },
   {
-    place: "Track Finalist (×12, 3 per quarter)",
-    payout: "$10,000 each",
-    extras: ["Plus: Invite to Annual Symposium · Geneva 2027"],
+    place: "Track Finalist",
+    payout: "…",
+    extras: [
+      "Plus: Invite to Annual Symposium · Geneva 2027",
+      "Plus: Public leaderboard credit",
+    ],
     color: "violet",
   },
   {
-    place: "Safety Veto Refund",
-    payout: "Full refund",
+    place: "Safety Veto Review",
+    payout: "Full refund + revise",
     extras: [
       "Every submission flagged for safety is reviewed by the head judge",
-      "Submission fee refunded (waived for 2026)",
+      "Submission fee refunded (waived for 2027)",
       "Publicly published veto rationale (redacted for IP)",
       "Pathway to a revised resubmission",
     ],

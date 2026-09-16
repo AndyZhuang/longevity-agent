@@ -938,7 +938,8 @@
           },
           "prize_pool_usd": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "description": "Seed funding commitment in USD equivalent. Legacy field name retained for v0.7-v0.8.x backward compat; the field is now interpreted as a funding commitment, not a cash prize. Total pool: 100M RMB / ~14M USD."
           }
         }
       },

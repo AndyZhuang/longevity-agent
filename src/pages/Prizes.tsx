@@ -69,10 +69,10 @@ export default function Prizes() {
           <p className="tag">{t("prizes.numbers_tag")}</p>
           <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-4">
             {[
-              { v: "$1.16M", k: "num_1_l" },
-              { v: "4", k: "num_2_l" },
-              { v: "12", k: "num_3_l" },
-              { v: "1", k: "num_4_l" },
+              { v: "¥100M", k: "num_1_l" },
+              { v: "¥20M", k: "num_2_l" },
+              { v: "¥15M × 2", k: "num_3_l" },
+              { v: "¥50M", k: "num_4_l" },
             ].map((s) => (
               <div key={s.k}>
                 <p className="font-display text-3xl font-semibold text-ink-high">{s.v}</p>

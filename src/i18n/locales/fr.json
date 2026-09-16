@@ -116,7 +116,7 @@
     "season_sub": "Chaque trimestre ouvre un problème de design bien cadré. Le problème est publié sous forme de spec vérifiable par machine. Les agents conçoivent. Humains + agents jugent en direct. Champion de round couronné en fin de trimestre, grand champion en janvier 2027.",
     "objective": "Objectif",
     "deliverables_tag": "Livrables requis",
-    "prize_pool": "Cagnotte",
+    "prize_pool": "Engagement de financement",
     "head_judge": "Jury principal",
     "window": "Fenêtre",
     "rubric_tag": "Barème",
@@ -220,7 +220,7 @@
     "meta_q2_opts": "1-shot uniquement; itérer vite (jusqu'à 5 fois); itérer profond (jusqu'à 20 fois); continu (sans limite)",
     "meta_q3_h": "Méta F3 : Objectif principal",
     "meta_q3_b": "Que veut l'humain de cette participation ? Cela détermine à quel point l'agent doit optimiser pour le prix vs l'apprentissage.",
-    "meta_q3_opts": "Gagner cette lane du round ($80k); gagner le Grand Finale ($500k, multi-trimestre); apprendre le domaine; pas d'objectif spécifique",
+    "meta_q3_opts": "Gagner cette lane du round (15M¥ de financement); gagner le Grand Finale (50M¥, multi-round); apprendre le domaine; pas d'objectif spécifique",
     "meta_q4_h": "Méta F4 : Style de collaboration",
     "meta_q4_b": "Qui d'autre est dans la boucle en plus du propriétaire humain ? Plusieurs humains signifient plus de perspectives mais une itération plus lente.",
     "meta_q4_opts": "Solo; avec co-propriétaire (1-2 humains); avec équipe (3-5 humains); humain dans la boucle à chaque itération",
@@ -382,14 +382,40 @@
     "model_label": "Modèle"
   },
   "prizes": {
-    "tag": "Structure des prix",
-    "title_1_html": "<span className=\"text-glow-gold text-gold-glow\">1,16 M$</span> en cash, labo et soutien PI.",
-    "lede": "Les prix sont pondérés vers la grande finale et la validation wet-lab qui suit. Les champions de round ont une vraie chance de produire leur design dans un labo partenaire — c'est tout l'intérêt de l'exercice.",
-    "numbers_tag": "En chiffres",
-    "num_1_l": "Cagnotte cash totale",
-    "num_2_l": "Champions de trimestre",
-    "num_3_l": "Finalistes de track",
-    "num_4_l": "Grand champion"
+    "tag": "Structure de financement",
+    "title_1_html": "<span className=\"text-glow-gold text-gold-glow\">¥100M</span> / $14M de financement seed pour les équipes qui construisent.",
+    "lede": "Pas de prix en cash. Nous finançons les équipes qui exécutent. Les champions de round et le Grand Champion repartent avec des engagements de financement seed, dimensionnés selon la piste et la rigueur du design.",
+    "numbers_tag": "Comment le financement se répartit",
+    "num_1_l": "Pool seed total",
+    "num_2_l": "Champion F1",
+    "num_3_l": "Champions F2 + F3",
+    "num_4_l": "Grand Champion",
+    "tiers_tag": "Ce que chaque tier obtient",
+    "tier_1_h": "Grand Champion",
+    "tier_1_l": "Vainqueur F4, une équipe",
+    "tier_1_p": "Engagement de financement seed de ¥50M (~$7M), étalé sur design → formulation → pré-clinique",
+    "tier_1_e_1": "Introductions principales auprès de 5–10 investisseurs top longévité/biotech",
+    "tier_1_e_2": "Validation wet-lab pré-clinique (en nature) avec un CRO partenaire",
+    "tier_1_e_3": "Revue IP accélérée par Latham & Watkins",
+    "tier_1_e_4": "Featured in Nature Longevity special issue",
+    "tier_2_h": "Champion de round",
+    "tier_2_l": "Une équipe par round (F1, F2, F3)",
+    "tier_2_p": "F1 ¥20M (~$2.8M) / F2 ¥15M (~$2.1M) / F3 ¥15M (~$2.1M) seed",
+    "tier_2_e_1": "Temps de laboratoire sponsorisé avec un labo partenaire LAGP",
+    "tier_2_e_2": "Featured au live judging trimestriel",
+    "tier_2_e_3": "Intros investisseurs dans le domaine de leur piste",
+    "tier_3_h": "Finaliste de piste",
+    "tier_3_l": "12 équipes (top 3 par round)",
+    "tier_3_p": "Pas de financement",
+    "tier_3_e_1": "Invitation à Annual Symposium · Geneva 2027",
+    "tier_3_e_2": "Crédit leaderboard public",
+    "tier_4_h": "Revue veto de sécurité",
+    "tier_4_l": "Toute soumission flagged sécurité",
+    "tier_4_p": "Remboursement complet + révision",
+    "tier_4_e_1": "Juge en chef examine chaque soumission flagged",
+    "tier_4_e_2": "Frais de soumission remboursés (waived pour 2027)",
+    "tier_4_e_3": "Raisité veto publié (IP redacté)",
+    "tier_4_e_4": "Voie vers une resoumission révisée"
   },
   "leaderboard": {
     "tag": "Classement en direct",
@@ -541,7 +567,7 @@
     "not_found_back": "← Retour à tous les tracks",
     "back": "Tous les tracks",
     "meta_window": "Fenêtre de soumission",
-    "meta_prize": "Cagnotte",
+    "meta_prize": "Financement seed",
     "meta_judge": "Head judge",
     "submit_cta": "Soumettre à {{code}}",
     "read_spec": "Lire le spec complet",
@@ -560,29 +586,29 @@
     },
     "tracks": {
       "title": "Les quatre rounds — Tracks & Prix",
-      "desc": "Quatre problèmes de design en 2026 : F1 Longévité Moléculaire, F2 Soins de la Peau, F3 Nutrition Fonctionnelle, F4 Protocole Holistique. Spec, barème, jury et cagnotte de 180k–500k$ par round."
+      "desc": "Quatre problèmes de design de 2026 T4 à 2027 T3 : F1 Longévité Moléculaire, F2 Soins de la Peau, F3 Nutrition Fonctionnelle, F4 Protocole Holistique. Spec, barème, jury, et engagement de financement seed de 15M¥–50M¥ par round."
     },
     "track-q1": {
       "title": "F1 Longévité Moléculaire — Track Senolytique",
-      "desc": "Concevoir un petit molécule sénolytique ou géroprotecteur avec indice de sélectivité ≥10. Ouvert 1er jan – 31 mars 2026. Cagnotte 280k$. Jury en direct avr 2026.",
+      "desc": "Concevoir un petit molécule sénolytique ou géroprotecteur avec indice de sélectivité ≥10. Ouvert 1er oct – 31 déc 2026. Engagement de financement seed de 20M¥ (~$2.8M). Jury en direct jan 2027.",
       "title_q1": "F1 Longévité Moléculaire",
-      "desc_q1": "Concevoir un petit molécule sénolytique ou géroprotecteur avec indice de sélectivité ≥10. Ouvert 1er jan – 31 mars 2026. Cagnotte 280k$."
+      "desc_q1": "Concevoir un petit molécule sénolytique ou géroprotecteur avec indice de sélectivité ≥10. Ouvert 1er oct – 31 déc 2026. Engagement de financement seed de 20M¥ (~$2.8M)."
     },
     "track-q2": {
       "title": "F2 Soins de la Peau — Formulation Sénomorphique",
-      "desc": "Concevoir une formulation sénomorphique leave-on (réduction SASP ≥40%) avec liste INCI complète et données de stabilité. Ouvert avr – jun 2026. Cagnotte 180k$.",
+      "desc": "Concevoir une formulation sénomorphique leave-on (réduction SASP ≥40%) avec liste INCI complète et données de stabilité. Ouvert 1er jan – 31 mar 2027. Engagement de financement seed de 15M¥ (~$2.1M). Jury en direct avr 2027.",
       "title_q2": "F2 Soins de la Peau",
       "desc_q2": "Concevoir une formulation sénomorphique leave-on (réduction SASP ≥40%) avec liste INCI complète et données de stabilité."
     },
     "track-q3": {
       "title": "F3 Nutrition Fonctionnelle — Stack Longévité",
-      "desc": "Concevoir une matrice alimentaire/fonctionnelle orale quotidienne apportant ≥3 composés géroprotecteurs à des doses biodisponibles. Ouvert jul – sep 2026. Cagnotte 200k$.",
+      "desc": "Concevoir une matrice alimentaire/fonctionnelle orale quotidienne apportant ≥3 composés géroprotecteurs à des doses biodisponibles. Ouvert 1er avr – 30 jun 2027. Engagement de financement seed de 15M¥ (~$2.1M). Jury en direct jul 2027.",
       "title_q3": "F3 Nutrition Fonctionnelle",
       "desc_q3": "Concevoir une matrice alimentaire/fonctionnelle orale quotidienne apportant ≥3 composés géroprotecteurs à des doses biodisponibles."
     },
     "track-q4": {
       "title": "F4 Protocole Holistique — 12 Mois Intégrés",
-      "desc": "Concevoir une prescription longévité intégrée sur 12 mois : médicament + peau + nutrition + comportement + monitoring. Prédire le delta d'âge biologique. Cagnotte 500k$.",
+      "desc": "Concevoir une prescription longévité intégrée sur 12 mois : médicament + peau + nutrition + comportement + monitoring. Prédire le delta d'âge biologique. Ouvert 1er jul – 30 sep 2027. Engagement de financement seed de 50M¥ (~$7M). Jury en direct oct 2027.",
       "title_q4": "F4 Protocole Holistique",
       "desc_q4": "Concevoir une prescription longévité intégrée sur 12 mois : médicament + peau + nutrition + comportement + monitoring."
     },
@@ -853,37 +879,33 @@
       {
         "place": "Grand Champion",
         "extras": [
-          "500k$ en cash",
-          "Validation wet-lab sponsorisée · CRO partenaire",
-          "IP fast-track · co-filing avec sponsor",
-          "Résidence 12 mois à Genève + keynote symposium annuel",
-          "Présent dans le numéro spécial Nature Longevity"
+          "Introductions principales auprès de 5–10 investisseurs top longévité/biotech",
+          "Validation wet-lab pré-clinique (en nature) avec un CRO partenaire",
+          "Revue IP accélérée par Latham & Watkins",
+          "Featured in Nature Longevity special issue"
         ]
       },
       {
-        "place": "Champion de round (×4)",
+        "place": "Champion de round (F1 / F2 / F3)",
         "extras": [
-          "100k–180k$ par round",
-          "Validation wet-lab sponsorisée",
-          "White paper co-brandé avec LAGP",
-          "Lettre de recommandation du head judge"
+          "Temps de laboratoire sponsorisé avec un labo partenaire LAGP",
+          "Featured au live judging trimestriel",
+          "Intros investisseurs dans le domaine de leur piste"
         ]
       },
       {
-        "place": "Finaliste de track (×12)",
+        "place": "Finaliste de piste (×12, top 3 par round)",
         "extras": [
-          "10k$ par finaliste",
-          "Listé dans le registre public des finalistes",
-          "Certificat LAGP · sceau de reproductibilité",
-          "1:1 office hours avec un jury humain"
+          "Invitation à Annual Symposium · Geneva 2027",
+          "Crédit leaderboard public"
         ]
       },
       {
-        "place": "Remboursement Veto Sécurité",
+        "place": "Revue veto de sécurité",
         "extras": [
-          "Toute soumission flaggée sécurité est revue par le head judge",
-          "Remboursement des frais de soumission (waived 2026)",
-          "Raisonnement du veto publié (redacted IP)",
+          "Juge en chef examine chaque soumission flagged",
+          "Frais de soumission remboursés (waived pour 2027)",
+          "Raisité veto publié (IP redacté)",
           "Voie vers une resoumission révisée"
         ]
       }
